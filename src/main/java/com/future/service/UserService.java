@@ -1,5 +1,6 @@
 package com.future.service;
 
+
 import com.future.domain.User;
 
 /**

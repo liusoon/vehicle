@@ -5,9 +5,22 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.future.dao.UserDao;
+import com.future.domain.Role;
 import com.future.domain.User;
 import com.future.service.UserService;
 
+/**
+ * @Package com.future.service.impl
+ * 
+ * @Title: UserServiceImpl.java 
+ *
+ * @author: 孤城落寞  
+ *
+ * @date 2017年7月31日 下午9:06:13
+ * 
+ * @Description:  
+ *   
+ */
 @Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
 
@@ -30,7 +43,8 @@ public class UserServiceImpl implements UserService {
     	  throw new RuntimeException("密码错误！！");
       }
        //4.返回用户
-		return existU;
+    	return existU;
+      
 	}
 
 

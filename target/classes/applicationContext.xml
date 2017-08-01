@@ -35,9 +35,9 @@
    <property name="hibernateProperties">
      <props>
          <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-         <prop key="show_sql">true</prop>
-         <prop key="format_sql">true</prop>
-         <prop key="hbm2ddl.auto">update</prop>
+         <prop key="hibernate.show_sql">true</prop>
+         <prop key="hibernate.format_sql">true</prop>
+         <prop key="hibernate.hbm2ddl.auto">update</prop>
      </props>
    </property>
    <!-- 引入orm元数据 -->

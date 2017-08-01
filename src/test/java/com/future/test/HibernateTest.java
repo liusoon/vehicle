@@ -42,9 +42,10 @@ public class HibernateTest {
 	 User u=new User();	
 	  
 	   u.setCode("12345");
-	   u.setStatus("admin");
-	   u.setName("tom");
 	   u.setPassword("12345");
+	   u.setName("tom");
+       u.setPhone(123456789);
+	   u.setAddress("hky");
 	   u.setDate(new Date());
 	   
 	   session.save(u);
@@ -62,13 +63,16 @@ public class HibernateTest {
 	public void fun2() {
 		Session session=sf.openSession();
 		Transaction tx=session.beginTransaction();
+	    
 		User u=new User();	
-		u.setCode("12345");
-		u.setStatus("admin");
-		u.setName("tom");
-		u.setPassword("12345");
-		u.setDate(new Date());
+		   u.setCode("123456");
+		   u.setPassword("123456");
+		   u.setName("jock");
+	       u.setPhone(123456789);
+		   u.setAddress("hsd");
+		   u.setDate(new Date());
 		session.save(u);
+		
 		tx.commit();
 		session.close();
 		
@@ -79,8 +83,8 @@ public class HibernateTest {
     @Test
     //测试hibernateTemple模板
     public void fun3() {
-    	User user = ud.getUserByCode("1234");
-        System.out.println(user);
+//    	User user = ud.getUserByCode("123456");
+//        System.out.println(user);
     } 
 
     
@@ -91,11 +95,12 @@ public class HibernateTest {
     public void fun4() {
     	
     	User u=new User();	
-		u.setCode("123456");
-		u.setStatus("admin");
-		u.setName("jerry");
-		u.setPassword("123456");
-  		u.setDate(new Date());
+    	u.setCode("12");
+	    u.setPassword("12");
+	    u.setName("tom");
+        u.setPhone(123456789);
+	    u.setAddress("xxxy");
+	    u.setDate(new Date());
         us.saveUser(u);
     } 
 	

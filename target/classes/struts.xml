@@ -8,10 +8,16 @@
       <constant name="struts.objectFactory" value="spring"></constant>
       
        <package name="vehicle" extends="struts-default" namespace="/">
+        <!-- 异常处理 -->
+        <global-exception-mappings>
+          <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+        </global-exception-mappings>
          
          <action name="UserAction_*" class="userAction" method="{1}"> 
-           
-           <result name="success">/success.jsp</result>
+           <result name="both">/success.jsp</result>
+           <result name="admin">/success2.jsp</result>
+           <result name="ordinary">/success3.jsp</result>
+           <result name="error">/index.jsp</result>
          
          </action>  
            
