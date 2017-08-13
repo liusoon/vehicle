@@ -7,19 +7,64 @@
       <!-- 配置常量 -->
       <constant name="struts.objectFactory" value="spring"></constant>
       
-       <package name="vehicle" extends="struts-default" namespace="/">
-        <!-- 异常处理 -->
+       <package name="default" extends="struts-default" namespace="/">
+        
+        <!--    异常处理 -->
         <global-exception-mappings>
           <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
         </global-exception-mappings>
          
-         <action name="UserAction_*" class="userAction" method="{1}"> 
-           <result name="both">/success.jsp</result>
-           <result name="admin">/success2.jsp</result>
-           <result name="ordinary">/success3.jsp</result>
-           <result name="error">/index.jsp</result>
-         
+        <!-- 各用户登录 -->
+		<action name="UserAction_*" class="userAction" method="{1}">
+            <result name="both">/WEB-INF/both/index.jsp</result>
+            <result name="admin">/WEB-INF/admin/index.jsp</result>
+            <result name="ordinary">/WEB-INF/ordinary/index.jsp</result>
+            <result name="error">/index.jsp</result>
          </action>  
+           
+         
+         <!-- 管理员操作 -->
+         <action name="AdminAction_*" class="adminAction" method="{1}" >
+           <!-- 对用户的操作 -->
+           <result name="addUser">/WEB-INF/admin/addUser.jsp</result>
+           <result name="toUserList" type="redirectAction" >
+			   <param name="namespace">/</param>
+			   <param name="actionName">AdminAction_userList</param>
+		   </result>
+           <result name="userList">/WEB-INF/admin/userList.jsp</result>
+           
+           <!-- 对车辆的操作 -->
+           <result name="addVehicleList">/WEB-INF/admin/addVehicleList.jsp</result>
+           <result name="vehicleList">/WEB-INF/admin/vehicleList.jsp</result>
+          <!--  <result name="error">/WEB-INF/admin/saveFruit.jsp</result> -->
+           
+           <!--对维护信息的操作 -->
+           <result name="addMaintain">/WEB-INF/admin/addMaintain.jsp</result>
+           <result name="maintainList">/WEB-INF/admin/maintainList.jsp</result>
+           <result name="toMaintainList" type="redirectAction" >
+			   <param name="namespace">/</param>
+			   <param name="actionName">AdminAction_maintainList</param>
+		   </result>
+		  <!--  <result name="error">/WEB-INF/admin/saveFruit.jsp</result> -->
+         </action>
+         
+         <!-- 普通用户操作 -->
+         <action name="OrdinaryAction_*" class="ordinaryAction" method="{1}">
+          <result name="add">/WEB-INF/ordinary/add.jsp</result>
+          <result name="list">/WEB-INF/ordinary/list.jsp</result>
+          <result name="toList" type="redirectAction" >
+			   <param name="namespace">/</param>
+			   <param name="actionName">OrdinaryAction_list</param>
+		  </result>
+		  <result name="error">/WEB-INF/ordinary/add.jsp</result>
+         </action>
+       
+         
+         
+         <!-- 数据字典 -->
+         <action name="BaseDictAction" class="baseDictAction" method="execute"></action>  
+           
+           
            
        </package>
 

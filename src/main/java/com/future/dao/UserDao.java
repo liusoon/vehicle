@@ -1,6 +1,5 @@
 package com.future.dao;
 
-import com.future.domain.Role;
 import com.future.domain.User;
 
 /**
@@ -16,9 +15,9 @@ import com.future.domain.User;
  *   
  */
 public interface UserDao extends BaseDao<User> {
-     
-	//根据登录名查询用户对象
-	User getUserByCode(String code);
+	
+	//查  根据账户查询用户对象
+  	User getUserByCode(String code);
 	
 	
 }

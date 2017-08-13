@@ -21,25 +21,75 @@
        <groupId>javax.servlet.jsp</groupId>
        <artifactId>javax.servlet.jsp-api</artifactId>
        <version>2.3.2-b02</version>
-       <!-- 只在编辑测试时运行 -->
        <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+   <dependency>
+     <groupId>javax.servlet</groupId>
+     <artifactId>javax.servlet-api</artifactId>
+     <version>3.1.0</version>
+       <!-- 只在编辑测试时运行 -->
+     <scope>provided</scope>
+   </dependency>
+ 
+  <!-- 使用jQuery的json所依赖的jar -->
+	<dependency>
+    	<groupId>net.sf.ezmorph</groupId>
+    	<artifactId>ezmorph</artifactId>
+    	<version>1.0.6</version>
+    </dependency>
+    
+    <dependency>  
+	   <groupId>net.sf.json-lib</groupId>  
+	   <artifactId>json-lib</artifactId>  
+	   <version>2.4</version> 
+	   <classifier>jdk15</classifier><!--指定jdk版本-->  
+    </dependency>  
+    
+	<dependency>
+	    <groupId>commons-beanutils</groupId>
+	    <artifactId>commons-beanutils</artifactId>
+	    <version>1.9.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>commons-collections</groupId>
+	    <artifactId>commons-collections</artifactId>
+	    <version>3.1</version>
+	</dependency>
+
 
     <!-- struts2 依赖 --> 
    <dependency>
        <groupId>org.apache.struts</groupId>
        <artifactId>struts2-core</artifactId>
        <version>2.3.24</version>
-    </dependency>
+       <exclusions>
+       	<exclusion>
+       		<groupId>javassist</groupId>
+       		<artifactId>javassist</artifactId>
+       	</exclusion>
+       </exclusions>
+   </dependency>
     
     <!-- struts2 整合spring -->
-   <dependency>
+    <dependency>
        <groupId>org.apache.struts</groupId>
        <artifactId>struts2-spring-plugin</artifactId>
        <version>2.3.24</version>
     </dependency>
     
-    
+    <!--struts2 ongl asm 表达式解析语言 -->
+	  <dependency>
+	    <groupId>asm</groupId>
+	    <artifactId>asm</artifactId>
+	    <version>3.3</version>
+	  </dependency>
+    <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>3.20.0-GA</version>
+     </dependency>
     
     <!-- hibernate 依赖 -->
      <dependency>

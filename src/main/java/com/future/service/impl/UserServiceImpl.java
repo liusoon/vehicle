@@ -1,13 +1,16 @@
 package com.future.service.impl;
 
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.future.dao.UserDao;
-import com.future.domain.Role;
 import com.future.domain.User;
 import com.future.service.UserService;
+import com.future.utils.PageBean;
 
 /**
  * @Package com.future.service.impl
@@ -21,7 +24,7 @@ import com.future.service.UserService;
  * @Description:  
  *   
  */
-@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
+@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=false,propagation=Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
 
 	private UserDao userDao;
@@ -29,7 +32,6 @@ public class UserServiceImpl implements UserService {
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-
 
 	public User getUserByCodePassword(User u) {
 	  //1.根据登陆账户查询User	
@@ -47,10 +49,43 @@ public class UserServiceImpl implements UserService {
       
 	}
 
-
-	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=false,propagation=Propagation.REQUIRED)
-	public void saveUser(User u) {
-         userDao.save(u);		
+	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
+	public PageBean getPageBean(DetachedCriteria dc, Integer currentPage, Integer pageSize) {
+		
+		//1.调用dao查询总记录
+       
+        Integer totalCount=userDao.getTotalCount(dc);
+        
+		//2.创建pageBean对象
+		PageBean pb=new PageBean(currentPage,totalCount,pageSize);
+       
+		//3.调用dao查询分页列表数据
+		List<User> list=userDao.getPageList(dc, pb.getStart(), pb.getPageSize());
+		
+		pb.setList(list);
+		
+		return pb;
 	}
+
+
+
+	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
+	public User getUserJudge(User u) {
+        User judgeU = userDao.getUserByCode(u.getCode());  
+		if(judgeU !=null) {
+		   throw new RuntimeException("添加用户失败，存在该用户 ！");		
+		}
+		return judgeU;
+	}
+
+
+    @Override
+	public void saveUser(User u) {
+		userDao.save(u);
+		
+	}
+
+
+	
  
 }

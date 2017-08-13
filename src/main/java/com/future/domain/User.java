@@ -26,104 +26,101 @@ public class User {
 	// 地址
 	private String address;
 	// 联系方法
-	private Integer phone;
-	// 备案日期
+	private String phone;
+	// 注册日期
 	private Date date;
-    
-	//车辆数目
-	private Set<Vehicle> vehicle = new HashSet<>();
-	private Set<Maintain> maintain = new HashSet<>();
-	
 	// 用户角色
-    private Set<Role> role=new HashSet<>();
+	private String role;
 	
+	//车辆数目
+	private Integer vehicleNumber;
 	
+	//信息数目
+	private Integer maintainNumber;
+	
+	//假删除
 
-	public Set<Maintain> getMaintain() {
-		return maintain;
-	}
-
-	public void setMaintain(Set<Maintain> maintain) {
-		this.maintain = maintain;
-	}
-
-	public void setRole(Set<Role> role) {
-		this.role = role;
-	}
-
-	public Set<Role> getRole() {
-		return role;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public Integer getPhone() {
-		return phone;
-	}
-
-	public void setPhone(Integer phone) {
-		this.phone = phone;
-	}
-
-	public Set<Vehicle> getVehicle() {
-		return vehicle;
-	}
-
-	public void setVehicle(Set<Vehicle> vehicle) {
-		this.vehicle = vehicle;
-	}
-
+	private String judge;
+	
 	public Integer getUserId() {
 		return userId;
 	}
-
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
 	public String getCode() {
 		return code;
 	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public Integer getVehicleNumber() {
+		return vehicleNumber;
+	}
+	
+	public void setVehicleNumber(Integer vehicleNumber) {
+		this.vehicleNumber = vehicleNumber;
+	}
 	public Date getDate() {
 		return date;
 	}
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public Integer getMaintainNumber() {
+		return maintainNumber;
+	}
+	public void setMaintainNumber(Integer maintainNumber) {
+		this.maintainNumber = maintainNumber;
+	}
+	
+	public String getJudge() {
+		return judge;
+	}
+	public void setJudge(String judge) {
+		this.judge = judge;
+	}
+	
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", code=" + code + ", password=" + password + ", name=" + name + ", address="
-				+ address + ", phone=" + phone + ", date=" + date + ", vehicle=" + vehicle + ", maintain=" + maintain
-				+ ", role=" + role + "]";
+				+ address + ", phone=" + phone + ", date=" + date + ", role=" + role + ", vehicleNumber="
+				+ vehicleNumber + ", maintainNumber=" + maintainNumber + ", judge=" + judge + "]";
 	}
-
+	
+	
+	
+ 
 }
