@@ -40,7 +40,7 @@ public class User {
 	
 	//假删除
 
-	private String judge;
+	private BaseDict judge;
 	
 	public Integer getUserId() {
 		return userId;
@@ -105,11 +105,10 @@ public class User {
 	public void setMaintainNumber(Integer maintainNumber) {
 		this.maintainNumber = maintainNumber;
 	}
-	
-	public String getJudge() {
+	public BaseDict getJudge() {
 		return judge;
 	}
-	public void setJudge(String judge) {
+	public void setJudge(BaseDict judge) {
 		this.judge = judge;
 	}
 	
@@ -119,6 +118,8 @@ public class User {
 				+ address + ", phone=" + phone + ", date=" + date + ", role=" + role + ", vehicleNumber="
 				+ vehicleNumber + ", maintainNumber=" + maintainNumber + ", judge=" + judge + "]";
 	}
+	
+	
 	
 	
 	

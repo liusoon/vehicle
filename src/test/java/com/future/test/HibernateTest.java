@@ -2,6 +2,7 @@ package com.future.test;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -112,15 +113,17 @@ public class HibernateTest {
     @Test
     //测试aop事务
     public void fun4() {
+    	BaseDict baseDict=new BaseDict();
     	User u=new User();	
-    	u.setCode("12");
-	    u.setPassword("12");
-	    u.setName("AA"); 
+    	u.setCode("1234");
+	    u.setPassword("1234");
+	    u.setName("jock"); 
         u.setPhone("123456789");
-	    u.setAddress("xxxy");
-	    u.setRole("admin");
+	    u.setAddress("hky");
+	    u.setRole("ordinary");
 	    u.setDate(new Date());
-	    u.setJudge("Y");
+	    baseDict.setDict_id("12");
+	    u.setJudge(baseDict);
         us.saveUser(u);
     } 
     
@@ -192,43 +195,87 @@ public class HibernateTest {
 	  @Test
 	  //维护信息录入
 	  public void fun8() {
-		    Maintain maintain =new Maintain();
-		    BaseDict baseDict=new BaseDict();		    
+		    Maintain maintain =new Maintain();	    
 		    String vehicleId = "00001";
 	  		
 		    Vehicle vehicleJudge = vs.getVehicleId(vehicleId);
-		    System.out.println(vehicleJudge);
+		   
 		    
-//		    String plateId = ;	  		
-//		    System.out.println(vehicleJudge.getPlateId());
-//		    12121
-//		    System.out.println(!(vehicleJudge.getPlateId().equals("12121")));
-		    
-		    if(!(vehicleJudge.getPlateId().equals("12121"))) {
+		    if(!(vehicleJudge.getPlateId().equals("12321"))) {
 	  			 throw new RuntimeException("信息录入失败！档案中的车牌号与录入的车牌号不符");
 	  		}
 	  		
-		    if(!(vehicleJudge.getUserName().equals("rose"))) {
+		    if(!(vehicleJudge.getUserName().equals("AA"))) {
 	  			throw new RuntimeException("信息录入失败！档案中的车主与录入的车主信息不符不符");
 	  		}
 	  		
 		    Integer userId = vehicleJudge.getUserId();
-	  		maintain.setJudge("Y");
-	  		maintain.setPlateId("12121");
+	  		/*maintain.setJudge("Y");*/
+	  		maintain.setPlateId("12321");
 	  		maintain.setVehicleId(vehicleId);
 	  		maintain.setUserId(userId);
 	  		maintain.setDate(new Date());
+	  		us.updateUserMaintain(userId);
 	  		ms.saveMaintain(maintain);
 	  } 
 	  @Test
-	  //维护信息录入
+	  //测试user信息变化
 	  public void fun9() {
-		     
-		  String vehicleId = "00001";
+		 User user = ud.getById(1);		
+		 System.out.println(user);
+		 Integer maintainNumber= user.getMaintainNumber();
+		 if(maintainNumber==null) {
+			 maintainNumber=0;
+		 }
+		 System.out.println(maintainNumber);
+		 maintainNumber++;
+		 System.out.println(maintainNumber);
+		 user.setMaintainNumber(maintainNumber);
+		 System.out.println(user);
+		 
+		 ud.save(user);    
 		  
-		  Vehicle vehicleJudge = vs.getVehicleId(vehicleId);
 		  
 	  } 
 	  
+	  @Test
+	  public void fun10() {
+		 /*DetachedCriteria dc = DetachedCriteria.forClass(BaseDict.class);
+		 dc.add(Restrictions.eq("dict_id", "10"));*/
+		
+		 
+		  
+//	    Vehicle vehicle=new Vehicle();
+		  //封装离线查询对象
+	    DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class); 
+	    dc.add(Restrictions.like("operationStatus.dict_id", "10",MatchMode.ANYWHERE)); 
+	    /* DetachedCriteria dc = DetachedCriteria.forClass(Student.class); 
+	    dc.add(Restrictions.like("team.id", teamId, )); */
+	    
+	    /*List<Vehicle> list = (List<Vehicle>) getHibernateTemplate().findByCriteria(dc);
+		
+	    if(list !=null && list.size()>0) {
+	    	return list.get(0);
+	    }else {
+	    	return null;
+	    }*/
+	    
+	    
+//  		DetachedCriteria dc2=dc.createAlias();
+  		/*DetachedCriteria beautyCriteria = DetachedCriteria.forClass(Beauty.class, "b").;
+  		DetachedCriteria customerCriteria = beautyCriteria.createAlias("customers", c");
+  		beautyCriteria.add(Restrictions.le("b.age", new Long(20))):
+  		customerCriteria.add(Restrictions.eq("c.name", "Gates")):	*/    
+//  		dc2.add(Restrictions.eq("bd.dict_id", "10"));
+//        dc.add(Restrictions.eq("dict.", "10"));
+  		
+  		//调用service 查询分页数据pagebean
+  		PageBean pb=vs.getPageBean(dc,null,null);
+  		
+  		System.out.println(pb);
+  		
+	    
+	  } 
+	 
 	  
  }

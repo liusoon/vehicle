@@ -46,11 +46,11 @@
             <column name="MAINTAINS_NUMBER" />
         </property>
 
-        <property name="judge" type="java.lang.String">
+        <!-- <property name="judge" type="java.lang.String">
             <column name="JUDGE" />
-        </property>
+        </property> -->
         
-        <!-- <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one> -->
+        <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>
         
     </class>
 

@@ -31,7 +31,7 @@
   <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/AdminAction_vehicleList" method="post">
         
                      车牌号:
-        <input type="text" name="name" id="name"/>
+        <input type="text" name="vehicle.plateId" id="plateId"/>
        
        <br/>
        <input type="submit" class="button" value="筛选" name="button"/>

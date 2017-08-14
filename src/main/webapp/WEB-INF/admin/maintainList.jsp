@@ -31,16 +31,16 @@
   <form id="pageForm"  action="${pageContext.request.contextPath}/AdminAction_maintainList" method="post">
                 维护信息查询 ：
                     车牌号:
-       <input type="text" name="plateId" id="plateId"/>
+       <input type="text" name="maintain.plateId" id="plateId" placeholder="请填写车牌号"/>
        <br/> 时间查询：
-       <input type="date" name="startDate" id="startDate"/>
-       <input type="date" name="endDate" id="endDate"/>
+       <input type="date" name="beginDate" id="beginDate" placeholder="起始日期"/>
+       <input type="date" name="endDate" id="endDate" placeholder="截止日期"/>
        <br/>
                   车辆档案号  :
-       <input type="text" name="vehicleId" id="vehicleId"/>
+       <input type="text" name="maintain.vehicleId" id="vehicleId" placeholder="请填写车辆档案号"/>
        <br/>                   
                    车主查询:
-       <input type="text" name="userName" id="userName"/>
+       <input type="text" name="maintain.userName" id="userName" placeholder="请输入车主名字"/>
        <br/>
        
        <input type="submit" class="button" value="筛选" name="button"/>
@@ -64,16 +64,18 @@
 	            <th>车主姓名</th>
 	            <th>车辆档案号</th>
 	            <th>车牌号</th>
+	            <th>联系方式</th>
 	            <th>维护信息的录入日期</th>
 	          </tr>  
 	          
 	          <c:forEach items="${pageBean.list}" var="list" >
 	          <tr>
-	            <td>${list.id}</td>
+	            <td>${list.maintainId}</td>
 	            <td>${list.userId}</td>
 	            <td>${list.userName}</td>
 	            <td>${list.vehicleId}</td>
 	            <td>${list.plateId}</td>
+	            <td>${list.userPhone}</td>	            
 	            <td>${list.date}</td>
 	            <td>
                   <a href="${pageContext.request.contextPath}/adminServlet?method=edit&maintainId=${Maintain.maintainId}">修改</a>

@@ -19,7 +19,7 @@ import java.util.Set;
 public class Maintain {
     
 	//维护信息的编号
-	private Integer id;
+	private Integer maintainId;
 	//车主id
 	private Integer userId;
 	//车主姓名
@@ -31,14 +31,17 @@ public class Maintain {
 	//维护信息的录入日期
 	private Date date;
     //假删除  Y能查询到  N不能查询
-	private String judge;
+	private BaseDict judge;
 	
-	public Integer getId() {
-		return id;
+	//联系方式 
+	private String userPhone;
+	
+	public Integer getMaintainId() {
+		return maintainId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setMaintainId(Integer maintainId) {
+		this.maintainId = maintainId;
 	}
 
 	public Integer getUserId() {
@@ -80,19 +83,33 @@ public class Maintain {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public String getJudge() {
+   
+	public BaseDict getJudge() {
 		return judge;
 	}
 
-	public void setJudge(String judge) {
+	public void setJudge(BaseDict judge) {
 		this.judge = judge;
 	}
+   
+	
+	public String getUserPhone() {
+		return userPhone;
+	}
 
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+   
+	
 	@Override
 	public String toString() {
-		return "Maintain [id=" + id + ", userId=" + userId + ", userName=" + userName + ", vehicleId=" + vehicleId
-				+ ", plateId=" + plateId + ", date=" + date + ", judge=" + judge + "]";
+		return "Maintain [maintainId=" + maintainId + ", userId=" + userId + ", userName=" + userName + ", vehicleId="
+				+ vehicleId + ", plateId=" + plateId + ", date=" + date + ", judge=" + judge + ", userPhone="
+				+ userPhone + "]";
 	}
+
+	
+	
 
 }

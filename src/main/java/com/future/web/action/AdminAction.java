@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import com.future.domain.BaseDict;
@@ -25,10 +27,13 @@ import com.opensymphony.xwork2.ModelDriven;
  */
 public class AdminAction extends ActionSupport{
     
-	private User user;
-	private Vehicle vehicle;
-	private Maintain maintain;
+	//实体类对象
+	private User user=new User();
+	private Vehicle vehicle=new Vehicle();
+	private Maintain maintain=new Maintain();
+	private BaseDict baseDict=new BaseDict(); 
 	
+	//service
 	private MaintainService maintainService;
 	private UserService   userService;
     private VehicleService vehicleService;
@@ -37,7 +42,10 @@ public class AdminAction extends ActionSupport{
   	private  Integer currentPage;
   	//每页显示数据的条数
   	private  Integer pageSize;
-	
+	//起始日期
+  	private  Date beginDate;
+	//截止日期
+  	private  Date endDate;
   	
   	//跳转到添加用户界面
   	public String addUser() throws Exception {   
@@ -51,7 +59,8 @@ public class AdminAction extends ActionSupport{
   	    //2.添加身份 ，日期
   		user.setRole("ordinary");
   		user.setDate(new Date());
-  	    user.setJudge("Y");
+  	    baseDict.setDict_id("12");
+  		user.setJudge(baseDict);
   	    //3.执行保存操作
   		userService.saveUser(user); 
   	    //4.进行页面跳转		
@@ -64,15 +73,13 @@ public class AdminAction extends ActionSupport{
   		DetachedCriteria dc=DetachedCriteria.forClass(User.class);
         
   		//封装查询条件
+  		dc.add(Restrictions.like("judge.dict_id", "12",MatchMode.ANYWHERE)); 
   		dc.add(Restrictions.eq("role","ordinary"));
-  		dc.add(Restrictions.eq("judge","Y"));
   		
-  		
-  		//判断并封装参数
-  	   if(StringUtils.isNotBlank(user.getName())){
-  		  dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
-  	   }
-  		
+  		//判断并封装参数 
+  		if(StringUtils.isNotBlank(user.getName())){
+  		   dc.add(Restrictions.like("name", "%"+user.getName()+"%"));
+  	    }
   		
   		//调用service 查询分页数据pagebean
   		PageBean pb=userService.getPageBean(dc,currentPage, pageSize);
@@ -86,7 +93,7 @@ public class AdminAction extends ActionSupport{
   	
     //进行车辆备案
   	/**
-     * 在车辆备案成功后在通过userId查询对象，并在车辆数目上+1
+     * 在进行批量修改后再调用一下userService.updateUserVehicle(Integer userId);
   	 * 
   	 * 
   	 * 
@@ -96,9 +103,8 @@ public class AdminAction extends ActionSupport{
   	    
   		//封装离线查询对象
   		DetachedCriteria dc=DetachedCriteria.forClass(Vehicle.class);
-  	    
-  		/*BaseDict dict = vehicle.getOperationStatus();
-        dc.add(Restrictions.eq("B", "10"));*/
+  		
+  		dc.add(Restrictions.like("operationStatus.dict_id", "10",MatchMode.ANYWHERE)); 
   		
   		//判断并封装参数
   		if(StringUtils.isNotBlank(vehicle.getPlateId())) {
@@ -121,12 +127,13 @@ public class AdminAction extends ActionSupport{
   		//封装离线查询对象
   		DetachedCriteria dc=DetachedCriteria.forClass(Vehicle.class);
   	    
-        // dc.add(Restrictions.eq("judge", "Y"));
+  		dc.add(Restrictions.like("judge.dict_id", "12",MatchMode.ANYWHERE)); 
+  		dc.add(Restrictions.like("operationStatus.dict_id", "9",MatchMode.ANYWHERE)); 
   		
-  		//判断并封装参数
-  		/*if(StringUtils.isNotBlank(vehicle.getPlateId())) {
+        //判断并封装参数
+  		if(StringUtils.isNotBlank(vehicle.getPlateId())) {
   			dc.add(Restrictions.like("plateId", "%"+vehicle.getPlateId()+"%"));
-  		}*/
+  		}
   	
   		//调用service 查询分页数据pagebean
   		PageBean pb=vehicleService.getPageBean(dc,currentPage, pageSize);
@@ -154,11 +161,14 @@ public class AdminAction extends ActionSupport{
   			throw new RuntimeException("信息录入失败！档案中的车主与录入的车主信息不符不符");
   		}
   		Integer userId = vehicleJudge.getUserId();
-		maintain.setJudge("Y");
+  		User u = userService.getUserById(userId);
+  		baseDict.setDict_id("12");
+  		maintain.setJudge(baseDict);
   		maintain.setUserId(userId);
+  		maintain.setUserPhone(u.getPhone());
   		maintain.setDate(new Date());
   		maintainService.saveMaintain(maintain);
-  		
+  		userService.updateUserMaintain(userId);
   		return "toMaintainList";
   	}
   	
@@ -166,12 +176,13 @@ public class AdminAction extends ActionSupport{
   	public String maintainList() throws Exception {
         
   	    //封装离线查询对象
-  		DetachedCriteria dc=DetachedCriteria.forClass(Vehicle.class);
+        DetachedCriteria dc=DetachedCriteria.forClass(Maintain.class);
   	    
-  		dc.add(Restrictions.eq("judge", "Y"));
+  		dc.add(Restrictions.like("judge.dict_id", "12",MatchMode.ANYWHERE)); 
+  		
   		
   	    //判断并封装参数
-  		/*if(StringUtils.isNotBlank(maintain.getPlateId())) {
+  		if(StringUtils.isNotBlank(maintain.getPlateId())) {
   			dc.add(Restrictions.like("plateId",maintain.getPlateId()));
   		}
   		
@@ -180,8 +191,24 @@ public class AdminAction extends ActionSupport{
   		}
   		if(StringUtils.isNotBlank(maintain.getUserName())) {
   			dc.add(Restrictions.like("userName",maintain.getUserName()));
-  		}*/
+  		}
   		
+  		if(beginDate!=null && endDate!=null) {
+  			DetachedCriteria decide=DetachedCriteria.forClass(Vehicle.class);
+  			decide.add(Restrictions.like("category.dict_id", "12",MatchMode.ANYWHERE)); 
+  			
+  			dc.add(Restrictions.between("date",beginDate,endDate));
+  		    
+  		}
+  		
+  		if(beginDate!=null && endDate==null) {
+  			endDate=new Date();
+  			dc.add(Restrictions.between("date",beginDate,endDate));
+  		}
+  		
+  		if(beginDate==null && endDate!=null) {
+  			
+  		}
   		//调用service 查询分页数据pagebean
   		PageBean pb=maintainService.getPageBean(dc,currentPage, pageSize);
   		
@@ -243,7 +270,23 @@ public class AdminAction extends ActionSupport{
 	public void setMaintain(Maintain maintain) {
 		this.maintain = maintain;
 	}
-    
+
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
 	
 	
 }

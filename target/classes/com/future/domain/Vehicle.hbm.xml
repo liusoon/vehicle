@@ -41,15 +41,11 @@
         <property name="userName" type="java.lang.String">
             <column name="USERS_NAME" />
         </property>
-        
-        <property name="judge" type="java.lang.String">
-            <column name="JUDGE" />
-        </property>
-        
-        
+         
         
         <many-to-one name="category" class="BaseDict" column="CATEGORY" lazy="false"></many-to-one>
         <many-to-one name="operationStatus" class="BaseDict" column="OPERATION_STATUS" lazy="false"></many-to-one>
+        <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>
         
     </class>
 </hibernate-mapping>

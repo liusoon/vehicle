@@ -33,7 +33,7 @@ public class OrdinaryAction extends ActionSupport implements  ModelDriven<Vehicl
 	
 	
 	private  Vehicle vehicle=new Vehicle();
-    private	 BaseDict baseDice=new BaseDict();
+    private	 BaseDict baseDict=new BaseDict();
 	private  VehicleService vehicleService; 
 	//当前页数
   	private  Integer currentPage;
@@ -58,13 +58,13 @@ public class OrdinaryAction extends ActionSupport implements  ModelDriven<Vehicl
 		vehicleService.getVehicleJudge(vehicle);
 	    //获取id
 		String id=vehicleService.getVehicleId();
-		
+		 
 	    //赋值
 		vehicle.setVehicleId(id);
 	    vehicle.setUserId(userId);
 	    vehicle.setUserName(userName);
-	    baseDice.setDict_id("10");
-	    vehicle.setOperationStatus(baseDice);
+	    baseDict.setDict_id("10");
+	    vehicle.setOperationStatus(baseDict);
 	    //执行保存操作
 	    vehicleService.saveVehicle(vehicle);
 	    //进行页面跳转

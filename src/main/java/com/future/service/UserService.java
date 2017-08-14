@@ -28,5 +28,13 @@ public interface UserService {
 		
 	//用户验证
     User getUserJudge(User u);
+    
+    //插入信息数据
+    void updateUserMaintain(Integer userId);
 	
+    //插入车辆数量
+    void updateUserVehicle(Integer userId);
+    
+    //通过id获取user对象
+	User getUserById(Integer userId);
 }

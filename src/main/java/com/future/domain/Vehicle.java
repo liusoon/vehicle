@@ -50,7 +50,7 @@ public class Vehicle {
 	private BaseDict operationStatus;
     
 	//假删除
-	private String judge;
+	private BaseDict judge;
 	
 	
 	public String getVehicleId() {
@@ -158,11 +158,11 @@ public class Vehicle {
 		this.maintainNuber = maintainNuber;
 	}
 
-	public String getJudge() {
+	public BaseDict getJudge() {
 		return judge;
 	}
 
-	public void setJudge(String judge) {
+	public void setJudge(BaseDict judge) {
 		this.judge = judge;
 	}
 
@@ -174,6 +174,8 @@ public class Vehicle {
 				+ maintainNuber + ", category=" + category + ", operationStatus=" + operationStatus + ", judge=" + judge
 				+ "]";
 	}
+
+	
 
 
 }

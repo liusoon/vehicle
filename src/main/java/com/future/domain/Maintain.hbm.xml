@@ -5,8 +5,8 @@
 
     <class name="Maintain" table="MAINTAINS">
 
-        <id name="id" type="java.lang.Integer">
-            <column name="ID" />
+        <id name="maintainId" type="java.lang.Integer">
+            <column name="MAINTAIN_ID" />
             <generator class="native" />
         </id>
 
@@ -26,15 +26,16 @@
             <column name="PLATE_ID" />
         </property>
         
-        <property name="judge" type="java.lang.String">
-            <column name="JUDGE" />
+        <property name="userPhone" type="java.lang.String">
+            <column name="USER_PHONE"/>
         </property>
-
+        
+        
         <property name="date" type="java.util.Date">
             <column name="DATE" />
         </property>
         
-        <!-- <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>  -->  
+        <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>   
     
     </class>
 </hibernate-mapping>
