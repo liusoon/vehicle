@@ -32,6 +32,10 @@ public class Maintain {
 	private Date date;
     //假删除  Y能查询到  N不能查询
 	private BaseDict judge;
+	//车的类型
+	private BaseDict category;
+	//车辆状态
+	private BaseDict operationStatus;
 	
 	//联系方式 
 	private String userPhone;
@@ -102,14 +106,27 @@ public class Maintain {
 	}
    
 	
+	public BaseDict getCategory() {
+		return category;
+	}
+
+	public void setCategory(BaseDict category) {
+		this.category = category;
+	}
+    
+	public BaseDict getOperationStatus() {
+		return operationStatus;
+	}
+
+	public void setOperationStatus(BaseDict operationStatus) {
+		this.operationStatus = operationStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Maintain [maintainId=" + maintainId + ", userId=" + userId + ", userName=" + userName + ", vehicleId="
-				+ vehicleId + ", plateId=" + plateId + ", date=" + date + ", judge=" + judge + ", userPhone="
-				+ userPhone + "]";
+				+ vehicleId + ", plateId=" + plateId + ", date=" + date + ", judge=" + judge + ", category=" + category
+				+ ", operationStatus=" + operationStatus + ", userPhone=" + userPhone + "]";
 	}
-
-	
-	
 
 }

@@ -59,6 +59,7 @@
 	            <th>车辆状态</th>
 	            <th>出厂日期</th>
 	            <th>车主 </th>
+	            <th>操作</th>
 	          </tr>  
 	          
 	          <c:forEach items="${pageBean.list}" var="list" >

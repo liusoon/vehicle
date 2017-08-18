@@ -40,12 +40,8 @@ public class OrdinaryAction extends ActionSupport implements  ModelDriven<Vehicl
 	//每页显示数据的条数
   	private  Integer pageSize;
   		
-  	ActionContext actionContext = ActionContext.getContext();
-  	Map session = actionContext.getSession();
+  	Map session = ActionContext.getContext().getSession();
   	User user = (User) session.get("ordinary");
-  	String userName=user.getName();   
-  	Integer userId=user.getUserId();
-  	
   	
 	//填写车辆信息
 	public String add() throws Exception {
@@ -60,9 +56,10 @@ public class OrdinaryAction extends ActionSupport implements  ModelDriven<Vehicl
 		String id=vehicleService.getVehicleId();
 		 
 	    //赋值
+		
 		vehicle.setVehicleId(id);
-	    vehicle.setUserId(userId);
-	    vehicle.setUserName(userName);
+	    vehicle.setUserId(user.getUserId());
+	    vehicle.setUserName(user.getName());
 	    baseDict.setDict_id("10");
 	    vehicle.setOperationStatus(baseDict);
 	    //执行保存操作
@@ -76,7 +73,7 @@ public class OrdinaryAction extends ActionSupport implements  ModelDriven<Vehicl
   		//封装离线查询对象
   		DetachedCriteria dc=DetachedCriteria.forClass(Vehicle.class);
   	    
-  		dc.add(Restrictions.eq("userName", userName));
+  		dc.add(Restrictions.eq("userName",user.getName()));
   		
   		//判断并封装参数
   		if(StringUtils.isNotBlank(vehicle.getPlateId())) {
@@ -104,6 +101,14 @@ public class OrdinaryAction extends ActionSupport implements  ModelDriven<Vehicl
 
 	public void setCurrentPage(Integer currentPage) {
 		this.currentPage = currentPage;
+	}
+   
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.future.service;
 
+import java.util.Date;
+
 import org.hibernate.criterion.DetachedCriteria;
 
 import com.future.domain.Maintain;
@@ -24,4 +26,7 @@ public interface MaintainService {
 	
 	//分页方法
 	PageBean getPageBean(DetachedCriteria dc,Integer currentPage,Integer pageSize);
+	
+	//查询的开始时间
+	Date getMaintainDateById();
 }

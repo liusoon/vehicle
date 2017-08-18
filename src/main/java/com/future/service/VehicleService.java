@@ -33,4 +33,7 @@ public interface VehicleService {
 
    //通过档案号查询车辆对象
    Vehicle getVehicleId(String vehicleId);
+   
+   //为车辆列表插入信息数据
+   void updateVehicleMaintain(String vehicleId);
 }

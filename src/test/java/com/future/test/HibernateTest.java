@@ -1,6 +1,9 @@
 package com.future.test;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +17,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,12 +85,12 @@ public class HibernateTest {
 		Transaction tx=session.beginTransaction();
 	    
 		User u=new User();	
-		   u.setCode("123456");
-		   u.setPassword("123456");
-		   u.setName("jock");
-	       u.setPhone("123456789");
-		   u.setAddress("hsd");
-		   u.setDate(new Date());
+	    u.setCode("123456");
+	    u.setPassword("123456");
+	    u.setName("jock");
+        u.setPhone("123456789");
+	    u.setAddress("hsd");
+	    u.setDate(new Date());
 		session.save(u);
 		
 		tx.commit();
@@ -115,9 +119,9 @@ public class HibernateTest {
     public void fun4() {
     	BaseDict baseDict=new BaseDict();
     	User u=new User();	
-    	u.setCode("1234");
-	    u.setPassword("1234");
-	    u.setName("jock"); 
+    	u.setCode("12341");
+	    u.setPassword("12341");
+	    u.setName("rose"); 
         u.setPhone("123456789");
 	    u.setAddress("hky");
 	    u.setRole("ordinary");
@@ -194,29 +198,60 @@ public class HibernateTest {
 
 	  @Test
 	  //维护信息录入
-	  public void fun8() {
+	  public void fun8() throws Exception {
+		    
 		    Maintain maintain =new Maintain();	    
+		    BaseDict baseDict=new BaseDict();
 		    String vehicleId = "00001";
-	  		
+		    //封装离线查询对象
+	  		DetachedCriteria dc=DetachedCriteria.forClass(Vehicle.class);
+		    
 		    Vehicle vehicleJudge = vs.getVehicleId(vehicleId);
 		   
 		    
-		    if(!(vehicleJudge.getPlateId().equals("12321"))) {
+		    if(!(vehicleJudge.getPlateId().equals("12312"))) {
 	  			 throw new RuntimeException("信息录入失败！档案中的车牌号与录入的车牌号不符");
 	  		}
 	  		
-		    if(!(vehicleJudge.getUserName().equals("AA"))) {
+		    if(!(vehicleJudge.getUserName().equals("jock"))) {
 	  			throw new RuntimeException("信息录入失败！档案中的车主与录入的车主信息不符不符");
 	  		}
 	  		
+		   
+		    
+		    if((dc.add(Restrictions.like("operationStatus.dict_id", "9"))!=null)) {
+	  			throw new RuntimeException("信息录入失败！该车辆未备案");
+	  		}
+		    
 		    Integer userId = vehicleJudge.getUserId();
-	  		/*maintain.setJudge("Y");*/
-	  		maintain.setPlateId("12321");
+		    User u = us.getUserById(userId);
+		    //设置查询状态
+		    baseDict.setDict_id("12");
+		    maintain.setJudge(baseDict);
+		    
+		    //设置车辆状态
+		    BaseDict category = vehicleJudge.getCategory();
+		    maintain.setCategory(category);
+		    System.out.println(u);
+		    maintain.setUserPhone(u.getPhone());
+		    maintain.setPlateId("12312");
 	  		maintain.setVehicleId(vehicleId);
 	  		maintain.setUserId(userId);
-	  		maintain.setDate(new Date());
+	  	   
+	  		//在录入信息是直接吧时间改成到期时间
+	  		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	  		Date date=new Date();
+			Calendar c = Calendar.getInstance();
+			c.add(Calendar.DAY_OF_MONTH,+120);
+			Date endDate=sdf.parse(sdf.format(c.getTime()));	
+	  		maintain.setDate(endDate);
+	  		
 	  		us.updateUserMaintain(userId);
 	  		ms.saveMaintain(maintain);
+	  		
+	  		
+	  		
+	  		
 	  } 
 	  @Test
 	  //测试user信息变化
@@ -239,43 +274,104 @@ public class HibernateTest {
 	  } 
 	  
 	  @Test
+	  //测试查询车辆状态
 	  public void fun10() {
-		 /*DetachedCriteria dc = DetachedCriteria.forClass(BaseDict.class);
-		 dc.add(Restrictions.eq("dict_id", "10"));*/
 		
-		 
-		  
-//	    Vehicle vehicle=new Vehicle();
-		  //封装离线查询对象
+		//封装离线查询对象
 	    DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class); 
 	    dc.add(Restrictions.like("operationStatus.dict_id", "10",MatchMode.ANYWHERE)); 
-	    /* DetachedCriteria dc = DetachedCriteria.forClass(Student.class); 
-	    dc.add(Restrictions.like("team.id", teamId, )); */
-	    
-	    /*List<Vehicle> list = (List<Vehicle>) getHibernateTemplate().findByCriteria(dc);
-		
-	    if(list !=null && list.size()>0) {
-	    	return list.get(0);
-	    }else {
-	    	return null;
-	    }*/
-	    
-	    
-//  		DetachedCriteria dc2=dc.createAlias();
-  		/*DetachedCriteria beautyCriteria = DetachedCriteria.forClass(Beauty.class, "b").;
-  		DetachedCriteria customerCriteria = beautyCriteria.createAlias("customers", c");
-  		beautyCriteria.add(Restrictions.le("b.age", new Long(20))):
-  		customerCriteria.add(Restrictions.eq("c.name", "Gates")):	*/    
-//  		dc2.add(Restrictions.eq("bd.dict_id", "10"));
-//        dc.add(Restrictions.eq("dict.", "10"));
-  		
   		//调用service 查询分页数据pagebean
   		PageBean pb=vs.getPageBean(dc,null,null);
   		
   		System.out.println(pb);
-  		
-	    
+   
+	  } 
+	  
+	  @Test
+	  //测试maintain中的时间查询
+	  public void fun11() throws Exception {
+		  /*DetachedCriteria dc = DetachedCriteria.forClass(BaseDict.class);
+		  dc.add(Restrictions.eq("dict_id", "10"));*/
+		 /* Maintain ma=new Maintain(); */
+//	     Vehicle vehicle=new Vehicle();
+		  //封装离线查询对象
+//		  DetachedCriteria criteriaInner=DetachedCriteria.forClass(Vehicle.class); 
+		  
+		  
+		  
+//		  DetachedCriteria dc = criteriaInner.createAlias(Maintain.class);
+		 
+//		  criteriaInner.add(Restrictions.eq("name", "Bob"));
+		 /* Date endDate = null;*/
+//		  List clazzList =  criteria.list();
+		  DetachedCriteria dc=DetachedCriteria.forClass(Maintain.class); 
+	
+		 /* SimpleDateFormat sdf    = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  Date beginDate = sdf.parse("2017-08-13 00:00:00");*/
+		  
+// 		  dc.add(Restrictions.like("category", "5"));
+		  /*System.out.println(dc.add(Restrictions.like("category.dict_id", "5"))!=null);*/
+		  /*//如果是货车的话
+		  if(dc.add(Restrictions.like("category.dict_id", "5"))!=null){
+			  Date date=new Date();
+			  Calendar c = Calendar.getInstance();
+			  c.add(Calendar.DAY_OF_MONTH,-120);
+			  beginDate=sdf.parse(sdf.format(c.getTime())); 
+		  }
+		  //判断他是不是客车
+		  if(dc.add(Restrictions.like("category.dict_id", "1"))!=null) {
+			  Date date=new Date();
+			  Calendar c = Calendar.getInstance();
+			  c.add(Calendar.DAY_OF_MONTH,-90);
+			  beginDate=sdf.parse(sdf.format(c.getTime())); 
+		  }*/
+		  String beginDate="2017-12-01 15:55:37";
+		  String endDate="2017-12-14 16:08:12";
+		  dc.add(Restrictions.between("date",beginDate,endDate)).
+          addOrder( Order.desc("date"));
+          
+		  
+		
+		  //调用service 查询分页数据pagebean
+		  PageBean pb=ms.getPageBean(dc,null,null);
+		  
+		  System.out.println(pb);
+		  
+	  } 
+	  @Test
+	  //测试到期车辆
+	  public void fun12() throws Exception {
+		 
+		  //封装离线查询对象
+		  DetachedCriteria dc=DetachedCriteria.forClass(Maintain.class); 
+
+		  
+		  SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  Date date=new Date();
+		  Calendar c = Calendar.getInstance();
+		  c.add(Calendar.DAY_OF_MONTH,+20);
+		  Date endDate=sdf.parse(sdf.format(c.getTime()));
+		  dc.add(Restrictions.like("plateId", "1231"));
+		  dc.add(Restrictions.lt("date",endDate))
+		  .addOrder( Order.desc("date"));
+		    
+		  //调用service 查询分页数据pagebean
+		  PageBean pb=ms.getPageBean(dc,null,null);
+		  
+		  System.out.println(pb);
+		  
 	  } 
 	 
+	  @Test
+	  //测试最小id
+	  public void fun13() throws Exception {
+		  
+		 Date date = ms.getMaintainDateById();
+		  
+		 System.out.println(date);
+		  
+	  } 
+	  
+	  
 	  
  }

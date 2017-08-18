@@ -1,5 +1,6 @@
 package com.future.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.future.dao.MaintainDao;
 import com.future.domain.Maintain;
 import com.future.domain.User;
+
 import com.future.service.MaintainService;
 import com.future.utils.PageBean;
 
@@ -55,6 +57,14 @@ public class MaintainServiceImpl implements MaintainService {
 		pb.setList(list);
 		
 		return pb;
+	}
+
+	@Override
+	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
+	public Date getMaintainDateById() {
+         Integer minId = maintainDao.getMinId();
+	     Maintain maintain = maintainDao.getById(minId);
+	     return maintain.getDate();
 	}
 
                              

@@ -33,8 +33,10 @@
                     车牌号:
        <input type="text" name="maintain.plateId" id="plateId" placeholder="请填写车牌号"/>
        <br/> 时间查询：
-       <input type="date" name="beginDate" id="beginDate" placeholder="起始日期"/>
-       <input type="date" name="endDate" id="endDate" placeholder="截止日期"/>
+       <input typpe="text" name="beginDateString" placeholder="请输入起始日期" class="sang_Calender" style="border-radius:7px;background-color: #F0F0F0;" >
+       <input type="text" name="endDateString" placeholder="请输入截止日期" class="sang_Calender" style="border-radius:7px;background-color: #F0F0F0;">
+       <script type="text/javascript" src="${path}js/datetime.js"></script>
+      
        <br/>
                   车辆档案号  :
        <input type="text" name="maintain.vehicleId" id="vehicleId" placeholder="请填写车辆档案号"/>
@@ -64,8 +66,10 @@
 	            <th>车主姓名</th>
 	            <th>车辆档案号</th>
 	            <th>车牌号</th>
+	            <th>车辆类型</th>
 	            <th>联系方式</th>
 	            <th>维护信息的录入日期</th>
+	            <th>操作</th>
 	          </tr>  
 	          
 	          <c:forEach items="${pageBean.list}" var="list" >
@@ -75,6 +79,7 @@
 	            <td>${list.userName}</td>
 	            <td>${list.vehicleId}</td>
 	            <td>${list.plateId}</td>
+	            <td>${list.category}</td>	 
 	            <td>${list.userPhone}</td>	            
 	            <td>${list.date}</td>
 	            <td>

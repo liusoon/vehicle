@@ -41,8 +41,7 @@ public class Vehicle {
 	private Integer userId;
     
 	//维护信息数量  多对一
-	private Integer maintainNuber;
-	
+	private Integer maintainNumber;
 	
 	// 车的类别
 	private BaseDict category;
@@ -150,14 +149,6 @@ public class Vehicle {
 		this.date = date;
 	}
 
-	public Integer getMaintainNuber() {
-		return maintainNuber;
-	}
-
-	public void setMaintainNuber(Integer maintainNuber) {
-		this.maintainNuber = maintainNuber;
-	}
-
 	public BaseDict getJudge() {
 		return judge;
 	}
@@ -165,15 +156,27 @@ public class Vehicle {
 	public void setJudge(BaseDict judge) {
 		this.judge = judge;
 	}
+    
+	
+	
+	public Integer getMaintainNumber() {
+		return maintainNumber;
+	}
+
+	public void setMaintainNumber(Integer maintainNumber) {
+		this.maintainNumber = maintainNumber;
+	}
 
 	@Override
 	public String toString() {
 		return "Vehicle [vehicleId=" + vehicleId + ", plateId=" + plateId + ", model=" + model + ", engineId="
 				+ engineId + ", carChassisId=" + carChassisId + ", manufactureDate=" + manufactureDate + ", weight="
-				+ weight + ", date=" + date + ", userName=" + userName + ", userId=" + userId + ", maintainNuber="
-				+ maintainNuber + ", category=" + category + ", operationStatus=" + operationStatus + ", judge=" + judge
-				+ "]";
+				+ weight + ", date=" + date + ", userName=" + userName + ", userId=" + userId + ", maintainNumber="
+				+ maintainNumber + ", category=" + category + ", operationStatus=" + operationStatus + ", judge="
+				+ judge + "]";
 	}
+
+	
 
 	
 

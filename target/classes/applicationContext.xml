@@ -56,6 +56,12 @@
   <property name="maintainService" ref="maintainService"></property>
   <property name="vehicleService" ref="vehicleService"></property>
  </bean>
+
+ <bean name="bothAction" class="com.future.web.action.BothAction" scope="prototype">
+  <property name="userService" ref="userService"></property>
+  <property name="maintainService" ref="maintainService"></property>
+  <property name="vehicleService" ref="vehicleService"></property>
+ </bean>
  
  <bean name="baseDictAction" class="com.future.web.action.BaseDictAction" scope="prototype">
   <property name="baseDictService" ref="baseDictService"></property>

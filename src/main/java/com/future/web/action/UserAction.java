@@ -58,7 +58,15 @@ public class UserAction  extends  ActionSupport  implements ModelDriven<User>{
         }
 	}
 	
+	//注销登录
+	public String logout() throws Exception {
 		
+		ActionContext.getContext().getSession().remove("user"); 
+		
+		return "logout";
+	}
+	
+	
 	public User getModel() {
 		return user;
 	}

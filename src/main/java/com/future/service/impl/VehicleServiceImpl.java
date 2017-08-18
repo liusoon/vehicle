@@ -101,6 +101,19 @@ public class VehicleServiceImpl implements  VehicleService {
 		return vehicleDao.getById(vehicleId);
 	}
 
+	@Override
+	public void updateVehicleMaintain(String vehicleId) {
+		Vehicle vehicle = vehicleDao.getById(vehicleId);		
+	    Integer maintainNumber = vehicle.getMaintainNumber();
+	    if(maintainNumber==null) {
+			 maintainNumber=0;
+		 }
+	    maintainNumber++;
+	    vehicle.setMaintainNumber(maintainNumber);
+	    vehicleDao.save(vehicle);
+		
+	}
+
 	
 
 }
