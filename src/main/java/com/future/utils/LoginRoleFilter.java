@@ -55,6 +55,7 @@ public class LoginRoleFilter implements Filter {
 		User ordinary = (User) HRequest.getSession().getAttribute("ordinary");// 获得登陆用户
 		String returnUrl = HRequest.getContextPath() + "/index.jsp";
 		String path = HRequest.getRequestURI();
+		System.out.println("path==========="+path);
 		//进行登录判断
 		if(both!=null&&path.indexOf("both")!=-1){	
 			chain.doFilter(request, response);

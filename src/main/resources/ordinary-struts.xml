@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+      <!-- 配置常量 -->
+      <constant name="struts.objectFactory" value="spring"></constant>
+      <!-- 设置成开发者模式 -->
+      <constant name="struts.configuration.xml.reload" value="true" />
+      
+      <!--普通用户 -->
+      <package name="ordinary" extends="struts-default" namespace="/ordinary">
+        
+      <!--    异常处理 -->
+      <global-exception-mappings>
+        <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+      </global-exception-mappings>
+         
+        <!-- Vehicle -->
+        <action name="VehicleAction_*" class="vehicleAction" method="{1}">
+         <result name="addVehicle">/WEB-INF/ordinary/add.jsp</result>
+         <result name="vehicleList">/WEB-INF/ordinary/list.jsp</result>
+         <result name="toVehicleList" type="redirectAction">
+		   <param name="namespace">/ordinary</param>
+		   <param name="actionName">VehicleAction_vehicleList</param>
+	      </result>
+	   <result name="error">/WEB-INF/ordinary/add.jsp</result>
+       </action>
+           
+        <!-- 数据字典 -->
+        <action name="BaseDictAction" class="baseDictAction" method="execute"></action>  
+                 
+       </package>
+
+</struts>
+

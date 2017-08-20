@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +22,7 @@
 	<div id="login_center">
 		<div id="login_area">
 			<div id="login_form">
-				<form action="UserAction_login" method="post">
+				<form action="BaseAction_login" method="post">
 					<div id="login_tip">
 						用户登录&nbsp;&nbsp;UserLogin
 					</div>

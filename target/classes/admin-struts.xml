@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+      
+      <!-- 配置常量 -->
+      <constant name="struts.objectFactory" value="spring"></constant>
+      <!-- 设置成开发者模式 -->
+      <constant name="struts.configuration.xml.reload" value="true" />
+      
+      <!--管理员 -->
+      <package name="admin" extends="struts-default" namespace="/admin">
+       <!-- 异常处理 -->
+       <global-exception-mappings>
+         <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+       </global-exception-mappings>
+        
+       <!--用户管理 -->
+	   <action name="UserAction_*" class="userAction" method="{1}">
+          <result name="addUser">/WEB-INF/admin/addUser.jsp</result>
+          <result name="userList">/WEB-INF/admin/userList.jsp</result>
+          <result name="toUserList" type="redirectAction" >
+		    <param name="namespace">/admin</param>
+		    <param name="actionName">/UserAction_userList</param>
+	      </result>
+       </action>  
+        
+      
+        <!--车辆管理 -->
+        <action name="VehicleAction_*" class="vehicleAction" method="{1}" >      
+          <result name="addVehicle">/WEB-INF/admin/addVehicle.jsp</result>
+          <result name="addVehicleList">/WEB-INF/admin/addVehicleList.jsp</result>
+          <result name="vehicleList">/WEB-INF/admin/vehicleList.jsp</result>
+	      <result name="maturityVehicleList">/WEB-INF/admin/maturityVehicleList.jsp</result>
+          <result name="toVehicleList" type="redirectAction">
+		   <param name="namespace">/admin</param>
+		   <param name="actionName">VehicleAction_vehicleList</param>
+	      </result>
+         </action> 
+          
+        <!--维护信息的管理 -->
+        <action name="MaintainAction_*" class="maintainAction" method="{1}">
+          <result name="addMaintain">/WEB-INF/admin/addMaintain.jsp</result>
+          <result name="maintainList">/WEB-INF/admin/maintainList.jsp</result>
+          <result name="toMaintainList" type="redirectAction" >
+			   <param name="namespace">/admin</param>
+			   <param name="actionName">MaintainAction_maintainList</param>
+	      </result>
+	    <!-- 异常破获 -->
+	     <result name="error">/WEB-INF/admin/message.jsp</result>
+        </action> 
+       
+      <!-- 数据字典 -->
+      <action name="BaseDictAction" class="baseDictAction" method="execute"></action>  
+             
+    </package>
+
+</struts>
+

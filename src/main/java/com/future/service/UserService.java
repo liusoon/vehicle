@@ -37,4 +37,7 @@ public interface UserService {
     
     //通过id获取user对象
 	User getUserById(Integer userId);
+    
+	//通过账号查询对象
+	User getUserByCode(User user);
 }

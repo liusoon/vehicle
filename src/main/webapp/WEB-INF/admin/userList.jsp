@@ -30,10 +30,10 @@
 </script>
 </head>
 <body>  
-     <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/AdminAction_userList" method="post">
+     <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/UserAction_userList" method="post">
         
                      用户名称:
-        <input type="text" name="user.name"  id="name"/>
+        <input type="text" name="name"  id="name"/>
         
         <input type="submit" class="button" value="筛选" name="button"/>
         

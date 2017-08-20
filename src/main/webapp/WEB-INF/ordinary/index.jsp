@@ -6,21 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="${path}css/common.css">
 <link rel="stylesheet" href="${path}css/style.css">
-<style>
-	#usern{
-	position: relative;
-	display: block;
-}
-#usern1{
-	position: absolute;
-	display: none;
-	top:65px;
-	/* left:  */
-}
-#usern:hover #usern1{
-	display: block;
-}
-</style>
 <script type="text/javascript" src="${path}js/jquery.min.js"></script>
 <script type="text/javascript" src="${path}js/jquery.SuperSlide.js"></script>
 <script type="text/javascript">
@@ -87,20 +72,15 @@ function menuScroll(num){
         <div id="logo" class="fl"></div>
         <div id="photo_info" class="fr">
           <div id="photo" class="fl">
-             <a href="#" id="usern">
-              <img src="images/a.png" alt="" width="60" height="60">
-              <div id="usern1">
-                <p>用户姓名：${User.name}</p>
-                <p>用户身份：${User.role}</p>
-                <p></p>
-              </div>
+             <a href="#" title="欢迎用户${User.name}登录">
+               <img src="images/a.png" alt="" width="60" height="60">
             </a>
           </div>
           <div id="base_info" class="fr">
             <div class="help_info">
               <a href="1" id="hp">&nbsp;</a>
               <a href="2" id="gy">&nbsp;</a>
-              <a href="${pageContext.request.contextPath}/UserAction_logout" id="out">&nbsp;</a>
+              <a href="${pageContext.request.contextPath}/BaseAction_logout" id="out">&nbsp;</a>
             </div>
             <div class="info_center">
                ordinary
@@ -118,8 +98,8 @@ function menuScroll(num){
         <div class="sideMenu" style="margin:0 auto">
           <h3> 车辆管理</h3>
           <ul>
-            <li><a href="${pageContext.request.contextPath}/OrdinaryAction_add" target="right">车辆备案</a></li>
-            <li><a href="${pageContext.request.contextPath}/OrdinaryAction_list" target="right">车辆列表</a></li>
+            <li><a href="${pageContext.request.contextPath}/ordinary/VehicleAction_addVehicle" target="right">车辆备案</a></li>
+            <li><a href="${pageContext.request.contextPath}/ordinary/VehicleAction_vehicleList" target="right">车辆列表</a></li>
           </ul>
           <h3>系统设置</h3>
           <ul>
@@ -130,7 +110,7 @@ function menuScroll(num){
        </div>
     </div>
     <div class="main">
-       <iframe name="right" id="rightMain" src="welcome.jsp"  frameborder="no" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
+       <iframe name="right" id="rightMain" src=""  frameborder="no" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
     </div>
 
     <div class="bottom">

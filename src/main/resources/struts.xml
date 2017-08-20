@@ -1,100 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
-    "http://struts.apache.org/dtds/struts-2.3.dtd">
-
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
       <!-- 配置常量 -->
       <constant name="struts.objectFactory" value="spring"></constant>
+      <!-- 设置成开发者模式 -->
+      <constant name="struts.configuration.xml.reload" value="true" />
       
-       <package name="default" extends="struts-default" namespace="/">
-        
-        <!--    异常处理 -->
-        <global-exception-mappings>
-          <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
-        </global-exception-mappings>
-         
-        <!-- 各用户登录 -->
-		<action name="UserAction_*" class="userAction" method="{1}">
-            <result name="both">/WEB-INF/both/index.jsp</result>
-            <result name="admin">/WEB-INF/admin/index.jsp</result>
-            <result name="ordinary">/WEB-INF/ordinary/index.jsp</result>
-            <result name="logout">/index.jsp</result>
-            <result name="error">/index.jsp</result>
-         </action>  
-           
-         
-         <!-- 管理员操作 -->
-         <action name="AdminAction_*" class="adminAction" method="{1}" >
-           <!-- 对用户的操作 -->
-           <result name="addUser">/WEB-INF/admin/addUser.jsp</result>
-           <result name="toUserList" type="redirectAction" >
-			   <param name="namespace">/</param>
-			   <param name="actionName">AdminAction_userList</param>
-		   </result>
-           <result name="userList">/WEB-INF/admin/userList.jsp</result>
-           
-           <!-- 对车辆的操作 -->
-           <result name="addVehicleList">/WEB-INF/admin/addVehicleList.jsp</result>
-           <result name="vehicleList">/WEB-INF/admin/vehicleList.jsp</result>
-		   <result name="maturityVehicleList">/WEB-INF/admin/maturityVehicleList.jsp</result>
-           
-           <!--对维护信息的操作 -->
-           <result name="addMaintain">/WEB-INF/admin/addMaintain.jsp</result>
-           <result name="maintainList">/WEB-INF/admin/maintainList.jsp</result>
-           <result name="toMaintainList" type="redirectAction" >
-			   <param name="namespace">/</param>
-			   <param name="actionName">AdminAction_maintainList</param>
-		   </result>
-		   <!-- 异常破获 -->
-		   <result name="error">/WEB-INF/admin/message.jsp</result>
-         </action>
-         
-         <!-- 双重身份管理员 -->
-         <action name="BothAction_*" class="bothAction" method="{1}" >
-           <!-- 对用户的操作 -->
-           <result name="addUser">/WEB-INF/both/addUser.jsp</result>
-           <result name="toUserList" type="redirectAction" >
-			   <param name="namespace">/</param>
-			   <param name="actionName">BothAction_userList</param>
-		   </result>
-           <result name="userList">/WEB-INF/both/userList.jsp</result>
-           
-           <!-- 对车辆的操作 -->
-           <result name="addVehicle">/WEB-INF/both/addVehicle.jsp</result>
-           <result name="vehicleList">/WEB-INF/both/vehicleList.jsp</result>
-		   <result name="maturityVehicleList">/WEB-INF/both/maturityVehicleList.jsp</result>
-           
-           <!--对维护信息的操作 -->
-           <result name="addMaintain">/WEB-INF/both/addMaintain.jsp</result>
-           <result name="maintainList">/WEB-INF/both/maintainList.jsp</result>
-           <result name="toMaintainList" type="redirectAction" >
-			   <param name="namespace">/</param>
-			   <param name="actionName">BothAction_maintainList</param>
-		   </result>
-		   <!-- 异常破获 -->
-		   <result name="error">/WEB-INF/both/message.jsp</result>
-         </action>
-         
-         <!-- 普通用户操作 -->
-         <action name="OrdinaryAction_*" class="ordinaryAction" method="{1}">
-          <result name="add">/WEB-INF/ordinary/add.jsp</result>
-          <result name="list">/WEB-INF/ordinary/list.jsp</result>
-          <result name="toList" type="redirectAction" >
-			   <param name="namespace">/</param>
-			   <param name="actionName">OrdinaryAction_list</param>
-		  </result>
-		   <result name="error">/WEB-INF/ordinary/add.jsp</result>
-         </action>
+      <!--引入其他xml文件-->	  
+      <include file="ordinary-struts.xml"></include>
+      <include file="admin-struts.xml"></include>
        
-         
-         
-         <!-- 数据字典 -->
-         <action name="BaseDictAction" class="baseDictAction" method="execute"></action>  
-           
-           
-           
-       </package>
+              
+      <package name="default" extends="struts-default" namespace="/">
+        
+	     <!--异常处理 -->
+	     <global-exception-mappings>
+	       <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+	     </global-exception-mappings>
+	          
+	     <!--基础action--> 
+	     <action name="BaseAction_*" class="baseAction" method="{1}">
+	       <!-- 登录 -->
+	         <result name="both">/WEB-INF/both/index.jsp</result>
+	         <result name="admin">/WEB-INF/admin/index.jsp</result>
+	         <result name="ordinary">/WEB-INF/ordinary/index.jsp</result>
+	       <!-- 注销 -->  
+	         <result name="logout">/index.jsp</result>
+	       <!-- 异常捕获 -->
+	         <result name="error">/index.jsp</result>
+	     </action>
+	     
+	      <!-- 数据字典 -->
+          <action name="BaseDictAction" class="baseDictAction" method="execute"></action> 
+     </package>
 
+   
+    
 </struts>
 

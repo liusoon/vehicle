@@ -47,28 +47,28 @@
 
 
 <!-- action -->
-<bean name="userAction" class="com.future.web.action.UserAction" scope="prototype">
+<bean name="baseAction" class="com.future.web.action.BaseAction" scope="prototype">
    <property name="userService" ref="userService"></property>
 </bean>
  
- <bean name="adminAction" class="com.future.web.action.AdminAction" scope="prototype">
+<bean name="userAction" class="com.future.web.action.UserAction" scope="prototype">
   <property name="userService" ref="userService"></property>
-  <property name="maintainService" ref="maintainService"></property>
-  <property name="vehicleService" ref="vehicleService"></property>
- </bean>
+</bean>
 
- <bean name="bothAction" class="com.future.web.action.BothAction" scope="prototype">
+<bean name="baseDictAction" class="com.future.web.action.BaseDictAction" scope="prototype">
+  <property name="baseDictService" ref="baseDictService"></property>
+</bean>
+ 
+<bean name="vehicleAction" class="com.future.web.action.VehicleAction" scope="prototype">
   <property name="userService" ref="userService"></property>
-  <property name="maintainService" ref="maintainService"></property>
   <property name="vehicleService" ref="vehicleService"></property>
  </bean>
  
- <bean name="baseDictAction" class="com.future.web.action.BaseDictAction" scope="prototype">
-  <property name="baseDictService" ref="baseDictService"></property>
- </bean>
 
- <bean name="ordinaryAction" class="com.future.web.action.OrdinaryAction" scope="prototype">
+ <bean name="maintainAction" class="com.future.web.action.MaintainAction" scope="prototype">
   <property name="vehicleService" ref="vehicleService"></property>
+  <property name="userService" ref="userService"></property>
+  <property name="maintainService" ref="maintainService"></property> 
  </bean>
 
 

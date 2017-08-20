@@ -28,10 +28,10 @@
 </script>
 </head>
 <body>
-  <form id="pageForm"  action="${pageContext.request.contextPath}/AdminAction_maintainList" method="post">
+  <form id="pageForm"  action="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" method="post">
                 维护信息查询 ：
                     车牌号:
-       <input type="text" name="maintain.plateId" id="plateId" placeholder="请填写车牌号"/>
+       <input type="text" name="plateId" id="plateId" placeholder="请填写车牌号"/>
        <br/> 时间查询：
        <input typpe="text" name="beginDateString" placeholder="请输入起始日期" class="sang_Calender" style="border-radius:7px;background-color: #F0F0F0;" >
        <input type="text" name="endDateString" placeholder="请输入截止日期" class="sang_Calender" style="border-radius:7px;background-color: #F0F0F0;">
@@ -39,10 +39,10 @@
       
        <br/>
                   车辆档案号  :
-       <input type="text" name="maintain.vehicleId" id="vehicleId" placeholder="请填写车辆档案号"/>
+       <input type="text" name="vehicleId" id="vehicleId" placeholder="请填写车辆档案号"/>
        <br/>                   
                    车主查询:
-       <input type="text" name="maintain.userName" id="userName" placeholder="请输入车主名字"/>
+       <input type="text" name="userName" id="userName" placeholder="请输入车主名字"/>
        <br/>
        
        <input type="submit" class="button" value="筛选" name="button"/>

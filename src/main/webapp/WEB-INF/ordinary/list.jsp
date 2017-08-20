@@ -29,7 +29,7 @@
 </script>
 </head>
 <body>
-  <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/OrdinaryAction_list" method="post">
+  <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/ordinary/OrdinaryAction_vehicleList" method="post">
         
                      车牌号:
         <input type="text" name="plateId" id="plateId"/>

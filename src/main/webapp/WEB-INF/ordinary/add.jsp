@@ -18,7 +18,7 @@
 </head>
 <body>
   <font color="red" ><s:property value="exception.message" /></font>
-  <form action="${pageContext.request.contextPath}/OrdinaryAction_save" method="post"> 
+  <form action="${pageContext.request.contextPath}/ordinary/VehicleAction_saveVehicleByOrdinary" method="post"> 
      <table>
        <tr>
          <th>车牌号</th>

@@ -46,9 +46,6 @@
             <column name="MAINTAINS_NUMBER" />
         </property>
 
-        <!-- <property name="judge" type="java.lang.String">
-            <column name="JUDGE" />
-        </property> -->
         
         <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>
         

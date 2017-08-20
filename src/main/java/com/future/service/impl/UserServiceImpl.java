@@ -116,6 +116,18 @@ public class UserServiceImpl implements UserService {
 		return userDao.getById(userId);
 	}
 
+	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
+	public User getUserByCode(User u) {
+		System.out.println(u);
+		User userByCode = userDao.getUserByCode(u.getCode());
+		System.out.println("user  --1");
+		if(!userByCode.getName().equals(u.getName())) {
+			throw new RuntimeException("车辆录入失败,不存在该车主！");
+		}
+		System.out.println("US2");
+		return  userByCode;	
+	}
+
 
 	
  

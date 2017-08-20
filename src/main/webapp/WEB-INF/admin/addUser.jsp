@@ -7,7 +7,7 @@
 <title>车辆维护管理系统——添加用户</title>
 </head>
 <body>
-   <form  action="${pageContext.request.contextPath}/AdminAction_saveUser" method="post" >
+   <form  action="${pageContext.request.contextPath}/admin/UserAction_saveUser" method="post" >
      <table align="center">
         <tr align="center">
           <th>添加用户</th>

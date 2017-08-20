@@ -31,10 +31,13 @@
   </filter-mapping>
 
   <!-- struts2核心过滤器 -->
+  
+  
   <filter>
   	<filter-name>struts2</filter-name>
   	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
   </filter>
+ 
   <filter>
   	<description>
   	</description>

@@ -102,7 +102,7 @@ function menuScroll(num){
             <div class="help_info">
               <a href="1" id="hp">&nbsp;</a>
               <a href="2" id="gy">&nbsp;</a>
-              <a href="${pageContext.request.contextPath}/UserAction_logout" id="out">&nbsp;</a>
+              <a href="${pageContext.request.contextPath}/BaseAction_logout" id="out">&nbsp;</a>
             </div>
             <div class="info_center">
                both

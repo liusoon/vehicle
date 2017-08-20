@@ -84,9 +84,11 @@ public class VehicleServiceImpl implements  VehicleService {
 	@Override
 	public Vehicle getVehicleJudge(Vehicle v) {
 		Vehicle judgeV =vehicleDao.getVehicleByPlateId(v.getPlateId());  
+		//判断是否存在
 		if(judgeV !=null) {
 		   throw new RuntimeException("车辆添加失败，存在该车辆 ！");		
 		}
+		
 		return judgeV;
 	}
 
