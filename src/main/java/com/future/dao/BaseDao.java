@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 
+import com.future.domain.Inform;
+import com.future.domain.Maintain;
 import com.future.domain.User;
+import com.future.domain.Vehicle;
 
 /**
  * @Package com.future.dao
@@ -42,10 +45,15 @@ public interface BaseDao<T> {
 	//查  查询分页列表数据
     List<T> getPageList(DetachedCriteria dc,Integer start,Integer pageSize); 
     
-	
-  	/***
-	 * 
-	 * 目前我光写了常用的几个借口，如果过还需要的话，找那些公共接口写在这里
-	 */
+    //查询整个车辆集合
+  	List<Vehicle> findAll(); 
+    //查询整个车辆维护信息集合  
+  	List<Maintain> get();
+  	
+  	//查询整个用户集合
+  	List<User> getAllUser();
+  	//查询整个通知信息集合
+	List<Inform> getAllInform();
+  	
     
 } 

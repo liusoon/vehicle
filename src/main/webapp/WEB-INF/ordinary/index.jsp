@@ -46,8 +46,6 @@
 function menuScroll(num){
   var Scroll = $('.sideMenu');
   var ScrollP = $('.sideMenu').position();
-  /*alert(n);
-  alert(ScrollP.top);*/
   if(num==1){
      Scroll.animate({top:ScrollP.top-38});
      n = n+1;
@@ -84,7 +82,7 @@ function menuScroll(num){
             </div>
             <div class="info_center">
                ordinary
-              <span id="nt">通知</span><span><a href="#" id="notice">3</a></span>
+              <span id="nt">通知</span><span><a href="${pageContext.request.contextPath}/admin/InformAction_informList?sign=3" id="notice" target="right">3</a></span>
             </div>
           </div>
         </div>
@@ -103,14 +101,14 @@ function menuScroll(num){
           </ul>
           <h3>系统设置</h3>
           <ul>
-            <li><a href="" target="right">修改密码</a></li>
-            <li><a href="" target="right">关于系统</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/UserAction_personal?id=${User.userId}" target="right">个人中心</a></li>
+            <%-- <li><a href="${pageContext.request.contextPath}/admin/UserAction_aboutSystem" target="right">关于系统</a></li> --%>
           </ul>
           
        </div>
     </div>
     <div class="main">
-       <iframe name="right" id="rightMain" src=""  frameborder="no" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
+       <iframe name="right" id="rightMain" src="${rootPath}welcome.jsp"  frameborder="no" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
     </div>
 
     <div class="bottom">

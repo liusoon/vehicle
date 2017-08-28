@@ -1,6 +1,8 @@
 package com.future.service;
 
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 
 import com.future.domain.User;
@@ -40,4 +42,13 @@ public interface UserService {
     
 	//通过账号查询对象
 	User getUserByCode(User user);
+	
+	//修改用户信息
+	void updateUser(User user);
+	
+	//查询该条用户信息
+	User select(int id);
+	
+	//查询所有用户信息
+	List<User> getAll();
 }

@@ -14,7 +14,10 @@ import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.future.dao.BaseDao;
+import com.future.domain.Inform;
+import com.future.domain.Maintain;
 import com.future.domain.User;
+import com.future.domain.Vehicle;
 
 /**
  * @Package com.future.dao.impl
@@ -70,7 +73,26 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		return (T) getHibernateTemplate().get(clazz, id);
 	}
 
+	//DAO中查询所有部门
+	@Override
+	public List<Vehicle> findAll() {
+		return (List<Vehicle>) this.getHibernateTemplate().find("from Vehicle");
+	}
+		
+	@Override
+	public List<Maintain> get() {
+		return (List<Maintain>) this.getHibernateTemplate().find("from Maintain");
+	}
+		
+	@Override
+	public List<User> getAllUser() {
+		return (List<User>)this.getHibernateTemplate().find("from User");
+	}
 	
+	@Override
+	public List<Inform> getAllInform() {
+		return (List<Inform>)this.getHibernateTemplate().find("from Inform");
+	}
 
 	@Override
 	public Integer getTotalCount(DetachedCriteria dc) {

@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
-	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
+	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED,timeout=30)
 	public User getUserByCodePassword(User u) {
 	  //1.根据登陆账户查询User	
       User existU=userDao.getUserByCode(u.getCode());
@@ -82,8 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
 	public void saveUser(User u) {
-		userDao.save(u);
-		
+    	userDao.save(u);
 	}
 
 	@Override
@@ -128,7 +127,22 @@ public class UserServiceImpl implements UserService {
 		return  userByCode;	
 	}
 
+	@Override
+	public void updateUser(User user) {
+		userDao.update(user);
+	}
 
+	@Override
+	public User select(int id) {
+	    User user=userDao.getById(id);
+		return user;
+	}
+
+	@Override
+	public List<User> getAll() {
+		List<User> user=userDao.getAllUser();
+		return user;
+	}
 	
  
 }

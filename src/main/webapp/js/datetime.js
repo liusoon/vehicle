@@ -319,6 +319,7 @@
 		ff.style.left=p['x']+"px";
 		ff.style.top=p['y'] + o.offsetHeight + "px";
 		ff.style.display="block";
+
 	}
 	
 	//隐藏日历控件

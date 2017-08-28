@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>车辆维护管理系统-维护信息列表</title>
+<link rel="stylesheet" href="${path}css/bootstrap.css"> 
+<link rel="stylesheet" href="${path}css/basic.css">
 <script type="text/javascript" src="${path}js/jquery.min.js"></script>
 <script type="text/javascript">
   function changePage(pageNum){
@@ -22,94 +24,158 @@
 	   //2 提交表单
 	   $("#pageForm").submit();
 	};
- 
-	
-	
 </script>
+  <style type="text/css">
+    .input{
+    width:100%;
+      height: 30px;
+    }
+    .box{
+    width:90%;
+    height:50px;
+    margin-left: 50px;
+    margin-top:20px;
+    }
+   
+   .box span{
+    font-size: 20px;
+    float: left;
+  }
+    .left{
+    width:60%;
+  
+    
+    float:left;
+    }
+    .right{
+    float:right;
+    width:40%;
+ 
+  
+    }
+    dody{
+    z-index:-1}
+    .tab{
+    height:10px;
+}
+    .ji{
+    width: 70%;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 100px;
+    
+   }
+      #pge{
+    float: right;
+    width:400px;
+    heigth:50px;
+    margin-top:-50px;
+    margin-right: 100px
+   }
+    
+    #pge nav{
+      float: right;
+    }
+  </style>
 </head>
 <body>
-  <form id="pageForm"  action="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" method="post">
-                维护信息查询 ：
-                    车牌号:
-       <input type="text" name="plateId" id="plateId" placeholder="请填写车牌号"/>
-       <br/> 时间查询：
-       <input typpe="text" name="beginDateString" placeholder="请输入起始日期" class="sang_Calender" style="border-radius:7px;background-color: #F0F0F0;" >
-       <input type="text" name="endDateString" placeholder="请输入截止日期" class="sang_Calender" style="border-radius:7px;background-color: #F0F0F0;">
-       <script type="text/javascript" src="${path}js/datetime.js"></script>
+<form id="pageForm"  action="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" method="post">
+  
+ <div class="box">
+ 	 <div class="left">
+ 	 	<div class="input">
+        <span>车牌号：</span>
+        <div class="col-lg-6 col-md-6  col-xs-6">
+        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号">
+        </div> 
+    </div><br>
+    <div class="input" >
+        <span>时间查询:</span>
+        <div class="col-lg-6 col-md-6  col-xs-6" style="display: inline-block;width: 450px">
+        <center><input type="text" name="beginDateString" class="sang_Calender"placeholder="请输入起始日期" style="width: 200px;float: left;border-radius:5px" ></center>
+        <input type="text" name="endDateString" class="sang_Calender" placeholder="请输入截止日期" style="width: 200px;float: left;margin-left: 20px;border-radius:5px" >  
+        </div>
+    </div><br>
+ 	 </div>
+     <div class="right">
+     	 <div class="input">
+        <span>车辆档案号：</span>
+        <div class="col-lg-6 col-md-6  col-xs-6">
+        <input type="text" class="form-control" name="vehicleId" id="vehicleId" placeholder="请输入车辆档案号">
+        </div>
+    </div><br>
+    <div class="input">
+        <span>车主查询：</span>
+        <div class="col-lg-6 col-md-6  col-xs-6">
+        <input type="text" name="userName" id="userName" class="form-control" placeholder="请输入车主名字">
+        </div>
+         <button class="btn btn-primary" class="button" name="button" type="submit">筛&nbsp;&nbsp;选</button>
+     </div>
       
-       <br/>
-                  车辆档案号  :
-       <input type="text" name="vehicleId" id="vehicleId" placeholder="请填写车辆档案号"/>
-       <br/>                   
-                   车主查询:
-       <input type="text" name="userName" id="userName" placeholder="请输入车主名字"/>
-       <br/>
-       
-       <input type="submit" class="button" value="筛选" name="button"/>
-        
-        
-            
-       	<!-- 隐藏域.当前页码 -->
+ </div>
+    
+   
+      
+    	<!-- 隐藏域.当前页码 -->
 		<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
-		
 		<!-- 隐藏域.每页显示条数 -->
         <input type="hidden" name="pageSize" id="pageSizeInput"   value="${pageBean.pageSize}" />
-        
-     </form> 
-        <!-- 分页查询 -->
-       <div>
-        <table>
-          <tbody>
-	          <tr>
-	            <th>维护信息的编号</th>
-	            <th>车主id</th>
-	            <th>车主姓名</th>
-	            <th>车辆档案号</th>
-	            <th>车牌号</th>
-	            <th>车辆类型</th>
-	            <th>联系方式</th>
-	            <th>维护信息的录入日期</th>
-	            <th>操作</th>
-	          </tr>  
-	          
-	          <c:forEach items="${pageBean.list}" var="list" >
+    </div><br>
+    
+ 
+</form>
+  <div class="tab" style="z-index:-1"><!-- 表格开始 -->
+    <table border="4" cellspacing＝"1">
+      <thead>
+        <tr>
+          <td>维护信息编号</td>
+          <td>车主姓名</td>
+          <td>车辆档案号</td>
+          <td>车牌号</td>
+          <td>车辆类型</td>
+          <td>联系方式</td>
+          <td>维护信息的录入日期</td>
+          <c:if test="${sign!='1'}"><td>操作</td></c:if>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach items="${pageBean.list}" var="list">
 	          <tr>
 	            <td>${list.maintainId}</td>
-	            <td>${list.userId}</td>
 	            <td>${list.userName}</td>
 	            <td>${list.vehicleId}</td>
 	            <td>${list.plateId}</td>
 	            <td>${list.category}</td>	 
 	            <td>${list.userPhone}</td>	            
 	            <td>${list.date}</td>
-	            <td>
-                  <a href="${pageContext.request.contextPath}/adminServlet?method=edit&maintainId=${Maintain.maintainId}">修改</a>
-                  &nbsp;&nbsp;
-                  <a href="${pageContext.request.contextPath}/adminServlet?method=delete&maintainId=${Maintain.maintainId}">删除</a>
-	            </td>
+               <c:if test="${sign!='1'}"><td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/MaintainAction_selectMainTain?id=${list.maintainId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/MaintainAction_deleteMainTain?id=${list.maintainId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td></c:if>
 	          </tr>
               </c:forEach>
-	         
-          </tbody>
-      </table>
-      </div>
-   <!--分页下部  -->
-        <div>
-	                        共[<b>${pageBean.totalCount}</b>]条记录,[<b>${pageBean.totalPage}</b>]页
+      </tbody>
+    </table>
+     <div class="ji">
+ 		共[<b>${pageBean.totalCount}</b>]条记录,[<b>${pageBean.totalPage}</b>]页
 			 ,每页显示 
 			 <select name="pageSize" onchange="changePageSize(this.options[this.options.selectedIndex].value)"  id="pageSizeSelect" >
 				<option  value="3"  ${pageBean.pageSize==3?'selected':''}>3</option>
 				<option  value="5" ${pageBean.pageSize==5?'selected':''}>5</option>
-			 </select> 
-			  条
-				[<a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage-1})" >前一页</a>]
-				<b>${pageBean.currentPage}</b>
-				[<a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a>] 
-			到
-			<input type="text" size="3" id="page" name="page" value="${pageBean.currentPage}"/>
-			页
-			<input type="button" value="Go" onclick="changePage($('#page').val())"/>
-	       <s:debug/>
+			 </select>
+			 条
+     </div>
+     <div class="col-lg-5 col-lg-offset-5 col-md-6 col-md-offset-4 col-xs-6 col-xs-offset-4" id="pge">
+           <nav>
+          <ul class="pagination">
+            </li>
+            <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage-1})" >前一页</a></li>
+            <li><a href="">${pageBean.currentPage}</a></li>
+            <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a></li>
+            <li>到 <input type="text" id="page" name="page" value="${pageBean.currentPage}" style="width: 60px">页</li>
+            <li><button class="btn btn-primary" type="button" onclick="changePage($('#page').val())">GO</button></li>
+            </li>
+          </ul>
+        </nav>
         </div>
+  </div>
+<script type="text/javascript" src="${path}js/datetime.js"></script>
 </body>
 </html>

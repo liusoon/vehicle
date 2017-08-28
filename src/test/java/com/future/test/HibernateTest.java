@@ -118,6 +118,7 @@ public class HibernateTest {
     //测试aop事务
     public void fun4() {
     	BaseDict baseDict=new BaseDict();
+    	
     	User u=new User();	
     	u.setCode("12341");
 	    u.setPassword("12341");
@@ -128,7 +129,8 @@ public class HibernateTest {
 	    u.setDate(new Date());
 	    baseDict.setDict_id("12");
 	    u.setJudge(baseDict);
-        us.saveUser(u);
+        
+	    us.saveUser(u);
     } 
     
     

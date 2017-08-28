@@ -7,6 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>车辆维护管理系统-车辆列表</title>
+<link rel="stylesheet" href="${path}css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${path}css/basic.css">
 <script type="text/javascript" src="${path}js/jquery.min.js"></script>
 <script type="text/javascript">
   function changePage(pageNum){
@@ -22,51 +24,47 @@
 	   //2 提交表单
 	   $("#pageForm").submit();
 	};
- 
-	
-	
 </script>
 </head>
 <body>
   <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" method="post">
-        
-                
-                    车牌号:
-       <input type="text" name="plateId" id="plateId" placeholder="请填写车牌号"/>
-                   档案号  :
-       <input type="text" name="vehicleId" id="vehicleId" placeholder="请填写车辆档案号"/>
-       
-       <br/>
-       <input type="submit" class="button" value="筛选" name="button"/>
-        
-            
-       	<!-- 隐藏域.当前页码 -->
-		<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
-		
-		<!-- 隐藏域.每页显示条数 -->
-        <input type="hidden" name="pageSize" id="pageSizeInput"   value="${pageBean.pageSize}" />
-        
-     </form> 
-        <!-- 分页查询 -->
-       <div>
-        <table>
-          <tbody>
-	          <tr>
-	            <th>档案号</th>
-	            <th>车牌号</th>
-	            <th>车的类别</th>
-	            <th>车辆型号</th>
-	            <th>发动机编号</th>
-	            <th>车底盘号衍射</th>
-	            <th>重量</th>
-	            <th>车辆状态</th>
-	            <th>出厂日期</th>
-	            <th>车辆维修截止时间</th>
-	            <th>车主 </th>
-	            <th>操作</th>
-	          </tr>  
-	          
-	          <c:forEach items="${pageBean.list}" var="list" >
+<div class="pas">
+    <span>车牌号：</span>
+    <div class="col-lg-1 col-md-1 col-xs-1" style="width:350px;margin-bottom:10px">
+        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号">
+   </div><br>
+    <span>请填写车辆档案号：</span>
+    <div class="col-lg-6 col-md-6  col-xs-6">
+        <input type="text" name="vehicleId" id="vehicleId" class="form-control" placeholder="请填写车辆档案号"/>
+    </div>
+    <br>	
+    <button class="btn btn-primary" type="submit" name="button" class="button" style="margin-top:5px">筛&nbsp;&nbsp;选</button>
+    <!-- 隐藏域.当前页码 -->
+	<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
+	<!-- 隐藏域.每页显示条数 -->
+    <input type="hidden" name="pageSize" id="pageSizeInput"   value="${pageBean.pageSize}" />
+  </div><!-- 输入框 -->
+</form>
+  <div class="tab"><!-- 表格开始 -->
+    <table border="4">
+      <thead>
+        <tr>
+          <td>档案号</td>
+          <td>车排号</td>
+          <td>车的类别</td>
+          <td>车辆型号</td>
+          <td>发动机编号</td>
+          <td>车底盘号衍射</td>
+          <td>重量</td>
+          <td>车辆状态</td>
+          <th>出厂日期</th>
+	      <th>车主 </th>
+	      <th>维护信息的数量</th>
+	      <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach items="${pageBean.list}" var="list" >
 	          <tr>
 	            <td>${list.vehicleId}</td>
 	            <td>${list.plateId}</td>
@@ -77,37 +75,38 @@
 	            <td>${list.weight}</td>
 	            <td>${list.operationStatus}</td>
 	            <td>${list.manufactureDate}</td>
-	            <td>${list.date}</td>	            
 	            <td>${list.userName}</td>
-	            <td>
-                  <a href="${pageContext.request.contextPath}/adminServlet?method=edit&vehicleId=${Vehicle.vehicleId}">修改</a>
-                  &nbsp;&nbsp;
-                  <a href="${pageContext.request.contextPath}/adminServlet?method=delete&vehicleId=${Vehicle.vehicleId}">删除</a>
+	            <td>${list.maintainNumber}</td>
+	            <td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_selectVehicle?vehicleId=${list.vehicleId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_deleteVehicle?vehicleId=${list.vehicleId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td>
+	            <td>  
 	            </td>
 	          </tr>
-              </c:forEach>
-	         
-          </tbody>
-      </table>
-      </div>
-   <!--分页下部  -->
-        <div>
-	                        共[<b>${pageBean.totalCount}</b>]条记录,[<b>${pageBean.totalPage}</b>]页
+         </c:forEach>
+      </tbody>
+    </table>
+     <div class="ji">
+       	 共[<b>${pageBean.totalCount}</b>]条记录,[<b>${pageBean.totalPage}</b>]页
 			 ,每页显示 
 			 <select name="pageSize" onchange="changePageSize(this.options[this.options.selectedIndex].value)"  id="pageSizeSelect" >
 				<option  value="3"  ${pageBean.pageSize==3?'selected':''}>3</option>
 				<option  value="5" ${pageBean.pageSize==5?'selected':''}>5</option>
-			 </select> 
-			  条
-				[<a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage-1})" >前一页</a>]
-				<b>${pageBean.currentPage}</b>
-				[<a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a>] 
-			到
-			<input type="text" size="3" id="page" name="page" value="${pageBean.currentPage}"/>
-			页
-			
-			<input type="button" value="Go" onclick="changePage($('#page').val())"/>
-	       <s:debug/>
+			 </select>
+			 条
+     </div>
+     <div class="col-lg-5 col-lg-offset-5 col-md-6 col-md-offset-4 col-xs-6 col-xs-offset-4" id="pge">
+           <nav>
+          <ul class="pagination">
+            
+            <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage-1})" >前一页</a></li>
+            <li><a href="">${pageBean.currentPage}</a></li>
+            <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a></li>
+            <li>到 <input type="text" id="page" name="page" value="${pageBean.currentPage}" style="width: 60px">页</li>
+            <li><button class="btn btn-primary" type="button" onclick="changePage($('#page').val())">GO</button></li>
+             
+          </ul>
+
+        </nav>
         </div>
+  </div>
 </body>
 </html>

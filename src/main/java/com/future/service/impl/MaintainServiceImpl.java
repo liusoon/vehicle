@@ -67,5 +67,20 @@ public class MaintainServiceImpl implements MaintainService {
 	     return maintain.getDate();
 	}
 
-                             
+	@Override
+	public List<Maintain> get() {
+		List<Maintain> m=maintainDao.get();
+		return m;
+	}
+
+	@Override
+	public void updateMaintain(Maintain maintain) {
+		maintainDao.update(maintain);
+	}
+
+	@Override
+	public Maintain getById(int id) {
+		Maintain m=maintainDao.getById(id);
+		return m;
+	}                         
 }

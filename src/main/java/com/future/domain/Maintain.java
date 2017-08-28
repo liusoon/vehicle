@@ -40,6 +40,7 @@ public class Maintain {
 	//联系方式 
 	private String userPhone;
 	
+	
 	public Integer getMaintainId() {
 		return maintainId;
 	}

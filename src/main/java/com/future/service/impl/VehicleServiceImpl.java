@@ -115,7 +115,23 @@ public class VehicleServiceImpl implements  VehicleService {
 	    vehicleDao.save(vehicle);
 		
 	}
+	
+	@Override
+	public void updateVehicle(Vehicle vehicle) {
+		vehicleDao.update(vehicle);
+	}
 
+	@Override
+	public List<Vehicle> getAll() {
+		List<Vehicle> v=vehicleDao.findAll();
+		return v;
+	}
+
+	@Override
+	public Vehicle select(int id) {
+		Vehicle v=vehicleDao.getById(id);
+		return v;
+	}
 	
 
 }

@@ -26,6 +26,7 @@
 	         <result name="both">/WEB-INF/both/index.jsp</result>
 	         <result name="admin">/WEB-INF/admin/index.jsp</result>
 	         <result name="ordinary">/WEB-INF/ordinary/index.jsp</result>
+	         <result name="administrator">/WEB-INF/administrator/index.jsp</result>
 	       <!-- 注销 -->  
 	         <result name="logout">/index.jsp</result>
 	       <!-- 异常捕获 -->

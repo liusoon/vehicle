@@ -18,6 +18,7 @@
   <property name="driverClass" value="${jdbc.driverClass}"></property>
   <property name="user" value="${jdbc.user}"></property>
   <property name="password" value="${jdbc.password}"></property>
+  
 </bean>
 
 <!-- spring核心事务管理器 -->
@@ -35,8 +36,8 @@
    <property name="hibernateProperties">
      <props>
          <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-         <prop key="hibernate.show_sql">true</prop>
-         <prop key="hibernate.format_sql">true</prop>
+         <!-- <prop key="hibernate.show_sql">true</prop>
+         <prop key="hibernate.format_sql">true</prop> -->
          <prop key="hibernate.hbm2ddl.auto">update</prop>
      </props>
    </property>
@@ -49,10 +50,18 @@
 <!-- action -->
 <bean name="baseAction" class="com.future.web.action.BaseAction" scope="prototype">
    <property name="userService" ref="userService"></property>
+   <property name="informService" ref="informService"></property>
 </bean>
  
 <bean name="userAction" class="com.future.web.action.UserAction" scope="prototype">
   <property name="userService" ref="userService"></property>
+  <property name="vehicleService" ref="vehicleService"></property>
+  <property name="maintainService" ref="maintainService"></property>
+  <property name="informService" ref="informService"></property> 
+</bean>
+
+<bean name="informAction" class="com.future.web.action.InformAction" scope="prototype">
+  <property name="informService" ref="informService"></property> 
 </bean>
 
 <bean name="baseDictAction" class="com.future.web.action.BaseDictAction" scope="prototype">
@@ -62,13 +71,15 @@
 <bean name="vehicleAction" class="com.future.web.action.VehicleAction" scope="prototype">
   <property name="userService" ref="userService"></property>
   <property name="vehicleService" ref="vehicleService"></property>
+  <property name="maintainService" ref="maintainService"></property>
+  <property name="informService" ref="informService"></property>
  </bean>
  
-
  <bean name="maintainAction" class="com.future.web.action.MaintainAction" scope="prototype">
   <property name="vehicleService" ref="vehicleService"></property>
   <property name="userService" ref="userService"></property>
   <property name="maintainService" ref="maintainService"></property> 
+  <property name="informService" ref="informService"></property>
  </bean>
 
 
@@ -77,9 +88,14 @@
     <property name="userDao" ref="userDao"></property>
 </bean>
 
+<bean name="informService" class="com.future.service.impl.InformServiceImpl">
+    <property name="informDao" ref="informDao"></property>
+</bean>
+
 <bean name="maintainService" class="com.future.service.impl.MaintainServiceImpl">
      <property name="maintainDao" ref="maintainDao" ></property>
 </bean>
+
 <bean name="baseDictService" class="com.future.service.impl.BaseDictServiceImpl">
      <property name="baseDictDao" ref="baseDictDao" ></property>
 </bean>
@@ -87,7 +103,6 @@
 <bean name="vehicleService" class="com.future.service.impl.VehicleServiceImpl">
     <property name="vehicleDao" ref="vehicleDao" ></property>
 </bean>
-
 
 <!-- dao -->
 <bean name="userDao" class="com.future.dao.impl.UserDaoImpl">
@@ -106,4 +121,7 @@
    <property name="sessionFactory" ref="sessionFactory"></property>
 </bean>
 
+<bean name="informDao" class="com.future.dao.impl.InformDaoImpl">
+   <property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
 </beans>
