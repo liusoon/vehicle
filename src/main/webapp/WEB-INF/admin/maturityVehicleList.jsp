@@ -25,20 +25,82 @@
 	   $("#pageForm").submit();
 	};
 </script>
+<style type="text/css">
+body{
+   background:#efefef;
+ }
+html{
+   background:#efefef;
+} 
+#innerhead{
+height:60px;
+background-color:white;
+}
+#innerhead p{
+font-size:20px;
+padding:13px 30px;
+}
+  .ji {
+     width: 70%;
+     font-size: 20px;
+     font-weight: bold;
+     margin-top: 100px;
+    }
+    
+ #pge{
+  margin-top:-50px;
+  }
+  .t1{
+  	width:525px;
+  	height:50px;
+  	/* background:green; */
+  }
+  .butt{
+ width:80px;
+ height:30px;
+ border-radius:15px;
+ background:rgb(153,200,207);
+
+ }
+ 
+ .picture{
+ position:absolute;
+ top:60px;
+ left:70%;
+ }
+  
+</style>
+
 </head>
 <body>
-  <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" method="post">
+<form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" method="post">
+<img src="${path }images/car.png" class="picture">
+<div id="innerhead">
+ <div class="row">
+   <div class="col-lg-5 col-md-5 col-xs-6">
+      <p>当前位置 >> 车辆管理 >> 管理到期车辆</p>
+   </div>
+  </div>
+</div>
 <div class="pas">
-    <span>车牌号：</span>
-    <div class="col-lg-1 col-md-1 col-xs-1" style="width:350px;margin-bottom:10px">
-        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号">
-   </div><br>
-    <span>请填写车辆档案号：</span>
-    <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" name="vehicleId" id="vehicleId" class="form-control" placeholder="请填写车辆档案号"/>
+	<div class="t1">
+		<span>车牌号：</span>
+    	<div class="col-lg-1 col-md-1 col-xs-1" style="width:350px;margin-bottom:10px;">
+        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号" value="${plateId}" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G555U');" oninput="setCustomValidity('');" >
+   		</div>
+   		<button class="butt" type="submit">筛&nbsp;&nbsp;选</button>
+
+	</div>
+    <div class="t1">
+    	<span>车辆档案号：</span>
+    	<div class="col-lg-7 col-md-6  col-xs-6">
+        <input type="text" name="vehicleId" id="vehicleId" class="form-control" placeholder="请填写车辆档案号" value="${vehicleId}"/>
     </div>
-    <br>	
-    <button class="btn btn-primary" type="submit" name="button" class="button" style="margin-top:5px">筛&nbsp;&nbsp;选</button>
+     
+    </div>
+    
+   	
+   
     <!-- 隐藏域.当前页码 -->
 	<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
 	<!-- 隐藏域.每页显示条数 -->
@@ -46,7 +108,7 @@
   </div><!-- 输入框 -->
 </form>
   <div class="tab"><!-- 表格开始 -->
-    <table border="4">
+    <table border="1">
       <thead>
         <tr>
           <td>档案号</td>
@@ -60,7 +122,6 @@
           <th>出厂日期</th>
 	      <th>车主 </th>
 	      <th>维护信息的数量</th>
-	      <th>操作</th>
         </tr>
       </thead>
       <tbody>
@@ -77,7 +138,6 @@
 	            <td>${list.manufactureDate}</td>
 	            <td>${list.userName}</td>
 	            <td>${list.maintainNumber}</td>
-	            <td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_selectVehicle?vehicleId=${list.vehicleId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_deleteVehicle?vehicleId=${list.vehicleId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td>
 	            <td>  
 	            </td>
 	          </tr>
@@ -85,7 +145,7 @@
       </tbody>
     </table>
      <div class="ji">
-       	 共[<b>${pageBean.totalCount}</b>]条记录,[<b>${pageBean.totalPage}</b>]页
+ 		共[<b>${pageBean.totalCount}</b>]条记录,[<b>${pageBean.totalPage}</b>]页
 			 ,每页显示 
 			 <select name="pageSize" onchange="changePageSize(this.options[this.options.selectedIndex].value)"  id="pageSizeSelect" >
 				<option  value="3"  ${pageBean.pageSize==3?'selected':''}>3</option>
@@ -101,7 +161,7 @@
             <li><a href="">${pageBean.currentPage}</a></li>
             <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a></li>
             <li>到 <input type="text" id="page" name="page" value="${pageBean.currentPage}" style="width: 60px">页</li>
-            <li><button class="btn btn-primary" type="button" onclick="changePage($('#page').val())">GO</button></li>
+            <li><button class="butt" type="button" onclick="changePage($('#page').val())">GO</button></li>
              
           </ul>
 

@@ -1,5 +1,6 @@
 package com.future.web.action;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -10,11 +11,11 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import com.future.domain.BaseDict;
-import com.future.domain.Inform;
+
 import com.future.domain.Maintain;
 import com.future.domain.User;
 import com.future.domain.Vehicle;
-import com.future.service.InformService;
+
 import com.future.service.MaintainService;
 import com.future.service.UserService;
 import com.future.service.VehicleService;
@@ -44,7 +45,6 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	private  VehicleService vehicleService;
 	private  UserService userService;
 	private MaintainService maintainService;
-	private InformService informService;
 	
 	private String many;
 	private  Vehicle vehicle1;
@@ -64,8 +64,6 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   	
     //跳转到添加车辆备案界面
     public String addVehicle() throws Exception {
-    	Inform inform=new Inform("您进行了添加车辆备案的操作请点击查看",date(),url(),role(),informName());
-		 informService.save(inform);
 		return "addVehicle";
 	}
   	
@@ -74,9 +72,13 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	   
 		BaseDict baseDict1=new BaseDict();  
 		//先判断车牌号是否存在
-		System.out.println(vehicle);
-		vehicleService.getVehicleJudge(vehicle);
-	   
+		Vehicle judgeV = vehicleService.getVehicleJudge(vehicle);
+		//判断是否存在
+		if(judgeV !=null) {
+			ActionContext.getContext().getSession().put("vehicleMessage", "车辆添加失败，存在该车辆 ！");
+		}else{
+		    ActionContext.getContext().getSession().put("vehicleMessage", "车辆添加成功");
+		}
 		User userByCode = userService.getUserByCode(user);
 		
 		//获取id
@@ -101,18 +103,16 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	
 	//查询单个用户车辆信息
   	public String selectVehicle() throws Exception{
-  		Inform inform=new Inform("您进行了车辆信息查询操作",date(),role(),informName());
-		informService.save(inform);
 		Vehicle vehicle1=vehicleService.getVehicleId(vehicle.getVehicleId());
 		request.put("vehicle1",vehicle1);
+		if(sign==1){
+			return "findVehicle";
+		}
 		return "selectVehicle";
 	}
   	
-  	
     //修改车辆信息
   	public String updateVehicle() throws Exception{
-  		Inform inform=new Inform("您进行了修改车辆的操作",date(),role(),informName());
-		informService.save(inform);
   		Vehicle v=vehicleService.getVehicleId(vehicle.getVehicleId());
   		v.setCarChassisId(vehicle1.getCarChassisId());
   		v.setDate(vehicle1.getDate());
@@ -122,15 +122,18 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   		v.setModel(vehicle1.getModel());
   		v.setWeight(vehicle1.getWeight());
   		v.setPlateId(vehicle1.getPlateId());
+  	    v.setCategory(vehicle1.getCategory());
   		vehicle=v;
   		vehicleService.updateVehicle(vehicle);
-  		return vehicleList();
+  		request.put("meg","修改成功");
+		if(sign==1) {
+  			return "toaddVehicleList";
+  		}
+  		return "toVehicleList";
   	}
 	
   	//删除车辆信息
   	public String deleteVehicle() throws Exception{
-  		Inform inform=new Inform("您进行了删除车辆信息操作",date(),role(),informName());
-		informService.save(inform);
   		//对于车辆信息的删除
   		Vehicle vehicle1=vehicleService.getVehicleId(vehicle.getVehicleId());
   		baseDict.setDict_id("11");
@@ -143,15 +146,19 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   			if(maintain.getUserId().equals(vehicle1.getUserId())){
   				maintain.setJudge(baseDict);
   				maintainService.updateMaintain(maintain);
+  			}else{
+  				break;
   			}
   		}
-  		return vehicleList();
+  		request.put("meg","删除成功");
+		if(sign==1) {
+  			return "toaddVehicleList";
+  		}
+  		return "toVehicleList";
   	}
   
   	//一键备案
   	public void fileAll() throws Exception{
-  		Inform inform=new Inform("您进行了一键备案的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
   		String s =many;
   		String[] re = s.split(" ");//用split()函数直接分割
         for (String vehicleId : re) {
@@ -161,7 +168,6 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	    		Date endDate = getVehicleMaturityTime();
 	      		vehicle.setDate(endDate);
 	      		vehicleService.updateVehicle(vehicle);
-	      		Date d=new Date();
 	      		this.getResponse().getWriter().println(1);
         }  
   	}
@@ -191,7 +197,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class);
-
+		dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
 		dc.add(Restrictions.like("operationStatus.dict_id", "10", MatchMode.ANYWHERE));
 
 		// 判断并封装参数
@@ -204,8 +210,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 
 		// 将pagebean放到request域中，转发到页面显示
 		ActionContext.getContext().getSession().put("pageBean", pb);
-		Inform inform=new Inform("您进行了查看需要备案的车辆列表的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
+
 		return "addVehicleList";
 
 	}
@@ -236,8 +241,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		// 将pagebean放到request域中，转发到页面显示
 		ActionContext.getContext().getSession().put("pageBean", pb);
 		request.put("sign",sign);
-		Inform inform=new Inform("您进行了查看车辆列表的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
+
 		return "vehicleList";
 
 	}
@@ -264,8 +268,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 
      	// 将pagebean放到request域中，转发到页面显示
      	ActionContext.getContext().getSession().put("pageBean", pb);
-     	Inform inform=new Inform("您进行了到期车辆查询的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
+
      	return "maturityVehicleList";
 	}
 	
@@ -363,7 +366,5 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	public void setSign(int sign) {
 		this.sign = sign;
 	}
-	public void setInformService(InformService informService) {
-		this.informService = informService;
-	}
+
 }

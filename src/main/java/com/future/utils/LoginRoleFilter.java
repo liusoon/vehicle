@@ -54,18 +54,13 @@ public class LoginRoleFilter implements Filter {
 		// 获得登陆用户
 		User admin = (User) HRequest.getSession().getAttribute("admin");
 		// 获得登陆用户
-		User ordinary = (User) HRequest.getSession().getAttribute("ordinary");
-		// 获得登陆用户
 		User administrator = (User) HRequest.getSession().getAttribute("administrator");
 		String returnUrl = HRequest.getContextPath() + "/index.jsp";
 		String path = HRequest.getRequestURI();
-		System.out.println("path==========="+path);
 		//进行登录判断
 		if(admin!=null&&path.indexOf("admin")!=-1){	
 			chain.doFilter(request, response);
 		} else if(administrator!=null&&path.indexOf("administrator")!=-1){
-			chain.doFilter(request, response);
-		} else if(ordinary!=null&&path.indexOf("ordinary")!=-1){	
 			chain.doFilter(request, response);
 		} else {		
 			//当用户为登录或登录超时时提醒并跳转到登录界面

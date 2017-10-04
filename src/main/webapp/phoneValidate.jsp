@@ -21,13 +21,13 @@
          <span class="tit">账号安全中心</span> 
        </div>
        <div class="find">
-         找回密码<div class="find-inner">${errorMeg}</div>
+         找回密码<div class="find-inner">${error}</div>
        </div>
        <p>您正在使用密码找回功能，请使用当前账号已验证尾号为${src}的手机号并找回密码</p>
 <form action="${pageContext.request.contextPath}/admin/UserAction_phoneValidate" method="post">
        <div class="register">
           <div class="text">
-            <span class="text-1">请输入手机号</span>
+            <span class="text-1">请输入手机号:</span>
             <input type="text" name="phone" class="text-2" placeholder="请输入手机号">
           </div>
           <input type="submit" name="" value="下一步" class="next">

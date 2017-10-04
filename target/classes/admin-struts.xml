@@ -21,11 +21,14 @@
 	   <action name="UserAction_*" class="userAction" method="{1}">
           <result name="addUser">/WEB-INF/admin/addUser.jsp</result>
           <result name="userList">/WEB-INF/admin/userList.jsp</result>
+          <result name="update">/WEB-INF/admin/modifyPassword.jsp</result>
+          <result name="aboutSystem">/WEB-INF/admin/introduction.jsp</result>
           <result name="toUserList" type="redirectAction" >
 		    <param name="namespace">/admin</param>
 		    <param name="actionName">/UserAction_userList</param>
 	      </result>
-	      <result name="error">/WEB-INF/admin/addUser.jsp</result>
+	      <result name="modify">/WEB-INF/admin/modifyPassword.jsp</result>
+	      <result name="modifyPassword">/WEB-INF/admin/message.jsp</result>	      
 	      <result name="selectUser">/WEB-INF/admin/updateUser.jsp</result>
 	      <result name="updatePassword">/updatePassword.jsp</result>
 	      <result name="success">/success.jsp</result>
@@ -46,12 +49,12 @@
 		   <param name="namespace">/admin</param>
 		   <param name="actionName">VehicleAction_vehicleList</param>
 	      </result>
-	      <result name="error">/WEB-INF/admin/addVehicle.jsp</result>
+		  <result name="toaddVehicleList" type="redirectAction">
+		   <param name="namespace">/admin</param>
+		   <param name="actionName">VehicleAction_addVehicleList</param>
+	      </result>
+	      <result name="findVehicle">/WEB-INF/admin/reviseVehicle.jsp</result>
         </action> 
-        <!--通知信息的管理  -->  
-        <action name="InformAction_*" class="informAction" method="{1}" >      
-          <result name="informList">/WEB-INF/admin/informList.jsp</result>
-         </action> 
         
         <!--维护信息的管理 -->
         <action name="MaintainAction_*" class="maintainAction" method="{1}">
@@ -72,4 +75,3 @@
     </package>
 
 </struts>
-

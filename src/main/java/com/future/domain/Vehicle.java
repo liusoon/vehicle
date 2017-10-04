@@ -44,14 +44,13 @@ public class Vehicle {
 	private Integer maintainNumber;
 	
 	// 车的类别
-	private BaseDict category;
+	private  String category;
 	// 车辆状态
-	private BaseDict operationStatus;
+	private  BaseDict operationStatus;
     
 	//假删除
-	private BaseDict judge;
-	
-	
+	private  BaseDict judge;
+
 	public String getVehicleId() {
 		return vehicleId;
 	}
@@ -109,11 +108,11 @@ public class Vehicle {
 		this.weight = weight;
 	}
 
-	public BaseDict getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(BaseDict category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

@@ -26,19 +26,66 @@
 	   //2 提交表单
 	   $("#pageForm").submit();
 	};
- 
 	
-	
+  /*  if('${userMessage}'!=null){
+	   alert('${userMessage}');   
+   }	 */
 </script>
+
+<style type="text/css">
+body{
+   background:#efefef;
+ }
+html{
+   background:#efefef;
+}
+#innerhead{
+  height:60px;
+  background-color:white;
+}
+#innerhead p{
+  font-size:20px;
+  padding:13px 30px;
+}
+.ji {
+     width: 70%;
+     font-size: 20px;
+     font-weight: bold;
+     margin-top: 100px;
+    }
+ #pge{
+    margin-top:-50px;
+  }
+ .picture{
+  position:absolute;
+  top:60px;
+  left:70%;
+ }
+ .butt{
+ width:80px;
+ height:30px;
+ border-radius:15px;
+ background:rgb(153,200,207)
+ }
+</style>
 </head>
 <body>  
 <form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/UserAction_userList" method="post">
+<img src="${path }images/car.png" class="picture">
+ <div id="innerhead">
+ <div class="row">
+   <div class="col-lg-5 col-md-5 col-xs-6">
+      <p>当前位置 >> 用户管理 >>管理用户</p>
+   </div>
+  </div>
+</div>
+ 
  <div class="pas">
     <span>用户名称：</span>
     <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" class="form-control" name="name" id="name" placeholder="请输入用户名称">
+        <input type="text" class="form-control" name="name" id="name" placeholder="请输入用户名称" value="${name}">
     </div>
-    <button class="btn btn-primary" type="submit" name="button">筛&nbsp;&nbsp;选</button>
+    <button class="butt" type="submit" name="button">筛&nbsp;&nbsp;选</button>
   		<!-- 隐藏域.当前页码 -->
 		<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
 		<!-- 隐藏域.每页显示条数 -->
@@ -46,15 +93,15 @@
   </div><!-- 输入框 -->
 </form>
   <div class="tab"><!-- 表格开始 -->
-    <table border="4">
+    <table border="1">
       <thead>
         <tr>
           <td>账号</td>
           <td>用户名</td>
           <td>地址</td>
-          <td>手机号</td>
-          <td>旗下车辆数目</td>
-          <td>维护次数</td>
+          <td>联系方式</td>
+          <td>车辆数目</td>
+          <td>信息数目</td>
           <td>操作</td>
         </tr>
       </thead>
@@ -90,11 +137,12 @@
             <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a></li>
             <li>到</li>
             <li><input type="text" id="page" name="page" value="${pageBean.currentPage}" style="width: 30px"/></li>
-            <li><button class="btn btn-primary" type="button" onclick="changePage($('#page').val())">GO</button></li>
+            <li><button class="butt"  style="width:45px" type="button" onclick="changePage($('#page').val())">GO</button></li>
              
           </ul>
           </nav>
         </div>
   </div>
+${meg}
 </body>
 </html>

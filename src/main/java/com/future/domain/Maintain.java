@@ -33,7 +33,7 @@ public class Maintain {
     //假删除  Y能查询到  N不能查询
 	private BaseDict judge;
 	//车的类型
-	private BaseDict category;
+	private String category;
 	//车辆状态
 	private BaseDict operationStatus;
 	
@@ -105,16 +105,15 @@ public class Maintain {
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
-   
-	
-	public BaseDict getCategory() {
+    
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(BaseDict category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
-    
+
 	public BaseDict getOperationStatus() {
 		return operationStatus;
 	}

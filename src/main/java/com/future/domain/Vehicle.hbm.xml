@@ -29,7 +29,11 @@
         <property name="manufactureDate" type="java.util.Date">
             <column name="MANU_FACTURE_DATE" />
         </property>
-
+        
+        <property name="category" type="java.lang.String">
+            <column name="CATEGORY" />
+        </property>
+        
         <property name="weight" type="double">
             <column name="WEIGHT" />
         </property>
@@ -50,7 +54,6 @@
             <column name="MAINTAIN_NUMBER" />
         </property>
         
-        <many-to-one name="category" class="BaseDict" column="CATEGORY" lazy="false"></many-to-one>
         <many-to-one name="operationStatus" class="BaseDict" column="OPERATION_STATUS" lazy="false"></many-to-one>
         <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>
         

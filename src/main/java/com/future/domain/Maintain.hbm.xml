@@ -10,8 +10,8 @@
             <generator class="native" />
         </id>
 
-        <property name="userId" type="java.lang.Integer">
-            <column name="USER_ID" />
+        <property name="category" type="java.lang.Integer">
+            <column name="CATEGORY" />
         </property>
 
         <property name="userName" type="java.lang.String">
@@ -34,9 +34,8 @@
         <property name="date" type="java.util.Date">
             <column name="DATE" />
         </property>
-        
-        <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>   
-        <many-to-one name="category" class="BaseDict" column="CATEGORY" lazy="false"></many-to-one>
+          
+        <many-to-one name="judge" class="BaseDict" column="JUDGE" lazy="false"></many-to-one>
         <many-to-one name="operationStatus" class="BaseDict" column="OPERATION_STATUS" lazy="false"></many-to-one>
         
     </class>

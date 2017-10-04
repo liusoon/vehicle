@@ -10,8 +10,20 @@
 </head>
 <style type="text/css">
 body{
-  background: url(${path}images/dotted.png);
+   background:#efefef;
 }
+html{
+  background:#efefef;
+} 
+#innerhead{
+height:60px;
+background-color:white;
+}
+#innerhead p{
+font-size:20px;
+padding:13px 30px;
+}
+
  #box{
   width: 500px;
   height: auto;
@@ -28,13 +40,48 @@ body{
  #box button{
    float: right;
    margin-top: 20px;
-   margin-right:20px;
-   /*width: 300px*/
+  /*width: 300px*/
+   margin-right:55px;
+   margin-left:10px;
  }
+ #side_here{
+	height: 44px;
+	background:#fff url('../images/here.gif') 0px 0px repeat-x;
+}
+#side_here_l{
+	width: 206px;
+	height: 44px;
+	background: url('../images/side_top.gif') 0px 0px no-repeat;
+}
+#here_area{
+	height: 44px;
+	line-height: 44px;
+	padding-left: 20px;
+}
+.butt{
+ width:80px;
+ height:30px;
+ border-radius:15px;
+ background:rgb(153,200,207)
+ }
+
+.picture{
+ position:absolute;
+ top:60px;
+ left:70%;
+ } 
 </style>
 <body>
-<font color="red"><s:property value="exception.message" /></font>
-   <form  action="${pageContext.request.contextPath}/admin/MaintainAction_saveMaintain" method="post" >
+ <form  action="${pageContext.request.contextPath}/admin/MaintainAction_saveMaintain" method="post" >
+ <img src="${path}images/car.png" class="picture">
+ <div id="innerhead">
+ <div class="row">
+   <div class="col-lg-5 col-md-5 col-xs-6">
+      <p>当前位置 >> 维护信息管理 >> 维护信息录入</p>
+   </div>
+  </div>
+</div>
+  
    <div id="box">
        <div class="col-lg-5 col-md-6  col-xs-6" >
             <span>车主姓名：</span>
@@ -52,10 +99,10 @@ body{
             <span>车牌号：</span>
         </div>
         <div class="col-lg-6 col-md-6  col-xs-6">
-           <input type="text" class="form-control" name="plateId" required oninvalid="setCustomValidity('请填写车牌号');" oninput="setCustomValidity('');"/>
+           <input type="text" class="form-control" name="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如浙E636UU');" oninput="setCustomValidity('');"/>
          </div>
-      
-         <button class="btn btn-primary" type="submit">维护信息录入</button>
+         <button class="but butt" type="reset">重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</button> 
+         <button class="butt" type="submit" style="width:110px">维护信息录入</button>
       </div>
    </form>
 </body>

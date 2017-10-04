@@ -1,6 +1,7 @@
  package com.future.dao.impl;
 
 import java.io.Serializable;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.future.dao.BaseDao;
-import com.future.domain.Inform;
 import com.future.domain.Maintain;
 import com.future.domain.User;
 import com.future.domain.Vehicle;
@@ -90,11 +90,6 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	}
 	
 	@Override
-	public List<Inform> getAllInform() {
-		return (List<Inform>)this.getHibernateTemplate().find("from Inform");
-	}
-
-	@Override
 	public Integer getTotalCount(DetachedCriteria dc) {
         //设置查询聚合函数,总记录数
 		dc.setProjection(Projections.rowCount());
@@ -119,6 +114,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		
 		return list;
 	}
+
+
 
 }
 

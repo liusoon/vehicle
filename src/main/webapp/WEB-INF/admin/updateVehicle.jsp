@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib  prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,12 +9,42 @@
 <link rel="stylesheet" href="${path}css/bootstrap.css">
 <link rel="stylesheet" href="${path}css/recruit.css">
 <script type="text/javascript" src="${path}js/jquery.min.js"></script>
-<script type="text/javascript" src="${path}js/selectList.js"></script>
+<style type="text/css">
+body{
+   background:#efefef;
+ }
+html{
+   background:#efefef;
+} 
+ .butt{
+ width:80px;
+ height:30px;
+ border-radius:15px;
+ background:rgb(153,200,207);
+
+ }
+ 
+ .picture{
+ position:absolute;
+ top:0;
+ left:70%;
+ }
+</style>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/admin/VehicleAction_updateVehicle?vehicleId=${vehicle1.vehicleId}" method="post">
+<img src="${path }images/car.png" class="picture">
 <div class="box">
    <div class="box-left">
+   		<span>档案号</span>
+   		<input type="text" name="vehicle1.vehicleId" value="${vehicle1.vehicleId}"  readonly="readonly">
+   		<span>车辆状态</span>
+   		<input type="text" name="vehicle1.operationStatus" value="${vehicle1.operationStatus}" readonly="readonly">
+   		<lable id="text">类型:</lable>
+		<select name="vehicle1.category" >
+				<option value="货车">货车</option>
+				<option value="汽车">汽车</option>
+	   </select><br>
        <div class="col-lg-4 col-md-4  col-xs-4" >
             <span>发动机编号：</span>
         </div>
@@ -25,7 +55,7 @@
             <span>车牌号:</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8" style="float: right">
-           <input type="text" name="vehicle1.plateId" class="form-control" value="${vehicle1.plateId}"  required oninvalid="setCustomValidity('请输入车牌号');" oninput="setCustomValidity('');"/>
+           <input type="text" name="vehicle1.plateId" class="form-control" value="${vehicle1.plateId}"  pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如浙E636UU');" oninput="setCustomValidity('');"/>
             
          </div> 
          <div class="col-lg-4 col-md-5  col-xs-5">
@@ -40,7 +70,7 @@
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
            
-           <input type="text" name="vehicle1.weight" class="form-control" value="${vehicle1.weight}" onkeyup="value=value.replace(/[^\d]/g,'')">
+           <input type="text" name="vehicle1.weight" class="form-control" value="${vehicle1.weight}" pattern="^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$" required  oninvalid="setCustomValidity('请填写带小数点的正数,单位是吨');" oninput="setCustomValidity('');">
          </div>
 
    </div><!-- 左边蓝结束 -->
@@ -73,8 +103,7 @@
            <input type="text" name="vehicle1.maintainNumber" class="form-control" value="${vehicle1.maintainNumber}"  onkeyup="value=value.replace(/[^\d]/g,'')">
          </div>
          <div class="butn">
-           <input class="btn btn-primary" type="submit" value="修&nbsp;&nbsp;改" style="width: 100px;float: left"></input>
-           <input class="btn btn-primary" type="reset" value="重&nbsp;&nbsp;置" style="width: 100px ;float: right;"></input>
+            <button class="butt" type="submit">修&nbsp;&nbsp;改</button> 
          </div><!-- 按钮 -->
    </div>
 </div>

@@ -1,9 +1,6 @@
 package com.future.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @ProjectName vehicle
  * 
@@ -14,6 +11,11 @@ import java.util.Set;
  * @DateTime 2017年7月26日 下午4:00:57
  */
 public class User {
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	// id
 	private Integer userId;
@@ -42,6 +44,21 @@ public class User {
 
 	private BaseDict judge;
 	
+	public User(Integer userId, String code, String password, String name, String address, String phone, Date date,
+			String role, Integer vehicleNumber, Integer maintainNumber, BaseDict judge) {
+		super();
+		this.userId = userId;
+		this.code = code;
+		this.password = password;
+		this.name = name;
+		this.address = address;
+		this.phone = phone;
+		this.date = date;
+		this.role = role;
+		this.vehicleNumber = vehicleNumber;
+		this.maintainNumber = maintainNumber;
+		this.judge = judge;
+	}
 	public Integer getUserId() {
 		return userId;
 	}

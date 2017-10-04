@@ -1,11 +1,11 @@
 package com.future.dao;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 
-import com.future.domain.Inform;
 import com.future.domain.Maintain;
 import com.future.domain.User;
 import com.future.domain.Vehicle;
@@ -53,7 +53,7 @@ public interface BaseDao<T> {
   	//查询整个用户集合
   	List<User> getAllUser();
   	//查询整个通知信息集合
-	List<Inform> getAllInform();
+
   	
     
 } 

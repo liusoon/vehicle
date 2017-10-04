@@ -1,9 +1,11 @@
 package com.future.web.action;
-import java.util.List;
 
-import com.future.domain.Inform;
+
+
+
+
 import com.future.domain.User;
-import com.future.service.InformService;
+
 import com.future.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
@@ -27,7 +29,8 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 	private  User user=new User();
 	
 	private  UserService userService;
-	private InformService informService;
+   
+	private  String old;
 	
 	
 	
@@ -40,8 +43,7 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 		//2.将返回的User对象放入session域中
 		ActionContext.getContext().getSession().put("User", u);
 		
-		Inform inform=new Inform("登陆成功",date(),url(),role(),informName());
-		informService.save(inform);
+
 		//3.重定向到项目主页
 	    if(u.getRole().equals("admin")) {
            ActionContext.getContext().getSession().put("admin", u);           
@@ -52,9 +54,6 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
         }else if(u.getRole().equals("both")) {
            ActionContext.getContext().getSession().put("both", u);
 		   return "both";
-        }else if(u.getRole().equals("ordinary")) {
-        	ActionContext.getContext().getSession().put("ordinary", u);
-        	return "ordinary";
         }else {
             return "error";    	
         }
@@ -64,12 +63,17 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 	public String logout() throws Exception {
 		
 		ActionContext.getContext().getSession().remove("user");
-		List<Inform> u=informService.getAll();
-		for(Inform inform:u){
-			informService.delete(inform);
-		}	
+
 		return "logout";
 	}
+	
+	/*//页面跳转
+	public String sign() throws Exception {
+		
+		ActionContext.getContext().getSession().remove("user");
+		
+		return "logout";
+	}*/
 	
 	
 	public User getModel() {
@@ -80,10 +84,16 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 		
 		this.userService = userService;
 	}
-	
-	public void setInformService(InformService informService) {
-		this.informService = informService;
+
+	public String getOld() {
+		return old;
 	}
+
+	public void setOld(String old) {
+		this.old = old;
+	}
+	
+    
 
 		
 }

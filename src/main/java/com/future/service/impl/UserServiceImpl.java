@@ -73,9 +73,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
 	public User getUserJudge(User u) {
         User judgeU = userDao.getUserByCode(u.getCode());  
-		if(judgeU !=null) {
-		   throw new RuntimeException("添加用户失败，存在该用户 ！");		
-		}
 		return judgeU;
 	}
 

@@ -232,8 +232,8 @@ public class HibernateTest {
 		    maintain.setJudge(baseDict);
 		    
 		    //设置车辆状态
-		    BaseDict category = vehicleJudge.getCategory();
-		    maintain.setCategory(category);
+		    
+//		    maintain.setCategory(category);
 		    System.out.println(u);
 		    maintain.setUserPhone(u.getPhone());
 		    maintain.setPlateId("12312");

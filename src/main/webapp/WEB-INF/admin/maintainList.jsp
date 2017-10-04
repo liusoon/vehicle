@@ -24,8 +24,28 @@
 	   //2 提交表单
 	   $("#pageForm").submit();
 	};
+	
+	
+  if('${maintainMessage}'!=null){
+	 alert('${maintainMessage}');   
+  }
+
 </script>
-  <style type="text/css">
+<style type="text/css">
+	body{
+	   background:#efefef;
+	 }
+	html{
+	   background:#efefef;
+	}
+	#innerhead{
+	height:60px;
+	background-color:white;
+	}
+	#innerhead p{
+	font-size:20px;
+	padding:13px 30px;
+	} 
     .input{
     width:100%;
       height: 30px;
@@ -76,24 +96,48 @@
     #pge nav{
       float: right;
     }
-  </style>
+    
+ .butt{
+  width:80px;
+  height:30px;
+  border-radius:15px;
+  background:rgb(153,200,207);
+
+ }
+ 
+  .picture{
+ position:absolute;
+ top:60px;
+ left:70%;
+ }
+</style>
 </head>
 <body>
 <form id="pageForm"  action="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" method="post">
-  
+<img src="${path }images/car.png" class="picture">
+ <div id="innerhead">
+ <div class="row">
+   <div class="col-lg-5 col-md-5 col-xs-6">
+      <p>当前位置 >> 维护信息管理 >> 管理维护信息</p>
+   </div>
+  </div>
+</div>
+ 
  <div class="box">
  	 <div class="left">
  	 	<div class="input">
         <span>车牌号：</span>
         <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号">
+        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号" value="${plateId}">
         </div> 
     </div><br>
     <div class="input" >
         <span>时间查询:</span>
         <div class="col-lg-6 col-md-6  col-xs-6" style="display: inline-block;width: 450px">
-        <center><input type="text" name="beginDateString" class="sang_Calender"placeholder="请输入起始日期" style="width: 200px;float: left;border-radius:5px" ></center>
-        <input type="text" name="endDateString" class="sang_Calender" placeholder="请输入截止日期" style="width: 200px;float: left;margin-left: 20px;border-radius:5px" >  
+         <center>
+           <input type="text" name="beginDateString" class="sang_Calender"placeholder="请输入起始日期" style="width: 200px;float: left;border-radius:5px"  value="${beginDateString}">
+           <input type="text" name="endDateString" class="sang_Calender" placeholder="请输入截止日期" style="width: 200px;float: left;margin-left: 20px;border-radius:5px" value="${endDateString}" >  
+        </center>
         </div>
     </div><br>
  	 </div>
@@ -101,21 +145,19 @@
      	 <div class="input">
         <span>车辆档案号：</span>
         <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" class="form-control" name="vehicleId" id="vehicleId" placeholder="请输入车辆档案号">
+        <input type="text" class="form-control" name="vehicleId" id="vehicleId" placeholder="请输入车辆档案号" value="${vehicleId}">
         </div>
     </div><br>
     <div class="input">
         <span>车主查询：</span>
         <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" name="userName" id="userName" class="form-control" placeholder="请输入车主名字">
-        </div>
-         <button class="btn btn-primary" class="button" name="button" type="submit">筛&nbsp;&nbsp;选</button>
+          <input type="text" name="userName" id="userName" class="form-control" placeholder="请输入车主名字" value="${userName}">
+        </div>  
+        <button class="butt" type="submit">筛&nbsp;&nbsp;选</button>
+       
      </div>
       
- </div>
-    
-   
-      
+ </div>   
     	<!-- 隐藏域.当前页码 -->
 		<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
 		<!-- 隐藏域.每页显示条数 -->
@@ -125,7 +167,7 @@
  
 </form>
   <div class="tab" style="z-index:-1"><!-- 表格开始 -->
-    <table border="4" cellspacing＝"1">
+    <table border="1" cellspacing＝"1">
       <thead>
         <tr>
           <td>维护信息编号</td>
@@ -135,7 +177,6 @@
           <td>车辆类型</td>
           <td>联系方式</td>
           <td>维护信息的录入日期</td>
-          <c:if test="${sign!='1'}"><td>操作</td></c:if>
         </tr>
       </thead>
       <tbody>
@@ -148,7 +189,6 @@
 	            <td>${list.category}</td>	 
 	            <td>${list.userPhone}</td>	            
 	            <td>${list.date}</td>
-               <c:if test="${sign!='1'}"><td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/MaintainAction_selectMainTain?id=${list.maintainId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/MaintainAction_deleteMainTain?id=${list.maintainId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td></c:if>
 	          </tr>
               </c:forEach>
       </tbody>
@@ -170,7 +210,7 @@
             <li><a href="">${pageBean.currentPage}</a></li>
             <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a></li>
             <li>到 <input type="text" id="page" name="page" value="${pageBean.currentPage}" style="width: 60px">页</li>
-            <li><button class="btn btn-primary" type="button" onclick="changePage($('#page').val())">GO</button></li>
+            <li><button class="butt" type="button" onclick="changePage($('#page').val())">GO</button></li>
             </li>
           </ul>
         </nav>

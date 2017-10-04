@@ -23,37 +23,35 @@
 	    
    });
 </script>
-</head>
+</head>  
 <body>
-	<div id="login_top">
-		<div id="welcome">
-			欢迎使用车辆维护管理系统
-		</div>
-		<div id="back">
-			<a href="index.jsp">返回首页</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-			<a href="#">帮助</a>
-		</div>
-	</div>
-	<div id="login_center">
-		<div id="login_area">
-			<div id="login_form">
-				<form action="BaseAction_login" method="post">
-					<div id="login_tip">
-						用户登录&nbsp;&nbsp;UserLogin
-					</div>
-					<div><input type="text" class="username" name="code" required oninvalid="setCustomValidity('请输入账号');" oninput="setCustomValidity('');" ></div>
-					<div><input type="password" class="pwd" id="begin" required oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"></div>
-					 <!--加密转换 -->
-					<div><input type="hidden"  name="password" id="end" ></div>
-			        <div><font color="red" ><s:property value="exception.message" /></font></div>
-					<a href="${pageContext.request.contextPath}/admin/UserAction_forgetPassword" target="right">忘记密码</a>
-					<div id="btn_area">
-						<input type="submit" name="submit" id="sub_btn" value="登&nbsp;&nbsp;录">
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div id="login_bottom"></div>  
+    <div class="wall">
+        <div class="box">
+            <div class="box1 in"></div>
+            <div class="box2 in">
+                 <h1>辉县市车辆维护管理系统</h1>
+            </div>
+            <div class="box3">
+                <div class="pic">
+                    <img src="images/1.png" width="60px">
+                    <span class="txt1">We &nbsp;&nbsp;are&nbsp;&nbsp; everywhere</span>
+                </div>
+               <div class="font">
+                   <form action="BaseAction_login" method="post">
+	                   <span class="txt2">账号:</span>
+	                   <input type="text" class="txt" name="code" required oninvalid="setCustomValidity('请输入账号');" oninput="setCustomValidity('');" ><br>
+	                   <span class="txt2">密码:</span>
+	                   <input type="password" class="txt" id="begin" required oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');">
+	                   <!-- 加密转换 -->
+	                   <input type="hidden"  name="password" id="end" ><br>
+	                   <!-- 错误提示 -->
+	                   <font color="red" ><s:property value="exception.message"/></font><br>
+	                   <input type="submit" value="登&nbsp;&nbsp;录"><br>
+	                   <a href="${pageContext.request.contextPath}/admin/UserAction_forgetPassword" target="top">找回密码</a>
+                   </form>
+               </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

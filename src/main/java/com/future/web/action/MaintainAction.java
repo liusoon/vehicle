@@ -2,7 +2,8 @@ package com.future.web.action;
 
 import java.text.SimpleDateFormat;
 
-import java.util.Calendar;
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,11 +14,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.future.domain.BaseDict;
-import com.future.domain.Inform;
+
 import com.future.domain.Maintain;
 import com.future.domain.User;
 import com.future.domain.Vehicle;
-import com.future.service.InformService;
+
 import com.future.service.MaintainService;
 import com.future.service.UserService;
 import com.future.service.VehicleService;
@@ -45,7 +46,6 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 	private VehicleService vehicleService;
 	private UserService  userService;
 	private MaintainService maintainService;
-	private InformService informService;
 	private int id;
 	private int sign;
 	private Maintain maintain1;
@@ -68,15 +68,13 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 	
 	//跳转到添加维护信息录入
 	public String addMaintain() throws Exception {
-		Inform inform=new Inform("您进行了维护信息录入的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
+	
 		return "addMaintain";
 	}
 	
 	//维护信息录入
 	public String saveMaintain() throws Exception {
-		Inform inform=new Inform("您进行了维护信息保存的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
+
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class);
 
@@ -85,16 +83,16 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 		// 验证车辆
 		Vehicle vehicleJudge = vehicleService.getVehicleId(vehicleId);
 
-		if (!(vehicleJudge.getPlateId().equals(maintain.getPlateId()))) {
-			throw new RuntimeException("信息录入失败！档案中的车牌号与录入的车牌号不符");
+		if (!(vehicleJudge.getPlateId().equals(maintain.getPlateId()))) {	
+			ActionContext.getContext().getSession().put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
 		}
 
 		if (!(vehicleJudge.getUserName().equals(maintain.getUserName()))) {
-			throw new RuntimeException("信息录入失败！档案中的车主与录入的车主信息不符不符");
+			ActionContext.getContext().getSession().put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
 		}
 
 		if ((dc.add(Restrictions.like("operationStatus.dict_id", "9")) == null)) {
-			throw new RuntimeException("信息录入失败！该车辆未备案");
+			ActionContext.getContext().getSession().put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
 		}
 		// 获取车主id
 		Integer userId = vehicleJudge.getUserId();
@@ -103,9 +101,8 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 		baseDict.setDict_id("12");
 		maintain.setJudge(baseDict);
 		// 设置车辆状态和车辆类
-		BaseDict category = vehicleJudge.getCategory();
 		BaseDict operationStatus = vehicleJudge.getOperationStatus();
-		maintain.setCategory(category);
+		maintain.setCategory(vehicleJudge.getCategory());
 		maintain.setOperationStatus(operationStatus);
 		// 后台添加属性
 		maintain.setUserPhone(u.getPhone());
@@ -124,54 +121,11 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 	
 	//对于维护信息的查询
   	public String selectMainTain() throws Exception{
-  		Inform inform=new Inform("您进行了维护信息查询操作",date(),role(),informName());
-		informService.save(inform);
+
   		Maintain maintain=maintainService.getById(id);
   		request.put("maintain1",maintain);
   		return "selectMainTain";
   	}
-  	
-  	//修改维护信息
-  	public String updateMainTain() throws Exception{
-  		Inform inform=new Inform("您进行了修改维护信息查询操作",date(),role(),informName());
-		informService.save(inform);
-  		//会从前台传过来个对象
-  		Maintain maintain=maintainService.getById(id);
-  		List<Vehicle> list=vehicleService.getAll();
-	  	  for(Vehicle vehicle:list){
-	  		if(vehicle.getUserId().equals(maintain.getUserId())){
-	  			vehicle.setUserName(maintain1.getUserName());
-	  			vehicle.setCategory(maintain1.getCategory());
-	  			vehicle.setPlateId(maintain1.getPlateId());
-	  			vehicleService.updateVehicle(vehicle);
-	  		}
-	  	  }
-	  	List<User> u=userService.getAll();
-		for(User user:u){
-			if(user.getUserId().equals(maintain.getUserId())){
-				user.setName(maintain1.getUserName());
-				user.setPhone(maintain1.getUserPhone());
-			}
-		}
-  		maintain.setUserName(maintain1.getUserName()); 
-  		maintain.setUserPhone(maintain1.getUserPhone());
-  		maintain.setPlateId(maintain1.getPlateId());
-  		maintain.setCategory(maintain1.getCategory());
-  		maintainService.updateMaintain(maintain);
-  		return maintainList();
-  	}
-	
-    //删除维护信息
-  	public String deleteMainTain() throws Exception{
-  		Inform inform=new Inform("您进行了删除维护信息查询操作",date(),role(),informName());
-		informService.save(inform);
-  		Maintain maintain=maintainService.getById(id);
-  		baseDict.setDict_id("11");
-  		maintain.setJudge(baseDict);
-  		maintainService.updateMaintain(maintain);
-  		return maintainList();
-  	}
-  	
   	
 	// 对维护信息进行查询
 	public String maintainList() throws Exception {
@@ -229,9 +183,6 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 
 		// 将pagebean放到request域中，转发到页面显示
 		ActionContext.getContext().getSession().put("pageBean", pb);
-		request.put("sign",sign);
-		Inform inform=new Inform("您进行了维护信息查询的操作请点击查看",date(),url(),role(),informName());
-		informService.save(inform);
 		return "maintainList";
 
 	}
@@ -317,9 +268,7 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 		this.sign = sign;
 	}
 
-	public void setInformService(InformService informService) {
-		this.informService = informService;
-	}
+
 	
 	
 	

@@ -46,7 +46,7 @@ body{
             <span>账号：</span>
         </div>
         <div class="col-lg-6 col-md-6  col-xs-6">
-           <input type="text" class="form-control" name="user1.code" value="${user1.code}"  required  oninvalid="setCustomValidity('请输入账号');" oninput="setCustomValidity('');"/>
+           <input type="text" class="form-control" name="user1.code" value="${user1.code}"  required  oninvalid="setCustomValidity('请输入账号');" oninput="setCustomValidity('');" readonly="readonly"/>
          </div> 
       <div class="col-lg-5 col-md-6  col-xs-6">
             <span>用户名：</span>
@@ -68,7 +68,6 @@ body{
          </div>
          <div class="butn">
            <input class="btn btn-primary" type="submit" value="修&nbsp;&nbsp;改" ></input>
-           <input class="btn btn-primary" type="reset" value="重&nbsp;&nbsp;置" ></input>
       </div>
       </div>
 </form>

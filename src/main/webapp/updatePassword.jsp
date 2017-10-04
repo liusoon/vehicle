@@ -50,7 +50,7 @@
        <div class="register">
           <div class="text">
             <span class="text-1">设置新密码</span>
-            <input type="password" id="before" class="text-2" required oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
+            <input type="password" id="before" class="text-2" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$" required oninvalid="setCustomValidity('包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间');" oninput="setCustomValidity('');"/>
            <input type="hidden" name="password" id="after"/>
           </div>
           <input type="submit" name="" value="提&nbsp;&nbsp;交" class="submit_button" onclick="return check(this.form);" id="next1">
