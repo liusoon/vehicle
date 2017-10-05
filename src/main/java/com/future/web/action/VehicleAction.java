@@ -104,7 +104,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	//查询单个用户车辆信息
   	public String selectVehicle() throws Exception{
 		Vehicle vehicle1=vehicleService.getVehicleId(vehicle.getVehicleId());
-		request.put("vehicle1",vehicle1);
+		ActionContext.getContext().getSession().put("vehicle1",vehicle1);
 		if(sign==1){
 			return "findVehicle";
 		}
@@ -125,7 +125,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   	    v.setCategory(vehicle1.getCategory());
   		vehicle=v;
   		vehicleService.updateVehicle(vehicle);
-  		request.put("meg","修改成功");
+  		ActionContext.getContext().getSession().put("vehicleMessage", "车辆修改成功");
 		if(sign==1) {
   			return "toaddVehicleList";
   		}
@@ -150,7 +150,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   				break;
   			}
   		}
-  		request.put("meg","删除成功");
+  		ActionContext.getContext().getSession().put("vehicleMessage", "车辆删除成功");
 		if(sign==1) {
   			return "toaddVehicleList";
   		}
@@ -240,8 +240,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 
 		// 将pagebean放到request域中，转发到页面显示
 		ActionContext.getContext().getSession().put("pageBean", pb);
-		request.put("sign",sign);
-
+		ActionContext.getContext().getSession().put("sign",sign);
 		return "vehicleList";
 
 	}

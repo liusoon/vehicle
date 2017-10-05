@@ -25,6 +25,10 @@
 	   $("#pageForm").submit();
 	};
 	
+	if('${vehicleMessage}'!=null){
+		 alert('${vehicleMessage}');   
+	}
+	
 	function selectAllDels() 
 	{ 
 		var allCheckBoxs = document.getElementsByName("many"); 

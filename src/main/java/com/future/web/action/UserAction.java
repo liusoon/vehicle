@@ -114,7 +114,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	
 	public String personal() throws Exception{
 		User user=userService.select(id);
-	  	request.put("user1", user);
+	  	ActionContext.getContext().getSession().put("user1", user);
 	  	return "personal";
 	}
 	
@@ -136,7 +136,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		User modifyPwdU=userService.select(id);
 		modifyPwdU.setPassword(user.getPassword());
 		userService.updateUser(modifyPwdU);
-        request.put("message", "密码修改成功"); 
+        ActionContext.getContext().getSession().put("message", "密码修改成功");
 		return "modifyPassword";
 	}
 	
@@ -148,11 +148,11 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 			if(s.getCode().equals(user.getCode())){
 				String str=s.getPhone();
 				String src=str.substring(str.length()-4,str.length());
-				request.put("user",s);
-				request.put("src",src);
+				ActionContext.getContext().getSession().put("user",s);
+				ActionContext.getContext().getSession().put("src",src);
 		  		return "phoneValidate";
 			}else{
-		  		request.put("errorMeg","账号不正确");
+		  		ActionContext.getContext().getSession().put("errorMeg","账号不正确");
 		  	}
 		}
 	  		return "forgetPassword";
@@ -163,10 +163,10 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		 List<User> u=userService.getAll();
 		 for(User s:u){
 			if(s.getPhone().equals(user.getPhone())){
-				request.put("user",s);
+				ActionContext.getContext().getSession().put("user",s);
 				return "updatePassword";	
 			}else{
-			  	request.put("error","手机号不正确");
+				ActionContext.getContext().getSession().put("error","手机号不正确");
 			}
 		  }
 		return "phoneValidate";	 
@@ -178,14 +178,14 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	  	u.setPassword(user.getPassword());
 	  	user=u;
 	  	userService.updateUser(user);
-	  	request.put("successMeg","密码修改成功");
+	  	ActionContext.getContext().getSession().put("successMeg","密码修改成功");
 	  	return "success";
 	  }
 		
 	 //根据id查询用户
 	 public String selectUser() throws Exception{
 	  	User user=userService.select(id);
-	  	request.put("user1", user);
+	  	ActionContext.getContext().getSession().put("user1", user);
 	  	return "selectUser";
 	 }
 	  	
@@ -197,7 +197,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		  user.setAddress(user1.getAddress());
 		  user.setPhone(user1.getPhone());
 		  userService.updateUser(user);
-		  request.put("meg","修改成功");
+		  ActionContext.getContext().getSession().put("userMessage", "修改用户成功");
 	  	  return  "toUserList";
 	  }
 	  	
@@ -231,13 +231,13 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	  				break;
 	  			}
 	  		}
-	  	   	request.put("meg", "删除成功");
+	  	   	ActionContext.getContext().getSession().put("userMessage", "删除用户成功");
 	  		return  "toUserList";
 	  	}	 
 	 	
 	//关于系统
 	public String aboutSystem() throws Exception{
-		request.put("meg","关于系统");
+		ActionContext.getContext().getSession().put("meg","关于系统");
 		return "aboutSystem";
 	}
 	

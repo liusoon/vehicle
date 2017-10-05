@@ -123,7 +123,7 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
   	public String selectMainTain() throws Exception{
 
   		Maintain maintain=maintainService.getById(id);
-  		request.put("maintain1",maintain);
+  		ActionContext.getContext().getSession().put("maintain1",maintain);
   		return "selectMainTain";
   	}
   	
