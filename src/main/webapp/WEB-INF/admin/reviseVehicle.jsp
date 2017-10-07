@@ -29,23 +29,25 @@ padding:13px 30px;
  height:30px;
  border-radius:15px;
  background:rgb(153,200,207);
- margin-left:10%;
+ margin-left:20%;
+ margin-top:30px;
+ padding-top:3px;
  }
 
- 
+.box{
+	margin:0 auto;
+	width:460px;
+	height:600px;
+}
+.box-left span{
+   width:140px;
+}
  .picture{
  position:absolute;
  top:60px;
  left:70%;
  }
-/*   .butn{
- 	 
- 	width: 290px;
- 	height: 30px;
-    margin: 20px auto;
- 	 background: red; 
 
- } */
 </style>
 </head>
 <body>
@@ -99,13 +101,8 @@ padding:13px 30px;
         <div class="col-lg-8 col-md-8  col-xs-8" style="float: right">
            <input type="text" name="vehicle1.plateId" class="form-control" value="${vehicle1.plateId}"  pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU);" oninput="setCustomValidity('');"/>
             
-        </div> 
-         
-         
-
-   </div><!-- 左边蓝结束 -->
-   <div class="box-right"><!-- 右边栏开始 -->
-   		<div class="col-lg-4 col-md-4  col-xs-4">
+        </div>          
+         <div class="col-lg-4 col-md-4  col-xs-4">
             <span>车辆重量：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
@@ -117,7 +114,7 @@ padding:13px 30px;
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
            
-           <input type="text" name="vehicle1.date" value="${vehicle1.date}" readonly="readonly" style="width:270px;height:35px;border-radius:5px;background:transparent">
+           <input type="text" name="vehicle1.date" value="${vehicle1.date}" readonly="readonly" style="width:200px;height:35px;border-radius:5px;background:transparent">
          
          </div>
       <div class="col-lg-4 col-md-4  col-xs-4">
@@ -132,7 +129,7 @@ padding:13px 30px;
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
            
-           <input type="text" name="vehicle1.manufactureDate" value="${vehicle1.manufactureDate}" class="sang_Calender" style="width:270px;height:35px;border-radius:5px"/>
+           <input type="text" name="vehicle1.manufactureDate" value="${vehicle1.manufactureDate}" class="sang_Calender" style="width:200px;height:35px;border-radius:5px"/>
          </div>
          <div class="col-lg-4 col-md-4  col-xs-4">
             <span>车辆型号：</span>
@@ -142,9 +139,9 @@ padding:13px 30px;
            <input type="text" name="vehicle1.model" class="form-control" value="${vehicle1.model}" required oninvalid="setCustomValidity('请输入车辆类型');" oninput="setCustomValidity('');"/>
          </div>
          <div class="butn">
-            <button class="butt" type="reset">重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</button> 
+            <button class="butt" type="reset">重&nbsp;&nbsp;置</button> 
             <button class="butt" type="submit" autofocus>修&nbsp;&nbsp;改</button> 
-         </div><!-- 按钮 -->
+         </div>
    </div>
 </div>
 </form>

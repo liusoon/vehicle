@@ -23,8 +23,7 @@
 		    <param name="namespace">/admin</param>
 		    <param name="actionName">/UserAction_userList</param>
 	      </result>
-	      <result name="modify">/WEB-INF/admin/modifyPassword.jsp</result>
-	      <result name="modifyPassword">/WEB-INF/admin/message.jsp</result>	      
+	      <result name="modify">/WEB-INF/admin/modifyPassword.jsp</result>  
 	      <result name="selectUser">/WEB-INF/admin/updateUser.jsp</result>
 	      <result name="updatePassword">/updatePassword.jsp</result>
 	      <result name="success">/success.jsp</result>

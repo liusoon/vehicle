@@ -77,14 +77,16 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		//判断是否存在
 		User userByCode = userService.getUserByCode(user);
 		
-		if(judgeV !=null) {
+        if(!userByCode.getName().equals(user.getName())) {
+			
+			request.put("vehicleMessage", "车辆添加失败, 不存在该车主");
+			
+		}else if(judgeV !=null) {
+		
 			request.put("vehicleMessage", "车辆添加失败，存在该车辆 ！");
 		
-		}else if(!userByCode.getName().equals(user.getName())) {
-		
-			request.put("vehicleMessage", "车辆录入失败,不存在该车主");
-		
 		}else{
+		
 			request.put("vehicleMessage", "车辆添加成功");
 			//获取id
 			String id=vehicleService.getVehicleId(); 
@@ -240,9 +242,11 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		//多身份查询条件变化
 		if(UserBySession!=null) {
             dc.add(Restrictions.eq("userId",UserBySession.getUserId())); 
-		}else {
-			   dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
-			   dc.add(Restrictions.like("operationStatus.dict_id", "9", MatchMode.ANYWHERE));
+		}else{
+			
+			 dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
+			 dc.add(Restrictions.like("operationStatus.dict_id", "9", MatchMode.ANYWHERE));
+			 System.out.println(1);
 		}
 		
 		// 判断并封装参数

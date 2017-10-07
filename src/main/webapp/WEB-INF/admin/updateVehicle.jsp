@@ -24,7 +24,14 @@ background-color:white;
 font-size:20px;
 padding:13px 30px;
 }
-.box{margin-left:35%;}
+.box{
+	margin:0 auto;
+	width:450px;
+	height:600px;
+}
+.box-left span{
+  width:140px;
+}
  .butt{
  width:120px;
  height:35px;

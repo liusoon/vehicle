@@ -26,11 +26,10 @@
 	         <result name="logOff">/pages/logoff.jsp</result>
 	       <!-- 异常捕获 -->
 	         <result name="error">/index.jsp</result>	          
-	  
+	       
 	       <!-- 修改密码 -->
-	        <result name="modifyPassword">/WEB-INF/admin/modifyPassword.jsp</result>
-	        
-	        
+	        <result name="loginJump">/index.jsp</result>
+	       
 	     </action>
 	     
 	     

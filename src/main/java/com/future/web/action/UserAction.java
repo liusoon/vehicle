@@ -130,7 +130,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		modifyPwdU.setPassword(user.getPassword());
 		userService.updateUser(modifyPwdU);
         request.put("message", "密码修改成功"); 
-		return "modifyPassword";
+		return "modify";
 	}
 	
 	

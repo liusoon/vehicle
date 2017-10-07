@@ -40,7 +40,7 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 	    
 		//2.判断用户是否存在 ，不存在抛出异常       判断密码是否正确，不正确抛出异常
 	    if(existU == null) {
-	    	request.put("login", "账号不存在！");
+	    	request.put("login", "账号输入错误！");
 	    }else if(!existU.getPassword().equals(user.getPassword())) {
 	    	request.put("login", "密码错误！！"); 
 	    }else {
@@ -62,8 +62,7 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 	     return "error";
 	}
 	
-	   //退出登录后,防倒退再次进入
-		
+	//退出登录后,防倒退再次进入	
 	public String logOff(){
 		request.put("identity", identity);
 		return "logOff";
@@ -80,6 +79,12 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 		}	
 		ActionContext.getContext().getSession().remove("User");
 		return "logout";
+	}
+	
+	//登录界面跳转
+	public  String loginJump() throws  Exception{
+
+		return "loginJump";
 	}
 	
 	

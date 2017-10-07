@@ -42,7 +42,7 @@
                     <span class="txt1">We &nbsp;&nbsp;are&nbsp;&nbsp; everywhere</span>
                 </div>
                <div class="font">
-                   <form action="${pageContext.request.contextPath}/BaseAction_login?identity=administrator" method="post">
+                   <form action="${pageContext.request.contextPath}/BaseAction_login" method="post">
 	                   <span class="txt2">账号:</span>
 	                   <input type="text" class="txt" name="code" required oninvalid="setCustomValidity('请输入账号');" oninput="setCustomValidity('');" ><br>
 	                   <span class="txt2">密码:</span>

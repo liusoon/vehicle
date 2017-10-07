@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 06/10/2017 17:16:04
+ Date: 07/10/2017 21:03:28
 */
 
 SET NAMES utf8mb4;
@@ -58,18 +58,23 @@ CREATE TABLE `maintains`  (
   `JUDGE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `OPERATION_STATUS` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`MAINTAIN_ID`) USING BTREE,
-  INDEX `FKcvv6f5423l53v9yprf2r94s4b`(`JUDGE`) USING BTREE,
-  INDEX `FKj6wytoa8ylv89rhg7tq45e4l6`(`OPERATION_STATUS`) USING BTREE,
+  INDEX `FK1jy6yab6j854j5ybmb1dmbnaw`(`JUDGE`) USING BTREE,
+  INDEX `FKasr1ohspt77lw74vi7ta4bp74`(`OPERATION_STATUS`) USING BTREE,
+  CONSTRAINT `FK1jy6yab6j854j5ybmb1dmbnaw` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKasr1ohspt77lw74vi7ta4bp74` FOREIGN KEY (`OPERATION_STATUS`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKcvv6f5423l53v9yprf2r94s4b` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKj6wytoa8ylv89rhg7tq45e4l6` FOREIGN KEY (`OPERATION_STATUS`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of maintains
 -- ----------------------------
 INSERT INTO `maintains` VALUES (1, '客运', '谢亚飞', '00001', '豫G2000U', '15837337963', 10, '2017-10-06 11:00:01', '11', '9');
 INSERT INTO `maintains` VALUES (2, '货车', '谢亚飞', '00001', '豫G2000U', '15837337963', 10, '2017-10-06 11:15:40', '11', '9');
-INSERT INTO `maintains` VALUES (3, '货运', 'jerry', '00009', '豫G1234U', '13137740549', 1, '2017-10-06 17:12:34', '12', '9');
+INSERT INTO `maintains` VALUES (3, '货运', 'jerry', '00009', '豫G1234U', '18336069295', 1, '2017-10-06 17:12:34', '11', '9');
+INSERT INTO `maintains` VALUES (4, '货车', '谢亚飞', '00001', '豫G2000U', '15837337963', 10, '2017-10-07 11:28:09', '12', '10');
+INSERT INTO `maintains` VALUES (5, '货车', '谢亚飞', '00001', '豫G2000U', '15837337963', 10, '2017-10-07 11:28:27', '12', '10');
+INSERT INTO `maintains` VALUES (6, '货运', 'jerry', '00007', '豫G1234U', '18336069295', 1, '2017-10-07 18:45:38', '11', '9');
 
 -- ----------------------------
 -- Table structure for users
@@ -88,27 +93,31 @@ CREATE TABLE `users`  (
   `MAINTAINS_NUMBER` int(11) DEFAULT NULL,
   `JUDGE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`USERS_ID`) USING BTREE,
-  INDEX `FK5vc4mk0pckb2cbccq0fkw70gf`(`JUDGE`) USING BTREE,
-  CONSTRAINT `FK5vc4mk0pckb2cbccq0fkw70gf` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `FKcsvwk3cq05rs77foegt9kvq4a`(`JUDGE`) USING BTREE,
+  CONSTRAINT `FK5vc4mk0pckb2cbccq0fkw70gf` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKcsvwk3cq05rs77foegt9kvq4a` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '1234', 'fcbc10512c76bbb0c5b5664f94398d5a', 'jerry', 'fdgdfsg', '13137740549', 'admin', '2017-10-05 09:29:36', 6, 1, '12');
+INSERT INTO `users` VALUES (1, '1234', 'c20ad4d76fe97759aa27a0c99bff6710', 'jerry', 'hky', '18336069295', 'admin', '2017-10-05 09:29:36', 6, 2, '11');
 INSERT INTO `users` VALUES (3, '123', 'c20ad4d76fe97759aa27a0c99bff6710', '12', 'hky', '13137740549', 'admin', '2017-10-05 10:14:09', NULL, NULL, '12');
 INSERT INTO `users` VALUES (5, 'zxzxc', 'c20ad4d76fe97759aa27a0c99bff6710', '121', '121', '15537364889', 'admin', '2017-10-05 11:31:43', NULL, NULL, '12');
-INSERT INTO `users` VALUES (6, 'xzzxc', 'c20ad4d76fe97759aa27a0c99bff6710', '12121', '56', '15837337963', 'admin', '2017-10-05 11:33:39', NULL, NULL, '12');
+INSERT INTO `users` VALUES (6, 'xzzxc', 'afdd0b4ad2ec172c586e2150770fbf9e', '12121', '56', '15837337963', 'admin', '2017-10-05 11:33:39', NULL, NULL, '12');
 INSERT INTO `users` VALUES (7, '123456', '6c8349cc7260ae62e3b1396831a8398f', '12', '566', '15537364889', 'admin', '2017-10-05 11:37:59', NULL, NULL, '12');
 INSERT INTO `users` VALUES (8, '21465', 'c20ad4d76fe97759aa27a0c99bff6710', '12', '56', '15837337963', 'admin', '2017-10-05 11:38:35', NULL, NULL, '12');
 INSERT INTO `users` VALUES (9, '121', '4c56ff4ce4aaf9573aa5dff913df997a', '121', '121', '13137740549', 'admin', '2017-10-05 15:08:55', NULL, NULL, '12');
-INSERT INTO `users` VALUES (10, 'gclm', 'c20ad4d76fe97759aa27a0c99bff6710', '谢亚飞', 'hky', '15837337963', 'administrator', '2017-10-05 19:32:15', 3, 4, '12');
+INSERT INTO `users` VALUES (10, 'gclm', '2cc53441ac560f44444fd5e361c41362', '谢亚飞', 'hky', '15837337963', 'administrator', '2017-10-05 19:32:15', 3, 6, '12');
 INSERT INTO `users` VALUES (11, 'ASDASD', 'afdd0b4ad2ec172c586e2150770fbf9e', '121', '121', '15646543254', 'administrator', '2017-10-05 21:30:33', NULL, NULL, '12');
-INSERT INTO `users` VALUES (12, 'alj', '5eaa40a294af857abdcdd306a98d73ab', '安李杰', '4566', '18945612312', 'admin', '2017-10-06 08:54:06', NULL, NULL, '12');
+INSERT INTO `users` VALUES (12, 'alj', 'e43dea77695e2871a36ee31f1ea533cd', '安李杰', '4566', '18945612312', 'admin', '2017-10-06 08:54:06', NULL, NULL, '12');
 INSERT INTO `users` VALUES (13, '656565', 'afdd0b4ad2ec172c586e2150770fbf9e', '56645', 'DFG', '18336069295', 'admin', '2017-10-06 10:22:55', NULL, NULL, '12');
 INSERT INTO `users` VALUES (14, '865465', 'afdd0b4ad2ec172c586e2150770fbf9e', '6565', '客家话', '18336069295', 'admin', '2017-10-06 10:23:16', NULL, NULL, '12');
 INSERT INTO `users` VALUES (15, '12121212121asdasd', '988107799b07e29ceac10dc9adb42915', 'zxc', '121', '15837337963', 'admin', '2017-10-06 15:57:11', NULL, NULL, '12');
 INSERT INTO `users` VALUES (16, 'admin', 'e64b78fc3bc91bcbc7dc232ba8ec59e0', '未来', 'hky', '15837337963', 'admin', '2017-10-06 17:08:32', NULL, NULL, '12');
+INSERT INTO `users` VALUES (17, 'qwe', '6c3baa8a7c8355e495c351c1bb589902', 'ewe', 'ew', '15646543254', 'admin', '2017-10-06 20:58:11', NULL, NULL, '12');
+INSERT INTO `users` VALUES (18, 'fgh', '220b76aefdcff1bae4ee9bc1d59d9cd5', 'v ', 'c', '15837337963', 'admin', '2017-10-06 20:59:32', NULL, NULL, '12');
+INSERT INTO `users` VALUES (19, '12121', '7fe4fc547319a1667a41a9c0121f82c0', '问问', '问问', '18945612312', 'admin', '2017-10-06 21:13:59', NULL, NULL, '12');
 
 -- ----------------------------
 -- Table structure for vehicles
@@ -130,23 +139,25 @@ CREATE TABLE `vehicles`  (
   `OPERATION_STATUS` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `JUDGE` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`VEHICLE_ID`) USING BTREE,
-  INDEX `FKf3dxu3j6ewqotv7tmo659lbfw`(`OPERATION_STATUS`) USING BTREE,
-  INDEX `FKtqmrfyld6xlqbef9t02xaokhu`(`JUDGE`) USING BTREE,
+  INDEX `FKd26a9x9wpxe8ov5122abn8u8g`(`OPERATION_STATUS`) USING BTREE,
+  INDEX `FKmkeooh6uluigwd4r8vlu7yaff`(`JUDGE`) USING BTREE,
+  CONSTRAINT `FKd26a9x9wpxe8ov5122abn8u8g` FOREIGN KEY (`OPERATION_STATUS`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKf3dxu3j6ewqotv7tmo659lbfw` FOREIGN KEY (`OPERATION_STATUS`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKmkeooh6uluigwd4r8vlu7yaff` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKtqmrfyld6xlqbef9t02xaokhu` FOREIGN KEY (`JUDGE`) REFERENCES `base_dict` (`dict_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of vehicles
 -- ----------------------------
-INSERT INTO `vehicles` VALUES ('00001', '豫G2000U', '12', '12', '1212121', '2017-10-04 19:32:37', '货车', 12, '2017-10-25 19:33:15', 10, '谢亚飞', NULL, '9', '12');
-INSERT INTO `vehicles` VALUES ('00002', '豫G6200U', '121', '12', '1320121212', '2017-10-11 19:35:03', '货车', 12, '2017-10-25 19:35:07', 10, '谢亚飞', NULL, '9', '12');
-INSERT INTO `vehicles` VALUES ('00003', '豫G7200U', '121', '121', '12121212', '2017-10-19 22:12:22', '货车', 121, '2018-02-02 22:12:29', 1, 'rose', NULL, '10', '12');
-INSERT INTO `vehicles` VALUES ('00004', '豫G2300U', '12121', '121', '131', '2017-10-27 22:31:23', '货运', 121, '2018-02-03 09:11:17', 1, 'rose', NULL, '9', '12');
-INSERT INTO `vehicles` VALUES ('00005', '豫G5200U', '121', '12121', '121', '2017-10-20 22:42:27', '货运', 121, '2018-02-02 22:42:33', 10, '谢亚飞', NULL, '10', '11');
-INSERT INTO `vehicles` VALUES ('00006', '豫G2100U', '1212', '1212', '1212', '2017-10-26 08:24:33', '货运', 121, '2018-02-03 08:24:37', 1, 'rose', NULL, '9', '12');
-INSERT INTO `vehicles` VALUES ('00007', '豫G5100U', '1212', '1212', '1212', '2017-10-20 08:47:35', '货运', 1212, '2018-02-03 08:47:44', 1, 'rose', NULL, '9', '12');
-INSERT INTO `vehicles` VALUES ('00008', '豫G2210U', '1212', '1212', '1212', '2017-10-12 08:51:58', '货运', 121, '2018-02-03 08:52:32', 1, 'rose', NULL, '9', '12');
-INSERT INTO `vehicles` VALUES ('00009', '豫G1234U', '1212', '1212', '1212', '2017-10-28 17:11:10', '货运', 121, '2018-02-03 17:11:15', 1, 'jerry', 1, '9', '12');
+INSERT INTO `vehicles` VALUES ('00001', '豫G2000U', '12', '12', '1212121', '2017-10-04 19:32:37', '货运', 12, '2017-10-25 19:33:15', 10, '谢亚飞', 2, '9', '12');
+INSERT INTO `vehicles` VALUES ('00002', '豫G6200U', '121', '12', '1320121212', '2017-10-11 19:35:03', '货运', 12, '2017-10-25 19:35:07', 10, '谢亚飞', NULL, '9', '12');
+INSERT INTO `vehicles` VALUES ('00003', '豫G7200U', '121', '121', '12121212', '2017-10-19 22:12:22', '货运', 121, '2018-02-02 22:12:29', 1, 'jerry', NULL, '9', '12');
+INSERT INTO `vehicles` VALUES ('00004', '豫G2300U', '12121', '121', '131', '2017-10-27 22:31:23', '货运', 121, '2018-02-03 09:11:17', 1, 'jerry', NULL, '9', '12');
+INSERT INTO `vehicles` VALUES ('00005', '豫G5200U', '121', '12121', '121', '2017-10-20 22:42:27', '货运', 121, '2018-02-02 22:42:33', 10, '谢亚飞', NULL, '9', '12');
+INSERT INTO `vehicles` VALUES ('00006', '豫G2100U', '1212', '1212', '1212', '2017-10-26 08:24:33', '货运', 121, '2018-02-03 08:24:37', 1, 'jerry', NULL, '10', '12');
+INSERT INTO `vehicles` VALUES ('00007', '豫G5100U', '1212', '1212', '1212', '2017-10-20 08:47:35', '货运', 1212, '2018-02-03 08:47:44', 1, 'jerry', 1, '9', '12');
+INSERT INTO `vehicles` VALUES ('00008', '豫G2210U', '1212', '1212', '1212', '2017-10-12 08:51:58', '货运', 121, '2018-02-03 08:52:32', 1, 'jerry', NULL, '9', '12');
+INSERT INTO `vehicles` VALUES ('00009', '豫G1234U', '545454', '1212', '1212', '2017-10-28 17:11:10', '货运', 121, '2018-02-03 17:11:15', 1, 'jerry', 1, '9', '11');
 
 SET FOREIGN_KEY_CHECKS = 1;
