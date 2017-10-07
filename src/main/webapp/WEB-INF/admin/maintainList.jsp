@@ -24,12 +24,6 @@
 	   //2 提交表单
 	   $("#pageForm").submit();
 	};
-	
-	
-  if('${maintainMessage}'!=null){
-	 alert('${maintainMessage}');   
-  }
-
 </script>
 <style type="text/css">
 	body{
@@ -113,7 +107,7 @@
 </style>
 </head>
 <body>
-<form id="pageForm"  action="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" method="post">
+<form id="pageForm" action="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" method="post">
 <img src="${path }images/car.png" class="picture">
  <div id="innerhead">
  <div class="row">
@@ -152,7 +146,8 @@
         <span>车主查询：</span>
         <div class="col-lg-6 col-md-6  col-xs-6">
           <input type="text" name="userName" id="userName" class="form-control" placeholder="请输入车主名字" value="${userName}">
-        </div>  
+        </div> 
+         
         <button class="butt" type="submit">筛&nbsp;&nbsp;选</button>
        
      </div>

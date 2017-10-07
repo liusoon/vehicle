@@ -1,8 +1,7 @@
 package com.future.web.action;
 
 import org.apache.commons.lang3.StringUtils;
-
-
+import org.apache.struts2.interceptor.RequestAware;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -66,25 +65,23 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	public String saveUser() throws Exception {
 		// 1.执行判断操作
 		User userJudge = userService.getUserJudge(user);
-		if(userJudge!=null) {
-			  /*ActionContext.getContext().getApplication().put("userMessage", "添加用户失败，存在该用户"); */   			
-		      /*ActionContext.getContext();*/
-		     /*ActionContext.getContext().getSession().put("userMessage", "添加用户失败，存在该用户");*/		
-			
-		}else {
-		   /*ActionContext.getContext().getSession().put("userMessage", "添加用户成功");*/
-		   /* request.put("userMessage", "添加用户成功");*/
-		}
-		// 2.添加身份 ，日期
-	    user.setRole("admin");	
-		user.setDate(new Date());
-		baseDict.setDict_id("12");
-		user.setJudge(baseDict);
-		// 3.执行保存操作
-		userService.saveUser(user);
 		
+		if(userJudge!=null) {
+		    request.put("userMessage", "添加用户失败，存在该用户"); 
+		}else {
+		    request.put("userMessage", "添加用户成功"); 
+			
+		    // 2.添加身份 ，日期
+		    user.setRole("admin");	
+			user.setDate(new Date());
+			baseDict.setDict_id("12");
+			user.setJudge(baseDict);
+			// 3.执行保存操作
+			userService.saveUser(user);
+		}
 		// 4.进行页面跳转
-		return "toUserList";
+		return "addUser";
+		
 	}
 
 	// 对用户的分页查询
@@ -114,7 +111,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	
 	public String personal() throws Exception{
 		User user=userService.select(id);
-	  	ActionContext.getContext().getSession().put("user1", user);
+	  	request.put("user1", user);
 	  	return "personal";
 	}
 	
@@ -136,7 +133,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		User modifyPwdU=userService.select(id);
 		modifyPwdU.setPassword(user.getPassword());
 		userService.updateUser(modifyPwdU);
-        ActionContext.getContext().getSession().put("message", "密码修改成功");
+        request.put("message", "密码修改成功"); 
 		return "modifyPassword";
 	}
 	
@@ -148,11 +145,11 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 			if(s.getCode().equals(user.getCode())){
 				String str=s.getPhone();
 				String src=str.substring(str.length()-4,str.length());
-				ActionContext.getContext().getSession().put("user",s);
-				ActionContext.getContext().getSession().put("src",src);
+				request.put("user",s);
+				request.put("src",src);
 		  		return "phoneValidate";
 			}else{
-		  		ActionContext.getContext().getSession().put("errorMeg","账号不正确");
+		  		request.put("errorMeg","账号不正确");
 		  	}
 		}
 	  		return "forgetPassword";
@@ -163,10 +160,10 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		 List<User> u=userService.getAll();
 		 for(User s:u){
 			if(s.getPhone().equals(user.getPhone())){
-				ActionContext.getContext().getSession().put("user",s);
+				request.put("user",s);
 				return "updatePassword";	
 			}else{
-				ActionContext.getContext().getSession().put("error","手机号不正确");
+			  	request.put("error","手机号不正确");
 			}
 		  }
 		return "phoneValidate";	 
@@ -178,14 +175,14 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	  	u.setPassword(user.getPassword());
 	  	user=u;
 	  	userService.updateUser(user);
-	  	ActionContext.getContext().getSession().put("successMeg","密码修改成功");
+	  	request.put("successMeg","密码修改成功");
 	  	return "success";
 	  }
 		
 	 //根据id查询用户
 	 public String selectUser() throws Exception{
 	  	User user=userService.select(id);
-	  	ActionContext.getContext().getSession().put("user1", user);
+	  	request.put("user1", user);
 	  	return "selectUser";
 	 }
 	  	
@@ -197,7 +194,7 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		  user.setAddress(user1.getAddress());
 		  user.setPhone(user1.getPhone());
 		  userService.updateUser(user);
-		  ActionContext.getContext().getSession().put("userMessage", "修改用户成功");
+		  request.put("userMessage","修改成功");
 	  	  return  "toUserList";
 	  }
 	  	
@@ -210,34 +207,37 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	  	  userService.updateUser(user);
 	  	  //对于车辆信息的删除
 	  	  List<Vehicle> list=vehicleService.getAll();
-	  	  System.out.println("123");
-	  	  for(Vehicle vehicle:list){
-	  		if(vehicle.getUserId().equals(id)){
-	  			baseDict.setDict_id("11");
-	  			vehicle.setJudge(baseDict);
-	  			vehicleService.updateVehicle(vehicle);
-	  		}else{
-	  			break;
-	  		}
+	  	  if(list!=null&&!list.isEmpty()) {
+		  	  for(Vehicle vehicle:list){
+			  		if(vehicle.getUserId().equals(user.getUserId())){
+			  			baseDict.setDict_id("11");
+			  			vehicle.setJudge(baseDict);
+			  			vehicleService.updateVehicle(vehicle);
+			  		}else{
+			  			break;
+			  		}
+		  	  }
 	  	  }
 	  	  //对于维护信息的删除
 	  	  List<Maintain> m=maintainService.get();
-	  	   for(Maintain maintain:m){
-	  		   if(maintain.getUserId().equals(id)){
-	  			   baseDict.setDict_id("11");
-	  			   maintain.setJudge(baseDict);
-	  			   maintainService.updateMaintain(maintain);
-	  			}else{
-	  				break;
-	  			}
-	  		}
-	  	   	ActionContext.getContext().getSession().put("userMessage", "删除用户成功");
-	  		return  "toUserList";
+	  	  if(m!=null&&!m.isEmpty()) {
+		  	   for(Maintain maintain:m){
+		  		   if(maintain.getUserId().equals(user.getUserId())){
+			  			 baseDict.setDict_id("11");
+			  			 maintain.setJudge(baseDict);
+			  			 maintainService.updateMaintain(maintain);   
+		  			}else{
+		  				break;  
+		  			}
+		  		}
+	  	  }
+	  	   request.put("userMessage", "删除成功");
+	  	   return  "toUserList";
 	  	}	 
 	 	
 	//关于系统
 	public String aboutSystem() throws Exception{
-		ActionContext.getContext().getSession().put("meg","关于系统");
+		request.put("meg","关于系统");
 		return "aboutSystem";
 	}
 	

@@ -22,10 +22,11 @@ public class BaseData implements RequestAware{
 	 */
 	
 	protected Map<String,Object> request;
+	
 	protected HttpServletResponse getResponse(){
 		return ServletActionContext.getResponse();
 	}
-	
+		
 	protected ServletContext getContext(){
 		return ServletActionContext.getServletContext();
 	}
@@ -33,6 +34,7 @@ public class BaseData implements RequestAware{
 	public Map<String, Object> getRequest() {
 		return request;
 	}
+	
 	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;

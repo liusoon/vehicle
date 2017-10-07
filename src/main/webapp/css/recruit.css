@@ -20,7 +20,6 @@ body{
  .box{
  	width: 800px;
  	height: 500px;
- 	/*background: red;*/
  	margin: 10px auto;
  }
  input{  
@@ -30,10 +29,9 @@ body{
  .box-left{
  	width: 350px;
  	height: 500px;
- 	float: left;
+ 	margin:0 auto;
  	color:#666;
  	font-size: 16px
- 	background: green
  }
  .box span{
  	font-size: 16px;
@@ -50,10 +48,11 @@ body{
  	background: green
  }
  .butn{
- 	float: right;
+ 	 
  	width: 290px;
  	height: 30px;
- 	/*background: red;*/
+    margin: 20px auto;
+ /*  background: red;  */
 
  }
  

@@ -37,14 +37,7 @@ public class UserServiceImpl implements UserService {
 	public User getUserByCodePassword(User u) {
 	  //1.根据登陆账户查询User	
       User existU=userDao.getUserByCode(u.getCode());
-	  //2.判断用户是否存在 ，不存在抛出异常
-      if(existU == null) {
-    	  throw new RuntimeException("账号不存在！");
-      }
-       //3.判断密码是否正确，不正确抛出异常
-      if(!existU.getPassword().equals(u.getPassword())) {
-    	  throw new RuntimeException("密码错误！！");
-      }
+	 
        //4.返回用户
     	return existU;
       
@@ -114,13 +107,7 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional(isolation=Isolation.REPEATABLE_READ,readOnly=true,propagation=Propagation.REQUIRED)
 	public User getUserByCode(User u) {
-		System.out.println(u);
 		User userByCode = userDao.getUserByCode(u.getCode());
-		System.out.println("user  --1");
-		if(!userByCode.getName().equals(u.getName())) {
-			throw new RuntimeException("车辆录入失败,不存在该车主！");
-		}
-		System.out.println("US2");
 		return  userByCode;	
 	}
 

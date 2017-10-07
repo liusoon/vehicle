@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//Dth HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dth">
 <html>
 <head>
@@ -10,6 +10,13 @@
 <script type="text/javascript" src="${path}js/jquery.md5.js" ></script>
 <title>辉县市车辆维护管理系统——增加用户</title>
 </head>
+<script type="text/javascript">
+  var tip = "${userMessage}";
+  if (tip !== null && tip !== undefined && tip !== '') { 
+	  	alert(tip);
+  } 
+  
+</script>  
 <style type="text/css">
 body{
    background:#efefef;
@@ -84,12 +91,12 @@ padding:13px 30px;
  }
 </style>
 <body>
-<form  action="${pageContext.request.contextPath}/admin/UserAction_saveUser" method="post" onsubmit="show()" >
+<form  action="${pageContext.request.contextPath}/admin/UserAction_saveUser" method="post" onsubmit="return show()" >
 <img src="${path }images/car.png" class="picture">
 <div id="innerhead">
  <div class="row">
    <div class="col-lg-5 col-md-5 col-xs-6">
-      <p>当前位置 >> 用户管理 >> 增加用户</p>
+      <p>当前位置 >> 用户管理 >> 增加用户  </p>                                    
    </div>
   </div>
 </div>
@@ -104,7 +111,7 @@ padding:13px 30px;
             <span>密码：</span>
         </div>
         <div class="col-lg-6 col-md-6  col-xs-6" id="passDiv">
-           <input type="password" id="before" class="form-control" required oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');" />
+           <input type="password" id="before" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$" required oninvalid="setCustomValidity('包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间');" oninput="setCustomValidity('');" />
            <input type="hidden" name="password" id="after" value=""/>
          </div>
       <div class="col-lg-5 col-md-6  col-xs-6">
@@ -114,7 +121,7 @@ padding:13px 30px;
            <input type="text" name="name" id="name" class="form-control" required oninvalid="setCustomValidity('请输入用户名');" oninput="setCustomValidity('');"/>
          </div>
       <div class="col-lg-5 col-md-6  col-xs-6">
-            <span>联系方式：</span>
+            <span>手机号：</span>
         </div>
         <div class="col-lg-6 col-md-6  col-xs-6">
            <input type="tel" name="phone" id="phone" class="form-control" pattern="^1[3-9]\d{9}$" required oninvalid="setCustomValidity('请输入11位手机号');" oninput="setCustomValidity('');"/>
@@ -126,7 +133,7 @@ padding:13px 30px;
            <input type="text" name="address" id="address"  class="form-control" required oninvalid="setCustomValidity('请输入地址');" oninput="setCustomValidity('');"/>
          </div>
          <button class="but butt" type="reset">重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</button> 
-         <button class="butt" type="submit">添加用户</button>
+         <button class="butt" type="submit" autofocus>添加用户</button>
       </div>
      
 </form>
@@ -141,7 +148,6 @@ padding:13px 30px;
     });
 	
 function show(){
-	
 	var code=document.getElementById("code").value;
     var before_password=document.getElementById("before").value;
     var name=document.getElementById("name").value;
@@ -151,12 +157,7 @@ function show(){
     	return true;
     }else{
        return false; 
-    }
-    
-  
-   
-           
+    }      
 }
-
 </script>
 </html>

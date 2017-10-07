@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.future.domain">
     
-    <class name="User" table="USERS">
+    <class name="User" table="users">
         
         <id name="userId" type="java.lang.Integer">
             <column name="USERS_ID" />

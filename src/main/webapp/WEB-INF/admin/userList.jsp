@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,11 +24,7 @@
 	   $("#pageSizeInput").val(pageSize);
 	   //2 提交表单
 	   $("#pageForm").submit();
-	};
-	
-  /*  if('${userMessage}'!=null){
-	   alert('${userMessage}');   
-   }	 */
+	}; 
 </script>
 
 <style type="text/css">
@@ -75,7 +70,7 @@ html{
  <div id="innerhead">
  <div class="row">
    <div class="col-lg-5 col-md-5 col-xs-6">
-      <p>当前位置 >> 用户管理 >>管理用户</p>
+      <p>当前位置 >> 用户管理 >>管理用户    <c:if test="${userMessage}">${userMessage}</c:if></p>
    </div>
   </div>
 </div>
@@ -143,6 +138,5 @@ html{
           </nav>
         </div>
   </div>
-${meg}
 </body>
 </html>

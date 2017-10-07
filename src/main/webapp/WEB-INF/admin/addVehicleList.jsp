@@ -25,10 +25,6 @@
 	   $("#pageForm").submit();
 	};
 	
-	if('${vehicleMessage}'!=null){
-		 alert('${vehicleMessage}');   
-	}
-	
 	function selectAllDels() 
 	{ 
 		var allCheckBoxs = document.getElementsByName("many"); 
@@ -161,30 +157,33 @@
     .left{
     	width:110px;
     	float:left;
+    	margin-top:40px;
     }
     .right{
     	width:110px;
     	float:right;
+    	margin-top:-26px;
     	 
     }
      .butt{
-	 width:80px;
+	 width:100px;
 	 height:30px;
 	 border-radius:15px;
-	 background:rgb(153,200,207)
+	 background:rgb(153,200,207);
 	 }
 	 .butt_1{
 	 width:100px;
 	 height:30px;
 	 border-radius:15px;
-	 margin-left:650px;
+	 margin-left:750px;
+	 margin-top:40px;
 	 display:block;
 	 text-align:center;
 	 color:#333;
 	 box-sizing:border-box;
 	 padding-top:5px;
  	 background:rgb(153,200,207);
- 	 box-shadow:2px 0 2px;
+ 	 box-shadow:2px 1px 2px;
 	 }
 	.butt_1:hover{text-decoration:none;color:#333}
 	.picture{
@@ -201,7 +200,7 @@
 <div id="innerhead">
  <div class="row">
    <div class="col-lg-5 col-md-5 col-xs-6">
-      <p>当前位置 >> 车辆管理>> 管理车辆备案</p>
+      <p>当前位置 >> 车辆管理>> 管理车辆备案    <c:if test="${vehicleMessage}">${vehicleMessage}</c:if></p>
    </div>
   </div>
 </div>
@@ -209,7 +208,7 @@
  <div class="pas">
     <span>车牌号：</span>
     <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" name="plateId" class="form-control" id="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G555U');" oninput="setCustomValidity('');" value="${plateId}"/>
+        <input type="text" name="plateId" class="form-control" id="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU');" oninput="setCustomValidity('');" value="${plateId}"/>
     </div>
     <button class="butt" type="submit" name="button" class="button">筛&nbsp;&nbsp;选</button>
     <!-- 隐藏域.当前页码 -->
@@ -252,7 +251,7 @@
 	            <td>${list.operationStatus}</td>
 	            <td>${list.manufactureDate}</td>
 	            <td>${list.userName}</td>
-	            <td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_selectVehicle?vehicleId=${list.vehicleId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_deleteVehicle?vehicleId=${list.vehicleId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td>
+	            <td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_selectVehicle?vehicleId=${list.vehicleId}&sign=1">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_deleteVehicle?vehicleId=${list.vehicleId}&sign=1"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td>
 	            <td>  
 	            </td>
 	          </tr>

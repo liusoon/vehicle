@@ -16,17 +16,27 @@ body{
 html{
    background:#efefef;
 } 
+#innerhead{
+height:60px;
+background-color:white;
+}
+#innerhead p{
+font-size:20px;
+padding:13px 30px;
+}
+.box{margin-left:35%;}
  .butt{
- width:80px;
- height:30px;
+ width:120px;
+ height:35px;
  border-radius:15px;
  background:rgb(153,200,207);
+ margin-left:30%;
+ margin-top:20px;
 
  }
- 
  .picture{
  position:absolute;
- top:0;
+ top:60px;
  left:70%;
  }
 </style>
@@ -34,77 +44,89 @@ html{
 <body>
 <form action="${pageContext.request.contextPath}/admin/VehicleAction_updateVehicle?vehicleId=${vehicle1.vehicleId}" method="post">
 <img src="${path }images/car.png" class="picture">
+<div id="innerhead">
+ <div class="row">
+   <div class="col-lg-5 col-md-5 col-xs-6">
+      <p>当前位置 >> 车辆管理 >> 修改车辆  </p>                                    
+   </div>
+  </div>
+</div>
 <div class="box">
    <div class="box-left">
-   		<span>档案号</span>
-   		<input type="text" name="vehicle1.vehicleId" value="${vehicle1.vehicleId}"  readonly="readonly">
-   		<span>车辆状态</span>
-   		<input type="text" name="vehicle1.operationStatus" value="${vehicle1.operationStatus}" readonly="readonly">
-   		<lable id="text">类型:</lable>
-		<select name="vehicle1.category" >
-				<option value="货车">货车</option>
-				<option value="汽车">汽车</option>
-	   </select><br>
+   		<div class="col-lg-4 col-md-4  col-xs-4" >
+   			<span>档案号:</span>
+   		</div>
+   		<div class="col-lg-8 col-md-8  col-xs-8" >
+   			<input type="text" name="vehicle1.vehicleId" class="form-control" value="${vehicle1.vehicleId}"  readonly="readonly">
+   		</div>
+   		<div class="col-lg-4 col-md-4  col-xs-4" >
+   			<span>车辆状态:</span>
+   		</div>
+   		<div class="col-lg-8 col-md-8  col-xs-8" >
+   			<input type="text" name="vehicle1.operationStatus" class="form-control" value="${vehicle1.operationStatus}" readonly="readonly">
+   		</div>
+   		<div class="col-lg-4 col-md-4  col-xs-4" >
+   			<span id="text">类型:</span>
+   		</div>
+   		<div class="col-lg-8 col-md-8  col-xs-8" >
+			<select name="vehicle1.category" class="form-control" >
+					<option value="货车">货车</option>
+					<option value="汽车">汽车</option>
+		    </select><br>
+	   </div>
        <div class="col-lg-4 col-md-4  col-xs-4" >
             <span>发动机编号：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8" style="float: right">
            <input type="text" name="vehicle1.engineId" class="form-control" value="${vehicle1.engineId}" required oninvalid="setCustomValidity('请输入发动机编号');" oninput="setCustomValidity('');"/>
          </div>
-         <div class="col-lg-4 col-md-4  col-xs-4" style="margin-top: 33px;height:50px" >
+        <div class="col-lg-4 col-md-4  col-xs-4" style="margin-top: 33px;height:50px" >
             <span>车牌号:</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8" style="float: right">
-           <input type="text" name="vehicle1.plateId" class="form-control" value="${vehicle1.plateId}"  pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如浙E636UU');" oninput="setCustomValidity('');"/>
+           <input type="text" name="vehicle1.plateId" class="form-control" value="${vehicle1.plateId}"  pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU);" oninput="setCustomValidity('');"/>
             
-         </div> 
-         <div class="col-lg-4 col-md-5  col-xs-5">
-            <span>车辆型号：</span>
-        </div>
-        <div class="col-lg-8 col-md-8  col-xs-8">
-           
-           <input type="text" name="vehicle1.model" class="form-control" value="${vehicle1.model}" required oninvalid="setCustomValidity('请输入车辆类型');" oninput="setCustomValidity('');"/>
-         </div>
-         <div class="col-lg-4 col-md-5  col-xs-5">
+        </div>        
+        <div class="col-lg-4 col-md-4  col-xs-4">
             <span>车辆重量：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
            
            <input type="text" name="vehicle1.weight" class="form-control" value="${vehicle1.weight}" pattern="^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$" required  oninvalid="setCustomValidity('请填写带小数点的正数,单位是吨');" oninput="setCustomValidity('');">
          </div>
-
-   </div><!-- 左边蓝结束 -->
-   <div class="box-right"><!-- 右边栏开始 -->
-         <div class="col-lg-4 col-md-5  col-xs-5">
+         <div class="col-lg-4 col-md-4  col-xs-4">
             <span>备案日期：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
            
-           <input type="text" name="vehicle1.date" value="${vehicle1.date}" class="sang_Calender" style="width:270px;height:35px;border-radius:5px">
+           <input type="text" name="vehicle1.date" value="${vehicle1.date}" readonly="readonly" style="width:200px;height:35px;border-radius:5px;background:transparent">
+         
          </div>
-      <div class="col-lg-4 col-md-5  col-xs-5">
+      <div class="col-lg-4 col-md-4  col-xs-4">
             <span >车底盘号衍射：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
              <input type="text" name="vehicle1.carChassisId" class="form-control" value="${vehicle1.carChassisId}" required oninvalid="setCustomValidity('车底盘号衍射');" oninput="setCustomValidity('');"/>
          </div>
    			
-         <div class="col-lg-4 col-md-5  col-xs-5">
+         <div class="col-lg-4 col-md-4  col-xs-4">
             <span>出厂日期：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
            
-           <input type="text" name="vehicle1.manufactureDate" value="${vehicle1.manufactureDate}" class="sang_Calender" style="width:270px;height:35px;border-radius:5px"/>
+           <input type="text" name="vehicle1.manufactureDate" value="${vehicle1.manufactureDate}" class="sang_Calender" style="width:200px;height:35px;border-radius:5px"/>
          </div>
-          <div class="col-lg-4 col-md-5  col-xs-5">
-            <span>维护信息数量：</span>
+         <div class="col-lg-4 col-md-4  col-xs-4">
+            <span>车辆型号：</span>
         </div>
         <div class="col-lg-8 col-md-8  col-xs-8">
-           <input type="text" name="vehicle1.maintainNumber" class="form-control" value="${vehicle1.maintainNumber}"  onkeyup="value=value.replace(/[^\d]/g,'')">
+           
+           <input type="text" name="vehicle1.model" class="form-control" value="${vehicle1.model}" required oninvalid="setCustomValidity('请输入车辆类型');" oninput="setCustomValidity('');"/>
          </div>
          <div class="butn">
-            <button class="butt" type="submit">修&nbsp;&nbsp;改</button> 
-         </div><!-- 按钮 -->
+           <!--  <button class="butt" type="reset">重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</button>  -->
+            <button class="butt" type="submit" autofocus>修&nbsp;&nbsp;改</button> 
+         </div>
    </div>
 </div>
 </form>

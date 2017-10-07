@@ -31,7 +31,7 @@
        </div>
        <div class="register">
           <p>修改密码成功</p> 
-          <a href="${pageContext.request.contextPath}/BaseAction_logout" id="out">转到登录</a>
+          <a href="${pageContext.request.contextPath}/BaseAction_login" id="out">转到登录</a>
        </div>
    </div>
  

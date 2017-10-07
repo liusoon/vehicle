@@ -12,10 +12,6 @@
       
       <!--管理员 -->
       <package name="admin" extends="struts-default" namespace="/admin">
-       <!-- 异常处理 -->
-       <global-exception-mappings>
-         <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
-       </global-exception-mappings>
         
        <!--用户管理 -->
 	   <action name="UserAction_*" class="userAction" method="{1}">
@@ -35,7 +31,6 @@
 	      <result name="forgetPassword">/forgetPassword.jsp</result>
 	      <result name="phoneValidate">/phoneValidate.jsp</result>
 	      <result name="personal">/personal.jsp</result>
-	      <result name="welcome">/welcome.jsp</result>
        </action>  
  
         <!--车辆管理 -->
@@ -46,6 +41,10 @@
 	      <result name="maturityVehicleList">/WEB-INF/admin/maturityVehicleList.jsp</result>
           <result name="selectVehicle">/WEB-INF/admin/updateVehicle.jsp</result>
           <result name="toVehicleList" type="redirectAction">
+		   <param name="namespace">/admin</param>
+		   <param name="actionName">VehicleAction_addVehicle</param>
+	      </result>
+	      <result name="toList" type="redirectAction">
 		   <param name="namespace">/admin</param>
 		   <param name="actionName">VehicleAction_vehicleList</param>
 	      </result>
@@ -63,10 +62,8 @@
           <result name="selectMainTain">/WEB-INF/admin/updateMaintain.jsp</result>
           <result name="toMaintainList" type="redirectAction" >
 			   <param name="namespace">/admin</param>
-			   <param name="actionName">MaintainAction_maintainList</param>
+			   <param name="actionName">MaintainAction_addMaintain</param>
 	      </result>
-	     <!-- 异常破获 -->
-	     <result name="error">/WEB-INF/admin/addMaintain.jsp</result>
         </action> 
        
       <!-- 数据字典 -->

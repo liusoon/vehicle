@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,6 +10,11 @@
 <link rel="stylesheet" href="${path}css\bootstrap.css">
 <script type="text/javascript" src="${path}js/jquery.min.js"></script>
 </head>
+<script type="text/javascript">
+	<c:if test="${!empty vehicleMessage}">
+	  alert('${vehicleMessage}');
+	</c:if>
+</script>
 <style type="text/css">
 body{
    background:#efefef;
@@ -87,7 +93,7 @@ html{
  
 </style>
 <body>
-<form action="${pageContext.request.contextPath}/admin/VehicleAction_saveVehicleByAdmin" method="post" onsubmit="show()">
+<form action="${pageContext.request.contextPath}/admin/VehicleAction_saveVehicle" method="post" onsubmit="return show()">
 <img src="${path }images/car.png" class="picture">
 <div id="innerhead">
  <div class="row">
@@ -96,15 +102,13 @@ html{
    </div>
   </div>
 </div>
- 
- 
  <div id="box">
      <div class="box-innner">
         <div class="col-lg-5 col-md-6  col-xs-6">
             <span>车主账号：</span>
         </div>
         <div class="col-lg-6 col-md-6  col-xs-6">
-           <input type="text" name="user.code" id="code" class="form-control" pattern="[0-9]{4,8}" required  oninvalid="setCustomValidity('请输入4至8个数字');" oninput="setCustomValidity('');" />
+           <input type="text" name="user.code" id="code" class="form-control"  required  oninvalid="setCustomValidity('请输入车主账号');" oninput="setCustomValidity('');" />
         </div>
      </div>
  	 <div class="box-innner">
@@ -128,8 +132,8 @@ html{
             <span>车辆类型：</span>
         </div>  
         <div class="col-lg-6 col-md-6  col-xs-6">        
-           <select  id="category">
-			 	<option value=""  selected="selected">请选择</option>
+           <select  id="category" name="category">
+			 	<option selected="selected">请选择</option>
 				<option value ="货运">货运</option>
 		  		<option value ="客运">客运</option>
 		   </select>
@@ -168,17 +172,17 @@ html{
            <input type="text" name="weight"  id="weight" class="form-control"  pattern="^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$" required  oninvalid="setCustomValidity('请填写带小数点的正数,单位是吨');" oninput="setCustomValidity('');" />
          </div>
      </div>
-     <div class="box-innner">
-           <div class="col-lg-5 col-md-6  col-xs-6">
-            <span>出厂日期：</span>
-        </div>
+      <div class="box-innner">
+          <div class="col-lg-5 col-md-6  col-xs-6">
+          <span>出厂日期：</span>
+      </div>
+        
         <div class="col-lg-6 col-md-6  col-xs-6">
-           <input type="text" name="manufactureDate" id="manufactureDate" class="sang_Calender"  required  oninvalid="setCustomValidity('请选择出厂日期');" oninput="setCustomValidity('');" />
-            
-         </div>
+           <input type="text" name="manufactureDate" id="manufactureDate" class="sang_Calender"  required  oninvalid="setCustomValidity('请选择出厂日期');" oninput="setCustomValidity('');" />  
+        </div>
      </div>
        <button class="butt" type="reset">重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</button> 
-       <button class="butt" type="submit">进行备案</button>
+       <button class="butt" type="submit" autofocus="autofocus">进行备案</button>
   </div>
 </form> 
 <script type="text/javascript" src="${path}js/datetime.js"></script>

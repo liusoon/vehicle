@@ -30,50 +30,57 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 	
 	private  UserService userService;
    
-	private  String old;
-	
-	
+	private  String identity;
 	
 	//登录方法
 	public String login() throws Exception {
 		
         //1.调用service执行登录逻辑
-		User u=userService.getUserByCodePassword(user);
-	
-		//2.将返回的User对象放入session域中
-		ActionContext.getContext().getSession().put("User", u);
-		
-
-		//3.重定向到项目主页
-	    if(u.getRole().equals("admin")) {
-           ActionContext.getContext().getSession().put("admin", u);           
-           return "admin";
-	    }else if(u.getRole().equals("administrator")) {
-	       ActionContext.getContext().getSession().put("administrator", u);
-	       return "administrator";
-        }else if(u.getRole().equals("both")) {
-           ActionContext.getContext().getSession().put("both", u);
-		   return "both";
-        }else {
-            return "error";    	
-        }
+		User existU=userService.getUserByCodePassword(user);
+	    
+		//2.判断用户是否存在 ，不存在抛出异常       判断密码是否正确，不正确抛出异常
+	    if(existU == null) {
+	    	request.put("login", "账号不存在！");
+	    }else if(!existU.getPassword().equals(user.getPassword())) {
+	    	request.put("login", "密码错误！！"); 
+	    }else {
+	        //3.将返回的User对象放入session域中
+	    	ActionContext.getContext().getSession().put("User", existU);
+	    	
+	    	//4.重定向到项目主页
+	    	if(existU.getRole().equals("admin")) {
+	            ActionContext.getContext().getSession().put("admin", existU);           
+	            return "admin";
+	 	    }else if(existU.getRole().equals("administrator")) {
+	 	       ActionContext.getContext().getSession().put("administrator", existU);
+	 	       return "administrator";
+	        }else {
+	             return "error";    	
+	        }
+	    }
+	    
+	     return "error";
 	}
+	
+	   //退出登录后,防倒退再次进入
+		
+	public String logOff(){
+		request.put("identity", identity);
+		return "logOff";
+	}
+		
 	
 	//注销登录
 	public String logout() throws Exception {
-		
-		ActionContext.getContext().getSession().remove("user");
-
+		//清除session中的user信息
+		if(identity.equals("admin")){
+			ActionContext.getContext().getSession().remove("admin");
+		}else if(identity.equals("administrator")){
+			ActionContext.getContext().getSession().remove("administrator");
+		}	
+		ActionContext.getContext().getSession().remove("User");
 		return "logout";
 	}
-	
-	/*//页面跳转
-	public String sign() throws Exception {
-		
-		ActionContext.getContext().getSession().remove("user");
-		
-		return "logout";
-	}*/
 	
 	
 	public User getModel() {
@@ -85,16 +92,13 @@ public class BaseAction  extends  BaseData  implements ModelDriven<User>{
 		this.userService = userService;
 	}
 
-	public String getOld() {
-		return old;
+	public String getIdentity() {
+		return identity;
 	}
 
-	public void setOld(String old) {
-		this.old = old;
+	public void setIdentity(String identity) {
+		this.identity = identity;
 	}
-	
-    
 
-		
 }
 

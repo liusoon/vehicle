@@ -1,5 +1,6 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,7 +8,9 @@
 <title>修改用户页面</title>
 <link rel="stylesheet" href="${path}css/bootstrap.css">
 <script type="text/javascript">
-
+<c:if test="${!empty userMessage}">
+	alert('${userMessage}');
+</c:if>
 </script>
 </head>
 <style type="text/css">
@@ -20,25 +23,26 @@ html{
  #box{
   width: 500px;
   height: auto;
-  margin: 50px auto
+  margin: 70px auto
  }
  #box span{
  float: right;
- margin-top: 20px;
- font-size: 20px
+ margin-top: 35px;
+ font-size: 20px;
+ vertical-align:middle;
  }
  #box input{
-  margin-top: 20px
+  margin-top:35px;
+  vertical-align:middle;
  }
  #box button{
    float: right;
-   margin-top: 20px;
-   margin-right:50px;
-   /*width: 300px*/
+   margin-top: 40px;
+   margin-right:160px;
  }
  .butt{
- width:80px;
- height:30px;
+ width:120px;
+ height:35px;
  border-radius:15px;
  background:rgb(153,200,207);
 
@@ -79,7 +83,7 @@ html{
         <div class="col-lg-6 col-md-6  col-xs-6">
            <input type="text" class="form-control" name="user1.phone" value="${user1.phone}" pattern="^1[3-9]\d{9}$" required oninvalid="setCustomValidity('请输入11位手机号');" oninput="setCustomValidity('');"/>
          </div>
-         <button class="butt" type="submit">修&nbsp;&nbsp;改</button>
+         <button class="butt" type="submit" >修&nbsp;&nbsp;改</button>
 </div>
 </form>
 </body>

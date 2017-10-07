@@ -73,7 +73,7 @@ padding:13px 30px;
 
 </head>
 <body>
-<form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" method="post">
+<form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_maturityVehicleList" method="post">
 <img src="${path }images/car.png" class="picture">
 <div id="innerhead">
  <div class="row">
@@ -86,7 +86,7 @@ padding:13px 30px;
 	<div class="t1">
 		<span>车牌号：</span>
     	<div class="col-lg-1 col-md-1 col-xs-1" style="width:350px;margin-bottom:10px;">
-        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号" value="${plateId}" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G555U');" oninput="setCustomValidity('');" >
+        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号" value="${plateId}" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU');" oninput="setCustomValidity('');" >
    		</div>
    		<button class="butt" type="submit">筛&nbsp;&nbsp;选</button>
 
@@ -112,7 +112,7 @@ padding:13px 30px;
       <thead>
         <tr>
           <td>档案号</td>
-          <td>车排号</td>
+          <td>车牌号</td>
           <td>车的类别</td>
           <td>车辆型号</td>
           <td>发动机编号</td>

@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.future.domain">
 
-    <class name="Vehicle" table="VEHICLES">
+    <class name="Vehicle" table="vehicles">
 
         <id name="vehicleId" type="java.lang.String">
             <column name="VEHICLE_ID" />

@@ -1,4 +1,4 @@
-package com.future.web.action;
+ package com.future.web.action;
 
 import java.text.SimpleDateFormat;
 
@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -42,7 +43,6 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 
 	private Maintain maintain =new Maintain();
 	private BaseDict baseDict=new BaseDict();
-	
 	private VehicleService vehicleService;
 	private UserService  userService;
 	private MaintainService maintainService;
@@ -65,6 +65,10 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 	private Date beginDate;
 	private Date endDate;
 	
+	//session中获取User 
+	Map session = ActionContext.getContext().getSession();
+	User UserBySession = (User) session.get("admin");
+	
 	
 	//跳转到添加维护信息录入
 	public String addMaintain() throws Exception {
@@ -77,53 +81,51 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class);
-
+		
 		// 获取车辆档案号
 		String vehicleId = maintain.getVehicleId();
 		// 验证车辆
 		Vehicle vehicleJudge = vehicleService.getVehicleId(vehicleId);
-
-		if (!(vehicleJudge.getPlateId().equals(maintain.getPlateId()))) {	
-			ActionContext.getContext().getSession().put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
-		}
-
-		if (!(vehicleJudge.getUserName().equals(maintain.getUserName()))) {
-			ActionContext.getContext().getSession().put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
-		}
-
-		if ((dc.add(Restrictions.like("operationStatus.dict_id", "9")) == null)) {
-			ActionContext.getContext().getSession().put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
-		}
-		// 获取车主id
-		Integer userId = vehicleJudge.getUserId();
-		// 获取车主对象
-		User u = userService.getUserById(userId);
-		baseDict.setDict_id("12");
-		maintain.setJudge(baseDict);
-		// 设置车辆状态和车辆类
-		BaseDict operationStatus = vehicleJudge.getOperationStatus();
-		maintain.setCategory(vehicleJudge.getCategory());
-		maintain.setOperationStatus(operationStatus);
-		// 后台添加属性
-		maintain.setUserPhone(u.getPhone());
-		maintain.setUserId(userId);
 		
-		maintain.setDate(new Date());
-		// 执行保存操作
-		maintainService.saveMaintain(maintain);
+		if (!(vehicleJudge.getPlateId().equals(maintain.getPlateId()))) {
+			request.put("maintainMessage", "信息录入失败！档案中的车牌号与录入的车牌号不符");
+		}else  if (!(vehicleJudge.getUserName().equals(maintain.getUserName()))) {
+			request.put("maintainMessage", "信息录入失败！档案中的车主与录入的车主信息不符不符");
+		}else  if ((dc.add(Restrictions.like("operationStatus.dict_id", "9")) == null)) {
+			request.put("maintainMessage", "信息录入失败！该车辆未备案");
+		}else{
+			request.put("maintainMessage", "信息录入成功");
+			// 获取车主id
+			Integer userId = vehicleJudge.getUserId();
+			// 获取车主对象
+			User u = userService.getUserById(userId);
+			baseDict.setDict_id("12");
+			maintain.setJudge(baseDict);
+			// 设置车辆状态和车辆类
+			BaseDict operationStatus = vehicleJudge.getOperationStatus();
+			maintain.setCategory(vehicleJudge.getCategory());
+			maintain.setOperationStatus(operationStatus);
+			// 后台添加属性
+			maintain.setUserPhone(u.getPhone());
+			maintain.setUserId(userId);
+			
+			maintain.setDate(new Date());
+			// 执行保存操作
+			maintainService.saveMaintain(maintain);
 
-		// 执行更新user和vehicle表
-		userService.updateUserMaintain(userId);
-		vehicleService.updateVehicleMaintain(vehicleId);
+			// 执行更新user和vehicle表
+			userService.updateUserMaintain(userId);
+			vehicleService.updateVehicleMaintain(vehicleId);
+		}
 		
-		return "toMaintainList";
+		return "addMaintain";
 	}
 	
 	//对于维护信息的查询
   	public String selectMainTain() throws Exception{
 
   		Maintain maintain=maintainService.getById(id);
-  		ActionContext.getContext().getSession().put("maintain1",maintain);
+  		request.put("maintain1",maintain);
   		return "selectMainTain";
   	}
   	
@@ -132,11 +134,17 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Maintain.class);
+		
 		if(sign!=1){
 			dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
 		}else{
 			dc.add(Restrictions.like("judge.dict_id", "11", MatchMode.ANYWHERE));
 		}
+		
+		if(UserBySession!=null) {
+			dc.add(Restrictions.eq("userId",UserBySession.getUserId())); 
+		}
+		
 		// 判断并封装参数
 		if (StringUtils.isNotBlank(maintain.getPlateId())) {
 			dc.add(Restrictions.like("plateId", "%"+maintain.getPlateId()+"%"));
@@ -187,13 +195,6 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 
 	}
 
-	// 车辆类型判断
-	private void getMaintainDate() throws Exception {
-
-		DetachedCriteria dc = DetachedCriteria.forClass(Maintain.class);
-		
-		
-	}
 	
 	@Override
 	public Maintain getModel() {
@@ -267,9 +268,4 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 	public void setSign(int sign) {
 		this.sign = sign;
 	}
-
-
-	
-	
-	
 }

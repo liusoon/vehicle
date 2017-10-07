@@ -28,7 +28,7 @@
        <div class="register">
           <div class="text">
             <span class="text-1">请输入手机号:</span>
-            <input type="text" name="phone" class="text-2" placeholder="请输入手机号">
+            <input type="text" name="phone" class="text-2" placeholder="请输入手机号" pattern="^1[3-9]\d{9}$" required oninvalid="setCustomValidity('请输入11位手机号');" oninput="setCustomValidity('');">
           </div>
           <input type="submit" name="" value="下一步" class="next">
        </div>

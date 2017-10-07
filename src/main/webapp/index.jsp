@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,6 +22,11 @@
 	    });
 	    
    });
+   
+<c:if test="${!empty login}">
+	alert('${login}');
+</c:if>
+
 </script>
 </head>  
 <body>
@@ -37,15 +42,13 @@
                     <span class="txt1">We &nbsp;&nbsp;are&nbsp;&nbsp; everywhere</span>
                 </div>
                <div class="font">
-                   <form action="BaseAction_login" method="post">
+                   <form action="${pageContext.request.contextPath}/BaseAction_login?identity=administrator" method="post">
 	                   <span class="txt2">账号:</span>
 	                   <input type="text" class="txt" name="code" required oninvalid="setCustomValidity('请输入账号');" oninput="setCustomValidity('');" ><br>
 	                   <span class="txt2">密码:</span>
 	                   <input type="password" class="txt" id="begin" required oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');">
 	                   <!-- 加密转换 -->
 	                   <input type="hidden"  name="password" id="end" ><br>
-	                   <!-- 错误提示 -->
-	                   <font color="red" ><s:property value="exception.message"/></font><br>
 	                   <input type="submit" value="登&nbsp;&nbsp;录"><br>
 	                   <a href="${pageContext.request.contextPath}/admin/UserAction_forgetPassword" target="top">找回密码</a>
                    </form>

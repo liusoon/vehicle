@@ -97,7 +97,8 @@ public class VehicleServiceImpl implements  VehicleService {
 	public Vehicle getVehicleId(String vehicleId) {
 		return vehicleDao.getById(vehicleId);
 	}
-
+    
+	
 	@Override
 	public void updateVehicleMaintain(String vehicleId) {
 		Vehicle vehicle = vehicleDao.getById(vehicleId);		
@@ -110,7 +111,6 @@ public class VehicleServiceImpl implements  VehicleService {
 	    vehicleDao.save(vehicle);
 		
 	}
-	
 	@Override
 	public void updateVehicle(Vehicle vehicle) {
 		vehicleDao.update(vehicle);

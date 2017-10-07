@@ -59,7 +59,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	
 	//session中获取User 
 	Map session = ActionContext.getContext().getSession();
-  	User UserBySession = (User) session.get("ordinary");
+  	User UserBySession = (User) session.get("admin");
 	
   	
     //跳转到添加车辆备案界面
@@ -68,43 +68,58 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 	}
   	
 	//新建车辆备案
-	public String saveVehicleByAdmin() throws Exception {
+	public String saveVehicle() throws Exception {
 	   
 		BaseDict baseDict1=new BaseDict();  
 		//先判断车牌号是否存在
 		Vehicle judgeV = vehicleService.getVehicleJudge(vehicle);
 		//判断是否存在
-		if(judgeV !=null) {
-			ActionContext.getContext().getSession().put("vehicleMessage", "车辆添加失败，存在该车辆 ！");
-		}else{
-		    ActionContext.getContext().getSession().put("vehicleMessage", "车辆添加成功");
-		}
 		User userByCode = userService.getUserByCode(user);
 		
-		//获取id
-		String id=vehicleService.getVehicleId(); 
-	    //赋值
-		vehicle.setVehicleId(id);
-		vehicle.setUserId(userByCode.getUserId());
-		vehicle.setUserName(userByCode.getName());
-	    baseDict.setDict_id("9");
-	    vehicle.setOperationStatus(baseDict);
-	    baseDict1.setDict_id("12");
-	    vehicle.setJudge(baseDict1);    
-	    vehicle.setDate(getVehicleMaturityTime()); 	   
-	    //执行保存操作
-	    vehicleService.saveVehicle(vehicle);
-	    //执行更新操作
-	    userService.updateUserVehicle(userByCode.getUserId());
+		if(judgeV !=null) {
+			request.put("vehicleMessage", "车辆添加失败，存在该车辆 ！");
+		
+		}else if(!userByCode.getName().equals(user.getName())) {
+		
+			request.put("vehicleMessage", "车辆录入失败,不存在该车主");
+		
+		}else{
+			request.put("vehicleMessage", "车辆添加成功");
+			//获取id
+			String id=vehicleService.getVehicleId(); 
+		    //赋值
+			vehicle.setVehicleId(id);
+		    if(sign==2){
+		       vehicle.setUserId(UserBySession.getUserId());
+			   vehicle.setUserName(UserBySession.getName());
+			   baseDict.setDict_id("9");
+		    }else {
+		       baseDict.setDict_id("10");
+		       vehicle.setUserId(userByCode.getUserId());
+			   vehicle.setUserName(userByCode.getName());
+		    }
+		    vehicle.setOperationStatus(baseDict);
+		    baseDict1.setDict_id("12");
+		    vehicle.setJudge(baseDict1);    
+		    vehicle.setDate(getVehicleAddTime()); 
+		    
+		    //执行保存操作
+		    
+		    vehicleService.saveVehicle(vehicle);
+		    //执行更新操作
+		    userService.updateUserVehicle(userByCode.getUserId());
+		    
+		}
+		
 	    //进行页面跳转
-	    return "toVehicleList";
+	    return "addVehicle";
 		
 	}
 	
 	//查询单个用户车辆信息
   	public String selectVehicle() throws Exception{
 		Vehicle vehicle1=vehicleService.getVehicleId(vehicle.getVehicleId());
-		ActionContext.getContext().getSession().put("vehicle1",vehicle1);
+		request.put("vehicle1",vehicle1);
 		if(sign==1){
 			return "findVehicle";
 		}
@@ -125,11 +140,11 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   	    v.setCategory(vehicle1.getCategory());
   		vehicle=v;
   		vehicleService.updateVehicle(vehicle);
-  		ActionContext.getContext().getSession().put("vehicleMessage", "车辆修改成功");
+  		request.put("vehicleMessage","修改成功");
 		if(sign==1) {
   			return "toaddVehicleList";
   		}
-  		return "toVehicleList";
+  		return "toList";
   	}
 	
   	//删除车辆信息
@@ -142,19 +157,21 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   		vehicleService.updateVehicle(vehicle);
   		//对于维护信息的删除
   		List<Maintain> m=maintainService.get();
-  		for(Maintain maintain:m){
-  			if(maintain.getUserId().equals(vehicle1.getUserId())){
-  				maintain.setJudge(baseDict);
-  				maintainService.updateMaintain(maintain);
-  			}else{
-  				break;
-  			}
+  		if(m!=null&&!m.isEmpty()) {
+	  		for(Maintain maintain:m){
+	  			if(maintain.getUserId().equals(vehicle1.getUserId())){
+	  				maintain.setJudge(baseDict);
+	  				maintainService.updateMaintain(maintain);
+	  			}else{
+	  				break;
+	  			}
+	  		}
   		}
-  		ActionContext.getContext().getSession().put("vehicleMessage", "车辆删除成功");
+  		request.put("vehicleMessage","删除成功");
 		if(sign==1) {
   			return "toaddVehicleList";
   		}
-  		return "toVehicleList";
+  		return "toList";
   	}
   
   	//一键备案
@@ -165,38 +182,19 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
             Vehicle vehicle=vehicleService.getVehicleId(vehicleId);
       		baseDict.setDict_id("9");   		
       		vehicle.setOperationStatus(baseDict);
-	    		Date endDate = getVehicleMaturityTime();
+	    		Date endDate = getVehicleAddTime();
 	      		vehicle.setDate(endDate);
 	      		vehicleService.updateVehicle(vehicle);
 	      		this.getResponse().getWriter().println(1);
         }  
   	}
 	
-	//提交车辆信息
-	public String saveVehicleByOrdinary() throws Exception{
-		//先判断车牌号是否存在
-		vehicleService.getVehicleJudge(vehicle);
-	    //获取id
-		String id=vehicleService.getVehicleId();
-		
-	  	//赋值
-		vehicle.setVehicleId(id);
-	    vehicle.setUserId(UserBySession.getUserId());
-	    vehicle.setUserName(UserBySession.getName());
-	    baseDict.setDict_id("10");
-	    vehicle.setOperationStatus(baseDict);
-	    //执行保存操作
-	    vehicleService.saveVehicle(vehicle);
-	    //进行页面跳转
-	    return "toVehicleList";
-	}  
-	
-	
     //需要备案的车辆列表
 	public String addVehicleList() throws Exception {
 
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class);
+		
 		dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
 		dc.add(Restrictions.like("operationStatus.dict_id", "10", MatchMode.ANYWHERE));
 
@@ -221,7 +219,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class);
 		//多身份查询条件变化
-		if(UserBySession!=null ) {
+		if(UserBySession!=null) {
             dc.add(Restrictions.eq("userId",UserBySession.getUserId())); 
 		}else {
 		   if(sign!=1){
@@ -231,6 +229,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 			   dc.add(Restrictions.like("judge.dict_id", "11", MatchMode.ANYWHERE));  
 		   }
 		}
+		
 		// 判断并封装参数
 		if (StringUtils.isNotBlank(vehicle.getPlateId())) {
 			dc.add(Restrictions.like("plateId", "%" + vehicle.getPlateId() + "%"));
@@ -240,7 +239,9 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 
 		// 将pagebean放到request域中，转发到页面显示
 		ActionContext.getContext().getSession().put("pageBean", pb);
-		ActionContext.getContext().getSession().put("sign",sign);
+		
+		request.put("sign",sign);
+
 		return "vehicleList";
 
 	}
@@ -280,6 +281,16 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		
 		return sdf.parse(sdf.format(c.getTime()));
 	   
+	} 
+	
+	public  Date  getVehicleAddTime() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, +120);
+		
+		return sdf.parse(sdf.format(c.getTime()));
+		
 	} 
 	
 	public User getUser() {

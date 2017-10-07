@@ -3,14 +3,14 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.future.domain">
 
-    <class name="Maintain" table="MAINTAINS">
+    <class name="Maintain" table="maintains">
 
         <id name="maintainId" type="java.lang.Integer">
             <column name="MAINTAIN_ID" />
             <generator class="native" />
         </id>
 
-        <property name="category" type="java.lang.Integer">
+        <property name="category" type="java.lang.String">
             <column name="CATEGORY" />
         </property>
 
@@ -30,6 +30,9 @@
             <column name="USER_PHONE"/>
         </property>
         
+        <property name="userId" type="java.lang.Integer">
+            <column name="USERS_ID" />
+        </property>
         
         <property name="date" type="java.util.Date">
             <column name="DATE" />

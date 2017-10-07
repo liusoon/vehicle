@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="${path}js/jquery.min.js"></script>
-<script type="text/javascript" src="${path}js/jquery.md5.js" ></script>
+<script type="text/javascript" src="${path}js/jquery.md5.js"></script>
 <script>
  $(function(){
   $("#before").blur(function(){
@@ -18,7 +18,6 @@
 <title>修改密码</title>
 <link rel="stylesheet" href="${path}css/bootstrap.css">
 <link rel="stylesheet" href="${path}css/password-1.css">
-<script type="text/javascript" src="${path}js/updatePassword.js"></script>
 </head>
 <style type="text/css">
  #next1{
@@ -46,14 +45,14 @@
        <div class="find">
          设置新密码
        </div>
-<form name="form1" id="form1" action="${pageContext.request.contextPath}/admin/UserAction_updatePassword?id=${user.userId}" method="post">       
+<form action="${pageContext.request.contextPath}/admin/UserAction_updatePassword?id=${user.userId}" method="post">       
        <div class="register">
           <div class="text">
             <span class="text-1">设置新密码</span>
             <input type="password" id="before" class="text-2" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$" required oninvalid="setCustomValidity('包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间');" oninput="setCustomValidity('');"/>
            <input type="hidden" name="password" id="after"/>
           </div>
-          <input type="submit" name="" value="提&nbsp;&nbsp;交" class="submit_button" onclick="return check(this.form);" id="next1">
+          <input type="submit" name="" value="提&nbsp;&nbsp;交" class="submit_button" id="next1">
         </div>
 </form>        
    </div>

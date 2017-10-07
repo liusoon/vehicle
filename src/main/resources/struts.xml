@@ -3,6 +3,7 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+
       <!-- 配置常量 -->
       <constant name="struts.objectFactory" value="spring"></constant>
       <!-- 设置成开发者模式 -->
@@ -13,11 +14,7 @@
               
       <package name="default" extends="struts-default" namespace="/">
         
-	     <!--异常处理 -->
-	     <global-exception-mappings>
-	       <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
-	     </global-exception-mappings>
-	          
+               
 	     <!--基础action--> 
 	     <action name="BaseAction_*" class="baseAction" method="{1}">
 	       <!-- 登录 -->
@@ -25,13 +22,17 @@
 	         <result name="administrator">/WEB-INF/administrator/index.jsp</result>
 	       <!-- 注销 -->  
 	         <result name="logout">/index.jsp</result>
+	         
+	         <result name="logOff">/pages/logoff.jsp</result>
 	       <!-- 异常捕获 -->
 	         <result name="error">/index.jsp</result>	          
 	  
 	       <!-- 修改密码 -->
-	         <result name="modifyPassword">/WEB-INF/admin/modifyPassword.jsp</result>
-	     
+	        <result name="modifyPassword">/WEB-INF/admin/modifyPassword.jsp</result>
+	        
+	        
 	     </action>
+	     
 	     
 	      <!-- 数据字典 -->
           <action name="BaseDictAction" class="baseDictAction" method="execute"></action> 

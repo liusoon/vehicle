@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
    
-    <class name="com.future.domain.BaseDict" table="BASE_DICT">
+    <class name="com.future.domain.BaseDict" table="base_dict">
    
         <id name="dict_id" type="java.lang.String">
             <column name="DICT_ID" />

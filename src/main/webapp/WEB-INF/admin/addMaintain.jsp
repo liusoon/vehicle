@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,6 +8,11 @@
 <title>车辆维护管理系统-维护信息录入</title>
 <link rel="stylesheet" href="${path}css/bootstrap.css">
 </head>
+<script type="text/javascript">
+	<c:if test="${!empty maintainMessage}">
+	  alert('${maintainMessage}');
+	</c:if>
+</script>
 <style type="text/css">
 body{
    background:#efefef;
@@ -99,10 +104,10 @@ padding:13px 30px;
             <span>车牌号：</span>
         </div>
         <div class="col-lg-6 col-md-6  col-xs-6">
-           <input type="text" class="form-control" name="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如浙E636UU');" oninput="setCustomValidity('');"/>
+           <input type="text" class="form-control" name="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU');" oninput="setCustomValidity('');"/>
          </div>
          <button class="but butt" type="reset">重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</button> 
-         <button class="butt" type="submit" style="width:110px">维护信息录入</button>
+         <button class="butt" type="submit" style="width:110px" autofocus="autofocus" >维护信息录入</button>
       </div>
    </form>
 </body>

@@ -39,8 +39,6 @@
   </filter>
  
   <filter>
-  	<description>
-  	</description>
   	<display-name>LoginRoleFilter</display-name>
   	<filter-name>LoginRoleFilter</filter-name>
   	<filter-class>com.future.utils.LoginRoleFilter</filter-class>

@@ -105,8 +105,8 @@ public class HibernateTest {
     private VehicleDao vd;
     @Test
     public void fun3() {
-        Vehicle user = vd.getById("00001");
-        //User user = ud.getById(1);
+      /*  Vehicle user = vd.getById("00001");*/
+        User user = ud.getById(1);
         
     	System.out.println(user);
     } 
@@ -116,16 +116,16 @@ public class HibernateTest {
     private UserService us; 
     @Test
     //测试aop事务
-    public void fun4() {
+    public void fun4(){
     	BaseDict baseDict=new BaseDict();
     	
     	User u=new User();	
     	u.setCode("12341");
-	    u.setPassword("12341");
+	    u.setPassword("12");
 	    u.setName("rose"); 
         u.setPhone("123456789");
 	    u.setAddress("hky");
-	    u.setRole("ordinary");
+	    u.setRole("admin");
 	    u.setDate(new Date());
 	    baseDict.setDict_id("12");
 	    u.setJudge(baseDict);

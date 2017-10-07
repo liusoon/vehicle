@@ -24,11 +24,6 @@
 	   //2 提交表单
 	   $("#pageForm").submit();
   };
-	
-  if('${vehicleMessage}'!=null){
-	  alert('${vehicleMessage}');   
-  }
-  
 </script>
 
 <style type="text/css">
@@ -79,7 +74,7 @@ padding:13px 30px;
 <div id="innerhead">
  <div class="row">
    <div class="col-lg-5 col-md-5 col-xs-6">
-      <p>当前位置 >> 车辆管理 >> 管理车辆</p>
+      <p>当前位置 >> 车辆管理 >> 管理车辆    <c:if test="${vehicleMessage}">${vehicleMessage}</c:if></p>
    </div>
   </div>
 </div>
@@ -87,7 +82,7 @@ padding:13px 30px;
 <div class="pas">
     <span>车牌号：</span>
     <div class="col-lg-6 col-md-6  col-xs-6">
-       <input type="text" name="plateId" class="form-control" id="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G555U');" oninput="setCustomValidity('');" value="${plateId}"/>
+       <input type="text" name="plateId" class="form-control" id="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU');" oninput="setCustomValidity('');" value="${plateId}"/>
     </div>
     <button class="butt" type="submit" name="button" class="button">筛&nbsp;&nbsp;选</button>
     <!-- 隐藏域.当前页码 -->
@@ -111,8 +106,8 @@ padding:13px 30px;
           <th>出厂日期</th>
 	      <th>车主 </th>
 	      <th>维护信息的数量</th>
-	      <th>操作</th>
-        </tr>
+	   <c:if test="${sign!='1'}"><th>操作</th></c:if>
+       </tr>
       </thead>
       <tbody>
         <c:forEach items="${pageBean.list}" var="list" >
@@ -128,7 +123,7 @@ padding:13px 30px;
 	            <td>${list.manufactureDate}</td>
 	            <td>${list.userName}</td>
 	            <td>${list.maintainNumber}</td>
-	             <td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_selectVehicle?vehicleId=${list.vehicleId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_deleteVehicle?vehicleId=${list.vehicleId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td>
+	            <c:if test="${sign!='1'}"><td class="edit"><img src="${path}images/bian.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_selectVehicle?vehicleId=${list.vehicleId}">修改</a>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;<img src="${path}images/lajitong.png"><a href="${pageContext.request.contextPath}/admin/VehicleAction_deleteVehicle?vehicleId=${list.vehicleId}"onclick="return confirm('确定要删除吗?')" style="color:#E11E05;">删除</a></td></c:if>
 	            <td>  
 	            </td>
 	          </tr>
