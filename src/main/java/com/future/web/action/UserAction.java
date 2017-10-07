@@ -1,7 +1,6 @@
 package com.future.web.action;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.interceptor.RequestAware;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -17,9 +16,6 @@ import com.future.service.VehicleService;
 import com.future.utils.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
-
-import javassist.compiler.ast.Symbol;
-
 /**
  * @ProjectName vehicle 
  * 
@@ -194,8 +190,29 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 		  user.setAddress(user1.getAddress());
 		  user.setPhone(user1.getPhone());
 		  userService.updateUser(user);
-		  request.put("userMessage","修改成功");
-	  	  return  "toUserList";
+		  //对于车辆对应信息的修改
+	  	  List<Vehicle> list=vehicleService.getAll();
+	  	  if(list!=null&&!list.isEmpty()) {
+		  	  for(Vehicle vehicle:list){
+			  		if(vehicle.getUserId().equals(user.getUserId())){
+			  			vehicle.setUserName(user1.getName());
+			  			vehicleService.updateVehicle(vehicle);
+			  		}
+		  	  }
+	  	  }
+	  	  //对于维护信息的修改
+	  	  List<Maintain> m=maintainService.get();
+	  	  if(m!=null&&!m.isEmpty()) {
+		  	   for(Maintain maintain:m){
+		  		   if(maintain.getUserId().equals(user.getUserId())){
+			  			maintain.setUserName(user1.getName());
+			  			maintain.setUserPhone(user1.getPhone());
+			  			maintainService.updateMaintain(maintain);   
+		  		   }
+		  		}
+	  	  }
+		  request.put("Message","修改成功");
+	  	  return  this.userList();
 	  }
 	  	
 	  //删除用户信息
@@ -213,8 +230,6 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 			  			baseDict.setDict_id("11");
 			  			vehicle.setJudge(baseDict);
 			  			vehicleService.updateVehicle(vehicle);
-			  		}else{
-			  			break;
 			  		}
 		  	  }
 	  	  }
@@ -223,16 +238,14 @@ public class UserAction extends BaseData implements ModelDriven<User>{
 	  	  if(m!=null&&!m.isEmpty()) {
 		  	   for(Maintain maintain:m){
 		  		   if(maintain.getUserId().equals(user.getUserId())){
-			  			 baseDict.setDict_id("11");
+		  			   baseDict.setDict_id("11");
 			  			 maintain.setJudge(baseDict);
 			  			 maintainService.updateMaintain(maintain);   
-		  			}else{
-		  				break;  
-		  			}
+		  		   }
 		  		}
 	  	  }
-	  	   request.put("userMessage", "删除成功");
-	  	   return  "toUserList";
+	  	   request.put("Message", "删除成功");
+	  	   return  this.userList();
 	  	}	 
 	 	
 	//关于系统

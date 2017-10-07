@@ -23,12 +23,13 @@
 	   $("#pageSizeInput").val(pageSize);
 	   //2 提交表单
 	   $("#pageForm").submit();
-	};
+  };
 </script>
+
 <style type="text/css">
 body{
    background:#efefef;
- }
+}
 html{
    background:#efefef;
 } 
@@ -40,22 +41,18 @@ background-color:white;
 font-size:20px;
 padding:13px 30px;
 }
-  .ji {
+ .ji {
      width: 70%;
      font-size: 20px;
      font-weight: bold;
      margin-top: 100px;
-    }
-    
+  }
+ 
  #pge{
   margin-top:-50px;
   }
-  .t1{
-  	width:525px;
-  	height:50px;
-  	/* background:green; */
-  }
-  .butt{
+ 
+ .butt{
  width:80px;
  height:30px;
  border-radius:15px;
@@ -68,39 +65,26 @@ padding:13px 30px;
  top:60px;
  left:70%;
  }
-  
-</style>
 
+</style>
 </head>
 <body>
-<form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_maturityVehicleList" method="post">
-<img src="${path }images/car.png" class="picture">
+<form id="pageForm" name="ordinaryForm" action="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" method="post">
+<img src="${path}images/car.png" class="picture">
 <div id="innerhead">
  <div class="row">
    <div class="col-lg-5 col-md-5 col-xs-6">
-      <p>当前位置 >> 车辆管理 >> 管理到期车辆</p>
+      <p>当前位置 >> 车辆管理 >> 管理车辆  </p>
    </div>
   </div>
 </div>
-<div class="pas">
-	<div class="t1">
-		<span>车牌号：</span>
-    	<div class="col-lg-1 col-md-1 col-xs-1" style="width:350px;margin-bottom:10px;">
-        <input type="text" class="form-control" name="plateId" id="plateId" placeholder="请输入车牌号" value="${plateId}">
-   		</div>
-   		<button class="butt" type="submit">筛&nbsp;&nbsp;选</button>
 
-	</div>
-    <div class="t1">
-    	<span>车辆档案号：</span>
-    	<div class="col-lg-7 col-md-6  col-xs-6">
-        <input type="text" name="vehicleId" id="vehicleId" class="form-control" placeholder="请填写车辆档案号" value="${vehicleId}"/>
+<div class="pas">
+    <span>车牌号：</span>
+    <div class="col-lg-6 col-md-6  col-xs-6">
+       <input type="text" name="plateId" class="form-control" id="plateId" value="${plateId}"/>
     </div>
-     
-    </div>
-    
-   	
-   
+    <button class="butt" type="submit" name="button" class="button">筛&nbsp;&nbsp;选</button>
     <!-- 隐藏域.当前页码 -->
 	<input type="hidden" name="currentPage" id="currentPageInput" value="${pageBean.currentPage}" />
 	<!-- 隐藏域.每页显示条数 -->
@@ -122,7 +106,7 @@ padding:13px 30px;
           <th>出厂日期</th>
 	      <th>车主 </th>
 	      <th>维护信息的数量</th>
-        </tr>
+       </tr>
       </thead>
       <tbody>
         <c:forEach items="${pageBean.list}" var="list" >
@@ -156,15 +140,12 @@ padding:13px 30px;
      <div class="col-lg-5 col-lg-offset-5 col-md-6 col-md-offset-4 col-xs-6 col-xs-offset-4" id="pge">
            <nav>
           <ul class="pagination">
-            
             <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage-1})" >前一页</a></li>
             <li><a href="">${pageBean.currentPage}</a></li>
             <li><a href="javaScript:void(0)" onclick="changePage(${pageBean.currentPage+1})" >后一页</a></li>
             <li>到 <input type="text" id="page" name="page" value="${pageBean.currentPage}" style="width: 60px">页</li>
             <li><button class="butt" type="button" onclick="changePage($('#page').val())">GO</button></li>
-             
           </ul>
-
         </nav>
         </div>
   </div>

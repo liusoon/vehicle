@@ -19,6 +19,13 @@
 	  
   };
   
+  
+  var tip = "${Message}";
+  if (tip !== null && tip !== undefined && tip !== '') { 
+	  	alert(tip);
+  } 
+  
+
   function changePageSize(pageSize){
 	   //1 将页码的值放入对应表单隐藏域中
 	   $("#pageSizeInput").val(pageSize);
@@ -70,7 +77,7 @@ html{
  <div id="innerhead">
  <div class="row">
    <div class="col-lg-5 col-md-5 col-xs-6">
-      <p>当前位置 >> 用户管理 >>管理用户    <c:if test="${userMessage}">${userMessage}</c:if></p>
+      <p>当前位置 >> 用户管理 >>管理用户   </p>
    </div>
   </div>
 </div>

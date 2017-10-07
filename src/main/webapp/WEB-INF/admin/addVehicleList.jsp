@@ -18,6 +18,11 @@
 	  $("#pageForm").submit();
   };
   
+  var tip = "${Message}";
+  if (tip !== null && tip !== undefined && tip !== '') { 
+	  	alert(tip);
+  } 
+  
   function changePageSize(pageSize){
 	   //1 将页码的值放入对应表单隐藏域中
 	   $("#pageSizeInput").val(pageSize);
@@ -208,7 +213,7 @@
  <div class="pas">
     <span>车牌号：</span>
     <div class="col-lg-6 col-md-6  col-xs-6">
-        <input type="text" name="plateId" class="form-control" id="plateId" pattern="^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$" required  oninvalid="setCustomValidity('请填写正确格式的车牌号,如豫G636UU');" oninput="setCustomValidity('');" value="${plateId}"/>
+        <input type="text" name="plateId" class="form-control" id="plateId" value="${plateId}"/>
     </div>
     <button class="butt" type="submit" name="button" class="button">筛&nbsp;&nbsp;选</button>
     <!-- 隐藏域.当前页码 -->

@@ -135,11 +135,9 @@ public class MaintainAction extends BaseData implements ModelDriven<Maintain>{
 		// 封装离线查询对象
 		DetachedCriteria dc = DetachedCriteria.forClass(Maintain.class);
 		
-		if(sign!=1){
-			dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
-		}else{
-			dc.add(Restrictions.like("judge.dict_id", "11", MatchMode.ANYWHERE));
-		}
+		
+		dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
+		
 		
 		if(UserBySession!=null) {
 			dc.add(Restrictions.eq("userId",UserBySession.getUserId())); 

@@ -93,16 +93,14 @@
             <dl class="custom">
                 <dt onClick="changeImage()" class="a">车辆管理<img class="pic" src="../images/select_xl01.png"></dt>
                 <dd class="first_dd"><a href="${pageContext.request.contextPath}/admin/VehicleAction_addVehicleList" target="main">管理车辆备案</a></dd>
-                <dd><a href="${pageContext.request.contextPath}/admin/VehicleAction_maturityVehicleList" target="main">管理到期车辆</a></dd>
-                <dd><a href="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" target="main">管理车辆</a></dd> 
-                <dd><a href="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList?sign=1" target="main">查看删除的车辆</a></dd> 
+                <dd><a href="${pageContext.request.contextPath}/admin/VehicleAction_maturityVehicleList" target="main">查询到期车辆</a></dd>
+                <dd><a href="${pageContext.request.contextPath}/admin/VehicleAction_vehicleList" target="main">管理车辆信息</a></dd> 
             </dl>
         
             <dl class="channel">
                 <dt class="a">维护信息管理<img class="pic" src="../images/select_xl01.png"></dt>
                 <dd class="first_dd"><a href="${pageContext.request.contextPath}/admin/MaintainAction_addMaintain" target="main">维护信息录入</a></dd>
-                <dd><a href="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" target="main">管理维护信息</a></dd>
-                <dd><a href="${pageContext.request.contextPath}/admin/MaintainAction_maintainList?sign=1" target="main">查看删除的维护信息</a><dd>
+                <dd><a href="${pageContext.request.contextPath}/admin/MaintainAction_maintainList" target="main">查询维护信息</a></dd>
             </dl>
         
             <dl class="app">

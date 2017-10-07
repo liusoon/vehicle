@@ -77,8 +77,14 @@ padding:13px 30px;
    		</div>
    		<div class="col-lg-8 col-md-8  col-xs-8" >
 			<select name="vehicle1.category" class="form-control" >
-					<option value="货车">货车</option>
-					<option value="汽车">汽车</option>
+				<c:if test="${vehicle1.category=='货运'}">
+					<option value="货运">货运</option>
+					<option value="汽运">汽运</option>
+				</c:if>
+				<c:if test="${vehicle1.category=='汽运'}">
+					<option value="汽运">汽运</option>	
+					<option value="货运">货运</option>
+				</c:if>
 		    </select><br>
 	   </div>
        <div class="col-lg-4 col-md-4  col-xs-4" >

@@ -1,6 +1,7 @@
 package com.future.web.action;
 import java.text.SimpleDateFormat;
 
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -130,21 +131,30 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   	public String updateVehicle() throws Exception{
   		Vehicle v=vehicleService.getVehicleId(vehicle.getVehicleId());
   		v.setCarChassisId(vehicle1.getCarChassisId());
-  		v.setDate(vehicle1.getDate());
   		v.setEngineId(vehicle1.getEngineId());
-  		v.setMaintainNumber(vehicle1.getMaintainNumber());
   		v.setManufactureDate(vehicle1.getManufactureDate());
   		v.setModel(vehicle1.getModel());
   		v.setWeight(vehicle1.getWeight());
   		v.setPlateId(vehicle1.getPlateId());
   	    v.setCategory(vehicle1.getCategory());
-  		vehicle=v;
-  		vehicleService.updateVehicle(vehicle);
-  		request.put("vehicleMessage","修改成功");
-		if(sign==1) {
-  			return "toaddVehicleList";
+  		vehicleService.updateVehicle(v);
+  		//对于维护信息的修改
+  		List<Maintain> m=maintainService.get();
+  		if(m!=null&&!m.isEmpty()) {
+	  		for(Maintain maintain:m){
+	  			if(maintain.getUserId().equals(v.getUserId())){
+	  				maintain.setPlateId(vehicle1.getPlateId());
+	  				maintain.setCategory(vehicle1.getCategory());
+	  				maintainService.updateMaintain(maintain);
+	  			}
+	  		}
   		}
-  		return "toList";
+  		request.put("Message","修改成功");
+  		vehicle.setPlateId(null);
+		if(sign==1) {
+  			return this.addVehicleList();
+  		}
+  		return this.vehicleList();
   	}
 	
   	//删除车辆信息
@@ -153,25 +163,34 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
   		Vehicle vehicle1=vehicleService.getVehicleId(vehicle.getVehicleId());
   		baseDict.setDict_id("11");
   		vehicle1.setJudge(baseDict);
-  		vehicle=vehicle1;
-  		vehicleService.updateVehicle(vehicle);
+  		vehicleService.updateVehicle(vehicle1);
   		//对于维护信息的删除
   		List<Maintain> m=maintainService.get();
   		if(m!=null&&!m.isEmpty()) {
 	  		for(Maintain maintain:m){
 	  			if(maintain.getUserId().equals(vehicle1.getUserId())){
+	  				baseDict.setDict_id("11");
 	  				maintain.setJudge(baseDict);
 	  				maintainService.updateMaintain(maintain);
-	  			}else{
-	  				break;
 	  			}
 	  		}
   		}
-  		request.put("vehicleMessage","删除成功");
-		if(sign==1) {
-  			return "toaddVehicleList";
+  		List<User> u=userService.getAll();
+  		if(u!=null&&!u.isEmpty()) {
+	  		for(User user:u){
+	  			if(user.getUserId().equals(vehicle1.getUserId())){
+	  				baseDict.setDict_id("11");
+	  				user.setJudge(baseDict);
+	  				userService.updateUser(user);
+	  			}
+	  		}
   		}
-  		return "toList";
+  		request.put("Message","删除成功");
+  		vehicle.setPlateId(null);
+		if(sign==1) {
+  			return this.addVehicleList();
+  		}
+  		return this.vehicleList();
   	}
   
   	//一键备案
@@ -222,12 +241,8 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		if(UserBySession!=null) {
             dc.add(Restrictions.eq("userId",UserBySession.getUserId())); 
 		}else {
-		   if(sign!=1){
 			   dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
 			   dc.add(Restrictions.like("operationStatus.dict_id", "9", MatchMode.ANYWHERE));
-		   }else{
-			   dc.add(Restrictions.like("judge.dict_id", "11", MatchMode.ANYWHERE));  
-		   }
 		}
 		
 		// 判断并封装参数
@@ -235,6 +250,7 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 			dc.add(Restrictions.like("plateId", "%" + vehicle.getPlateId() + "%"));
 		}
 		// 调用service 查询分页数据pagebean
+		
 		PageBean pb = vehicleService.getPageBean(dc, currentPage, pageSize);
 
 		// 将pagebean放到request域中，转发到页面显示
@@ -245,6 +261,36 @@ public class VehicleAction extends BaseData implements ModelDriven<Vehicle>  {
 		return "vehicleList";
 
 	}
+	
+		//查看自己的车辆列表 新加
+		public String myVehicleList() throws Exception {
+
+			// 封装离线查询对象
+			DetachedCriteria dc = DetachedCriteria.forClass(Vehicle.class);
+			//多身份查询条件变化
+			if(UserBySession!=null) {
+	            dc.add(Restrictions.eq("userId",UserBySession.getUserId())); 
+			}else {
+				   dc.add(Restrictions.like("judge.dict_id", "12", MatchMode.ANYWHERE));
+				   dc.add(Restrictions.like("operationStatus.dict_id", "9", MatchMode.ANYWHERE));
+			}
+			
+			// 判断并封装参数
+			if (StringUtils.isNotBlank(vehicle.getPlateId())) {
+				dc.add(Restrictions.like("plateId", "%" + vehicle.getPlateId() + "%"));
+			}
+			// 调用service 查询分页数据pagebean
+			PageBean pb = vehicleService.getPageBean(dc, currentPage, pageSize);
+
+			// 将pagebean放到request域中，转发到页面显示
+			ActionContext.getContext().getSession().put("pageBean", pb);
+			
+			request.put("sign",sign);
+
+			return "myVehicleList";
+
+		}
+	
 	
 	// 到期车辆查询
 	public String maturityVehicleList() throws Exception {

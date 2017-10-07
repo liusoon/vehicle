@@ -38,6 +38,7 @@
           <result name="addVehicle">/WEB-INF/admin/addVehicle.jsp</result>
           <result name="addVehicleList">/WEB-INF/admin/addVehicleList.jsp</result>
           <result name="vehicleList">/WEB-INF/admin/vehicleList.jsp</result>
+          <result name="myVehicleList">/WEB-INF/admin/myVehicleList.jsp</result>
 	      <result name="maturityVehicleList">/WEB-INF/admin/maturityVehicleList.jsp</result>
           <result name="selectVehicle">/WEB-INF/admin/updateVehicle.jsp</result>
           <result name="toVehicleList" type="redirectAction">
