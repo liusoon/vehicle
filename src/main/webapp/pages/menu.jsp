@@ -102,11 +102,6 @@
                 <dd><a href="${pageContext.request.contextPath}/admin/UserAction_modify?id=${User.userId}" target="main">修改密码</a></dd>
                 <dd><a href="aboutSystem.jsp" target="main">关于系统</a></dd>
             </dl>
-            
-            <dl class="cloud">
-                <dt class="a" onClick="changeImage()">使用说明<img class="pic" src="../images/select_xl01.png"></dt>
-                <dd><a href="userintroduce.jsp" target="main">使用说明</a></dd>
-            </dl>
     </div>
 </div>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
